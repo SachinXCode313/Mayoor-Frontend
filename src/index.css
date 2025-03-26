@@ -1,0 +1,39 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family:sans-serif, montserrat;
+}
+
+
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+ overscroll-behavior-y: contain;
+}
+
+.student-item{
+  padding : 12px 12px;
+  background : #fff;
+  text-align: left;
+  border-bottom : solid thin #ccc;
+  color: #6c6c6c;
+}
+
+.student-item span{
+  text-transform: capitalize;
+}
+
+.student-item span.initials{
+  display: inline-block;
+  height : 48px;
+  width : 48px;
+  line-height: 48px;
+  text-align: center;
+  color : #fff;
+  background-color: rgb(32, 178, 170);
+  border-radius: 50%;
+  margin-right: 12px;
+}
