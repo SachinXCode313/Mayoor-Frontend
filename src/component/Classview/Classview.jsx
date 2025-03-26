@@ -6,7 +6,7 @@ import axios from "axios";
 
 
 
-const ClassView = ({ setIndex, user }) => {
+const ClassView = ({ setIndex, onLogout }) => {
   const [selectedChart, setSelectedChart] = useState("ac");
   const [acData, setAcData] = useState([]);
   const [loData, setLoData] = useState([]);
@@ -403,7 +403,7 @@ const ClassView = ({ setIndex, user }) => {
           <Menu
             onProfileClick={handleProfileClick}
             onSettingsClick={handleSettingsClick}
-            onLogoutClick={handleLogoutClick}
+            onLogoutClick={onLogout}
             onReturnClick={handleClick}
           />
         </div>

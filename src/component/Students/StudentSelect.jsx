@@ -6,7 +6,7 @@ import TeacherProfile from "../TeacherProfile/index.jsx";
 import Menu from "../MenuBar/index.jsx";
 import Wrapper from "./StudentSelectStyles.js";
 
-const StudentList = ({ onStudentsData , setIndex}) => {
+const StudentList = ({ onStudentsData , setIndex, onLogout}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [students, setStudents] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
@@ -119,7 +119,7 @@ const StudentList = ({ onStudentsData , setIndex}) => {
           <Menu
             onProfileClick={() => alert("Go to Profile")}
             onSettingsClick={() => alert("Open Settings")}
-            onLogoutClick={() => alert("Logging Out...")}
+            onLogoutClick={onLogout}
             onReturnClick={handleClick}
           />
         </div>

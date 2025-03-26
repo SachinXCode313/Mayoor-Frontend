@@ -6,7 +6,7 @@ import axios from 'axios';
 import noData from "../assets/noData.png";
 import Menu from '../MenuBar';
 
-const ROlist = ({ loItems, setLoItems, setIndex, handleLoItems, acItems }) => {
+const ROlist = ({ loItems, setLoItems, setIndex, handleLoItems, acItems ,onLogout}) => {
   const [activeIndex, setActiveIndex] = useState(null);
   const [roList, setRoList] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -90,7 +90,7 @@ const ROlist = ({ loItems, setLoItems, setIndex, handleLoItems, acItems }) => {
           <Menu
             onProfileClick={() => alert("Go to Profile")}
             onSettingsClick={() => alert("Open Settings")}
-            onLogoutClick={() => alert("Logging Out...")}
+            onLogoutClick={onLogout}
             onReturnClick={handleClick}
           />
         </div>

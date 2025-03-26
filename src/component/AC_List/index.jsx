@@ -17,7 +17,7 @@ const AC_List = ({
   handleAcItems,
   studentsData,
   setIndex,
-  user,
+  onLogout
 }) => {
   const [acList, setAcList] = useState([]);
   const [activeMenuIndex, setActiveMenuIndex] = useState(null);
@@ -199,7 +199,7 @@ const AC_List = ({
           <Menu
             onProfileClick={() => alert("Go to Profile")}
             onSettingsClick={() => alert("Open Settings")}
-            onLogoutClick={() => alert("Logging Out...")}
+            onLogoutClick={onLogout}
             onReturnClick={handleClick}
           />
         </div>

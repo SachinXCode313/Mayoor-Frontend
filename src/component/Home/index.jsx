@@ -13,7 +13,7 @@ import StudentList from '../Students/StudentSelect';
 import ClassView from "../Classview/Classview";
 import homeIcon from "../assets/home.png";
 
-const Home = ({ user }) => {
+const Home = ({ user,onLogout }) => {
   const [index, setIndex] = useState(1);
   const [tabs, setTabs] = useState([
     { id: 2, title: 'Home', icon: homeIcon },
@@ -51,15 +51,15 @@ const Home = ({ user }) => {
         {index === 1 ? (
           <HomeList user={user} setIndex={setIndex}  />
         ) : index === 2 ? (
-          <ClassView setIndex={setIndex} user={user}/>
+          <ClassView setIndex={setIndex} user={user} onLogout={onLogout}/>
         ) : index === 3 ? (
-          <StudentList onStudentsData={handleStudentsData} setIndex={setIndex} />
+          <StudentList onStudentsData={handleStudentsData} setIndex={setIndex} onLogout={onLogout}/>
         ) : index === 4 ? (
-          <ROlist loItems={loItems} setLoItems={setLoItems} setIndex={setIndex} handleLoItems={handleLoItems} acItems={acItems}/>
+          <ROlist loItems={loItems} setLoItems={setLoItems} setIndex={setIndex} handleLoItems={handleLoItems} acItems={acItems} onLogout={onLogout}/>
         ) : index === 5 ? (
-          <LOlist loItems={loItems} setLoItems={setLoItems} handleLoItems={handleLoItems} acItems={acItems} setAcItems={setAcItems} setIndex={setIndex}/>
+          <LOlist loItems={loItems} setLoItems={setLoItems} handleLoItems={handleLoItems} acItems={acItems} setAcItems={setAcItems} setIndex={setIndex} onLogout={onLogout}/>
         ) : (
-          <AClist acItems={acItems} setAcItems={setAcItems} handleAcItems={handleAcItems} studentsData={studentsData} setIndex={setIndex} user={user}/>
+          <AClist acItems={acItems} setAcItems={setAcItems} handleAcItems={handleAcItems} studentsData={studentsData} setIndex={setIndex} user={user} onLogout={onLogout}/>
         )}
       </div>
       {index !== 1 && (

@@ -12,7 +12,7 @@ import DeletedSuccessfully from "../DeletedSuccessfully/index.jsx";
 import DeleteFailed from "../DeleteFailed/index.jsx";
 import AreYouSure from "../AreYouSure"; 
 
-const LOlist = ({ acItems, setAcItems, loItems, setLoItems, handleLoItems, setIndex }) => {
+const LOlist = ({ acItems, setAcItems, loItems, setLoItems, handleLoItems, setIndex,onLogout }) => {
   const [activeIndex, setActiveIndex] = useState(null);
   const [activeMenuIndex, setActiveMenuIndex] = useState(null);
   const [filteredLoList, setFilteredLoList] = useState([]);
@@ -171,7 +171,7 @@ const LOlist = ({ acItems, setAcItems, loItems, setLoItems, handleLoItems, setIn
           <Menu
             onProfileClick={() => alert("Go to Profile")}
             onSettingsClick={() => alert("Open Settings")}
-            onLogoutClick={() => alert("Logging Out...")}
+            onLogoutClick={onLogout}
             onReturnClick={handleClick}
           />
         </div>

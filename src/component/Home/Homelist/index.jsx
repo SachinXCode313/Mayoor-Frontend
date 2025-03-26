@@ -75,7 +75,7 @@ const HomeList = ({ user, setIndex, msg }) => {
       <div id="user">
         <div id="detail">
           <p id="hi">Hi,</p>
-          <h1 id="name">Mr. Cool</h1>
+          <h1 id="name">{user}</h1>
         </div>
         <div id="image">
           {/* <img id="notification" src={notification} alt="Notification" /> */}
