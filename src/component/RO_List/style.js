@@ -1,12 +1,11 @@
 import styled from "styled-components";
 
 const Wrapper = styled.section`
-    width: 100%;
+width: 100%;
     display: flex;
     flex-direction: column;
     overflow: hidden; /* Prevent overflowing of the container */
-    background-color: #21c3bc;
-
+    background-color: #21C3BC;
     .search-container {
       display: flex;
       gap: 5px;
@@ -15,13 +14,12 @@ const Wrapper = styled.section`
       margin-top: 17px;
       padding: 10px;
             margin-left: -10px;
-
     }
-
     .icon{
       display: flex;
       gap: 12px;
       align-items: center;
+      margin-left: 20px;
       // padding-right: 15px;
     }
     .search-bar {
@@ -55,6 +53,9 @@ const Wrapper = styled.section`
     border-top-right-radius: 30px;
     background-color: #fff;
     padding: 10px;
+    justify-content: center;
+    display: flex;
+    color : gray;
   }
 
   .no_results{

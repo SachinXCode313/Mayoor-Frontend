@@ -104,26 +104,6 @@ const Wrapper = styled.div`
   width: 1200px; /* Ensure width is more than the parent to enable scroll */
 }
 
-.y-axis-labels {
-    min-width: 50px;
-    text-align: right;
-    padding-right: 10px;
-    padding-top:22px;
-    background-color: white;
-    height: 240px;
-    z-index: 10;
-    position: fixed;
-    
-}
-
-.y-axis-label {
-    font-size: 12px;
-    height: 36px;
-    font-weight: normal;
-    color: #434343;
-
-}
-
 
   .metric-cards-container {
     width:90%;
@@ -280,8 +260,6 @@ const Wrapper = styled.div`
   padding: 5px 0;
   border-bottom: 1px solid #ddd;
 }
-
-
 
 `;
 

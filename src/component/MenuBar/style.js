@@ -5,14 +5,12 @@ const Wrapper = styled.section`
   position: relative;
   display: inline-block;
 }
-
 /* Hamburger Icon */
 .menu-icon {
   width: 35px;
   cursor: pointer;
   z-index: 2000; /* Ensure it stays above */
 }
-
 // /* Fullscreen Overlay for Background Blur */
 // .overlay {
 //   position: fixed;
@@ -25,12 +23,10 @@ const Wrapper = styled.section`
 //   z-index: 999;
 //   display: none;
 // }
-
 /* Show overlay when menu is open */
 .overlay.open {
   display: block;
 }
-
 /* Sidebar Menu */
 .sidebar {
   position: fixed;
@@ -38,7 +34,7 @@ const Wrapper = styled.section`
   left: -250px; /* Initially hidden */
   width: 150px;
   height: auto;
-  background: #2a9d8f /* Teal color */
+  background: #2A9D8F /* Teal color */
   color: white;
   display: flex;
   flex-direction: column;
@@ -46,14 +42,14 @@ const Wrapper = styled.section`
   transition: right 0.4s ease-in-out;
   box-shadow: -3px 0 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  background-color: rgba(255,255,255,0.9)
+  background-color: rgba(255, 255, 255, 0.9)
+  
 }
-
 /* When menu is open */
 .sidebar.open {
   left: 0; /* Slide into view */
+  border-bottom-right-radius: 25px;
 }
-
 /* Menu Items */
 .sidebar button {
   background: none;
@@ -67,23 +63,21 @@ const Wrapper = styled.section`
   transition: background 0.3s ease-in-out;
   display: flex;
   align-items: center;
-  height: auto
+  height: auto;
+  font-weight: 500;
 }
-
 /* Add icons next to the text */
 .sidebar button::before {
   margin-right: 10px;
 }
-
 /* Logout Button */
 .logout-btn {
   margin-top: auto; /* Push to bottom */
-  background: red;
+  // background: beige;
   color: white;
   padding: 12px;
   border-radius: 5px;
   // font-weight: bold;
 }
-
 `
 export default Wrapper

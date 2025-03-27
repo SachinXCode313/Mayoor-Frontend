@@ -30,6 +30,7 @@ const Wrapper = styled.section`
       gap: 12px;
       align-items: center;
       // padding-right: 15px;
+      margin-left: 20px;
     }
       
     .search-bar {
@@ -96,6 +97,9 @@ const Wrapper = styled.section`
     border-top-right-radius: 30px;
     background-color: #fff;
     padding: 10px;
+    display : flex;
+    justify-content: center;
+    color : gray;
   }
 
   .no_results{

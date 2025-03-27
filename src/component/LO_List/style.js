@@ -28,6 +28,7 @@ const Wrapper = styled.section`
       // gap: 12px;
       align-items: center;
       // padding-right: 15px;
+      margin-left: 20px;
     }
 
     .search-bar {

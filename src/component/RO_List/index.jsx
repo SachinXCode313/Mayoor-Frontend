@@ -161,7 +161,8 @@ const ROlist = ({ loItems, setLoItems, setIndex, handleLoItems, acItems ,onLogou
           })
         ) : (
           <li className="no-results">
-            <img className='no-results' src={noData} alt="No Data" />
+            {/* <img className='no-results' src={noData} alt="No Data" /> */}
+            No Result Found
           </li>
         )}
       </ul>

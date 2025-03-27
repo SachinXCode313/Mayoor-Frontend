@@ -231,9 +231,9 @@ const AC_List = ({
                 <div className="ac-info">
                   <p className="item-title">{item.ac_name}</p>
                 </div>
-                <div className="mapCounter">
+                {/* <div className="mapCounter">
                   {missingMarksCount[item.ac_id] ?? 0}
-                </div>
+                </div> */}
                 <div>
                   <MenuDots
                     index={index}
@@ -248,7 +248,7 @@ const AC_List = ({
           ))
         ) : (
           <li className="no-results">
-            <p className="no_results">No Data Available</p>
+            No Results Found
           </li>
         )}
       </ul>

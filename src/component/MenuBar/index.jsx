@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import imgMenu from "../assets/menu.png";
 import Wrapper from "./style";
-
 const Menu = ({ onProfileClick, onSettingsClick, onLogoutClick, onReturnClick }) => {
   const [menuOpen, setMenuOpen] = useState(false);
-
   // Close menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -15,7 +13,6 @@ const Menu = ({ onProfileClick, onSettingsClick, onLogoutClick, onReturnClick })
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
-
   return (
     <Wrapper>
     <div className="menu-container">
@@ -29,7 +26,6 @@ const Menu = ({ onProfileClick, onSettingsClick, onLogoutClick, onReturnClick })
           setMenuOpen(!menuOpen);
         }}
       />
-
       <div className={`sidebar ${menuOpen ? "open" : ""}`}>
         {/* <button onClick={onProfileClick}>Profile</button> */}
         <button onClick={onReturnClick}>Return Home</button>
@@ -42,5 +38,4 @@ const Menu = ({ onProfileClick, onSettingsClick, onLogoutClick, onReturnClick })
     </Wrapper>
   );
 };
-
 export default Menu;
