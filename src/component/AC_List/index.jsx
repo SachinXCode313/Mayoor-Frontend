@@ -158,7 +158,6 @@ const AC_List = ({
       setAcItems(updatedAcItems);
       setFilteredAcList(updatedAcItems);
       setshowDeleted(true);
-      alert("Assessment Criteria deleted successfully.");
     } catch (error) {
       setShowDeleteFailed(true);
       console.error(

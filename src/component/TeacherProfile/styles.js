@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Wrapper = styled.section`
     margin: 0;
     padding: 0;
-    background-color: #21C3BC;
+    background-color: #21c2ba;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,7 +19,7 @@ const Wrapper = styled.section`
   }
 
   .btn{
-    background-color: #21C3BC;
+    background-color: #21c2ba;
     border: 0;
     font-size: 30px;
   }
@@ -146,7 +146,7 @@ const Wrapper = styled.section`
   .avatar {
     width: 100px;
     height: 100px;
-    background-color: #21C3BC;
+    background-color: #21c2ba;
     color: black;
     font-size: 30px;
     font-weight: bold;

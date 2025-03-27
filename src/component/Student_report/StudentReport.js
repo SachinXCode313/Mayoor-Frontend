@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   /* Global Styles */
   margin: 0;
-  background-color: #21C3BC;
+  background-color: #21c2ba;
   height:90;
 overflow:hidden;
 
@@ -11,7 +11,7 @@ overflow:hidden;
   /* Header */
   .st-header {
     height:30px;
-    background-color: #21C3BC;
+    background-color: #21c2ba;
     color: white;
     text-align: center;
     padding: 30px;

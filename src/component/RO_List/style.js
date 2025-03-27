@@ -5,7 +5,7 @@ width: 100%;
     display: flex;
     flex-direction: column;
     overflow: hidden; /* Prevent overflowing of the container */
-    background-color: #21C3BC;
+    background-color: #21c2ba;
     .search-container {
       display: flex;
       gap: 5px;

@@ -28,7 +28,7 @@ const Menu = ({ onProfileClick, onSettingsClick, onLogoutClick, onReturnClick })
       />
       <div className={`sidebar ${menuOpen ? "open" : ""}`}>
         {/* <button onClick={onProfileClick}>Profile</button> */}
-        <button onClick={onReturnClick}>Return Home</button>
+        <button onClick={onReturnClick}>Menu⤴</button>
         {/* <button onClick={onSettingsClick}>Settings</button> */}
         <button onClick={onLogoutClick} className="logout-btn">
           Log Out

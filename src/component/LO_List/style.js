@@ -4,7 +4,7 @@ const Wrapper = styled.section`
     display: flex;
     flex-direction: column;
     overflow: hidden; /* Prevent overflowing of the container */
-    background-color: #21C3BC;
+    background-color: #21c2ba;
 
     .search-container {
       display: flex;
@@ -169,7 +169,7 @@ const Wrapper = styled.section`
     color: rgb(26, 24, 24)
     }
   .add{
-    background-color: #21C3BC;
+    background-color: #21c2ba;
     opacity: 0.9;
     font-weight: bold;
     width: 60px;
@@ -205,10 +205,10 @@ const Wrapper = styled.section`
   }
 .list-icons{
   height: 20px;
- // background-color: #21C3BC;
+ // background-color: #21c2ba;
 }
 .list-icon-containers{
- // background-color: #21C3BC;
+ // background-color: #21c2ba;
   margin-right: 10px;
   border-radius: 5px;
   padding: 2px;

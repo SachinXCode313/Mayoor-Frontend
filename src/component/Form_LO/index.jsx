@@ -62,7 +62,7 @@ const Form_LO = ({ closeForm, loadLO, closeFormOnly, setShowSuccess, setShowFail
       "Content-Type": "application/json",
       year: userData.year,
       classname: userData.class,
-      section: userData.section,
+      quarter : userData.quarter,
       subject: userData.subject,
     };
     try {

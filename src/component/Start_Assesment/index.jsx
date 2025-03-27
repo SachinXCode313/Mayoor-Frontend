@@ -131,7 +131,6 @@ const Assessment = ({ selectedAssessment, onBack, studentsData, onMissingMarksCh
     }
     const maxMarks = selectedAssessment?.max_marks || 100
     if ((parseInt(value) > maxMarks || parseInt(value) < 0)) {
-      alert("Invalid marks")
       return
     }
     setStudents((prevStudents) =>
@@ -150,7 +149,6 @@ const Assessment = ({ selectedAssessment, onBack, studentsData, onMissingMarksCh
     } catch (error) {
       console.error("Error submitting new scores:", error.response?.data || error.message)
       setShowFailed(true)
-      // alert("Failed to submit new scores. Please try again.")
     }
   }
   const updateScores = async (updateScores, headers) => {

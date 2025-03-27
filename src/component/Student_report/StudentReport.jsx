@@ -144,10 +144,10 @@ useEffect(() => {
               <span className="initials">{student.name.split(' ')[0][0] + (student.name.split(' ')[1] ? student.name.split(' ')[1][0].toUpperCase() : "")}</span>
               </div>
               <div className="student-details">
-                <p><strong>Name:{student.name|| userData?.name || "N/A"}</strong></p>
-                <p><strong>Roll No:{student.id|| userData?.id || "N/A"}</strong> </p>
-                <p><strong>Grade:</strong> {userData?.getclassName || userData?.class || "N/A"}</p>
-                <p><strong>Section:{userData?.sectionName|| userData?.section || "N/A"}</strong> </p>
+                <p><strong>Name :</strong> {student.name|| userData?.name || "N/A"}</p>
+                <p><strong>Roll No : </strong>{student.id|| userData?.id || "N/A"} </p>
+                <p><strong>Grade : </strong> {userData?.getclassName || userData?.class || "N/A"}</p>
+                <p><strong>Section : </strong>{userData?.sectionName|| userData?.section || "N/A"} </p>
               </div>
             </div>
 

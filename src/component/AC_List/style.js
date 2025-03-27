@@ -154,7 +154,7 @@ const Wrapper = styled.section`
   }
 
   .add{
-    background-color: #21c3bc;
+    background-color: #21c2ba;
     opacity: 0.9;
     font-weight: bold;
     margin-bottom: 10px;
@@ -188,7 +188,7 @@ const Wrapper = styled.section`
 }
 .list-icons{
   height: 20px;
-  //background-color: #21c3bc;
+  
 }
   .loading-message{
     height: 30px;  
@@ -198,7 +198,7 @@ const Wrapper = styled.section`
     color: grey;
     }
 .list-icon-containers{
-  //background-color: #21c3bc;
+
   margin-right: 10px;
   border-radius: 5px;
   padding: 2px;

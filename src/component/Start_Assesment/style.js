@@ -8,10 +8,18 @@ const Wrapper = styled.div`
     gap: 50px;
     align-items: center;
     position: relative;
-    background-color: #21C3BC;
+    background-color: #21c2ba;
     width: 90%;
     margin: 22px 0;
   }
+    .info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 90%;
+  text-align: center;
+  overflow: hidden;
+}
   .search-bar {
     width: 90%;
     padding: 10px 40px 10px 15px;
@@ -46,7 +54,7 @@ const Wrapper = styled.div`
     text-align: center;
     width: 100%;
     height: 180px;
-    background-color: #21C3BC;
+    background-color: #21c2ba;
     box-shadow: 0px 4px 6px rgba(244, 240, 240, 0.1);
     align-items: center;
     overflow: hidden;
@@ -61,15 +69,17 @@ const Wrapper = styled.div`
     border: 5px solid #FFFFFF;
   }
   .name {
-    font-family: sans-serif;
-    font-size: 25px;
-    // margin-top: 10px;
-    color: white;
-  }
+  font-family: sans-serif;
+  color: white;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  direction: ltr;
+}
   .max-marks {
     font-size: 14px;
     color: white;
-    // margin-top: 5px;
   }
   .ac-container {
     display: flex;
@@ -147,9 +157,8 @@ const Wrapper = styled.div`
   text-align: center;
   padding: 10px;
   border: none;
-  height: 35px;
-  width: 35px;
-  margin-bottom: 10px;
+  height: 40px;
+  width: 40px;
   border-radius: 50%;
   cursor: pointer;
   position: fixed;

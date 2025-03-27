@@ -103,8 +103,16 @@ const Wrapper = styled.div`
     font-weight: bold;  
   }  
   .Value {  
-    flex-grow: 1;  
+    // flex-grow: 1;  
   }  
+
+    /* Student Details */
+  .student-details p,
+  .student-section p {
+    font-size: 17px;
+    margin: 3px 0;
+    text-align : left;
+  }
   
   .TableContainer {  
     overflow-x: auto; 

@@ -6,7 +6,7 @@ import axios from "axios";
 
 
 
-const ClassView = ({ setIndex, user }) => {
+const ClassView = ({ setIndex, user,onLogout }) => {
   const [selectedChart, setSelectedChart] = useState("ac");
   const [acData, setAcData] = useState([]);
   const [loData, setLoData] = useState([]);
@@ -327,7 +327,6 @@ const [selectedStudents, setSelectedStudents] = useState([]);
 
   const handleProfileClick = () => alert("Go to Profile");
   const handleSettingsClick = () => alert("Open Settings");
-  const handleLogoutClick = () => alert("Logging Out...");
 
   // useEffect(() => {
   // const graphContainer = document.querySelector(".chart-wrapper"); // Select chart wrapper
@@ -403,7 +402,7 @@ const chartWidth = Math.max(1200, selectedData.length * 0); // Adjust width dyna
           <Menu
             onProfileClick={handleProfileClick}
             onSettingsClick={handleSettingsClick}
-            onLogoutClick={handleLogoutClick}
+            onLogoutClick={onLogout}
             onReturnClick={handleClick}
           />
         </div>

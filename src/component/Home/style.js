@@ -29,8 +29,12 @@ const Wrapper = styled.section`
             font-weight: bold;
             cursor: pointer;
             &.active{
-                background-color: #21c3bc;
-                transform: scale(1.1); 
+                background-color: #21c2ba;
+                transform: scaleY(1.1); 
+                transform-origin: bottom;
+                height: auto;
+                 border-top-left-radius: 10px;
+                 border-top-right-radius: 10px;
             }
         }
         .tab-icon{
@@ -41,7 +45,8 @@ const Wrapper = styled.section`
             font-weight: bold;
             cursor: pointer;
             &.active{
-                background-color: #21c3bc;
+                background-color: #21c2ba;
+               
             }
         }
     }

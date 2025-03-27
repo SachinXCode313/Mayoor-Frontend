@@ -101,7 +101,8 @@ const Form_AC = ({closeForm, loadAC, closeFormOnly, setShowSuccess, setShowFaile
     }
 
     if (selectedLoIds.length === 0) {
-        alert("Please select at least one Learning Outcome.");
+      
+       alert ("Please select at least one Learning Outcome.");
         setIsSubmitting(false);
         return;
     }
