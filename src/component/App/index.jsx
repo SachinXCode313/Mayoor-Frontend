@@ -1,4 +1,5 @@
 import Login from "../Login"
+import MappingTree from "../MappingTree"
 // import Home from "../Home"
 import './index.css'
 // import LoadNotification from "./LoadNotification"
@@ -14,6 +15,7 @@ const App = () => {
     return (
       <>
         <Login/>
+        <MappingTree/>
         {/* <LoadNotification/> */}
         {/* {
          user ? <Home user={user} /> : <Login setUser = {setUser} />
