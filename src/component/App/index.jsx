@@ -15,7 +15,7 @@ const App = () => {
     return (
       <>
         <Login/>
-        <MappingTree/>
+        {/* <MappingTree/> */}
         {/* <LoadNotification/> */}
         {/* {
          user ? <Home user={user} /> : <Login setUser = {setUser} />
