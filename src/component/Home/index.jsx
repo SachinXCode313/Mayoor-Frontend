@@ -12,7 +12,6 @@ import StudentList from '../Students/StudentSelect';
 // import { useSwipeable } from 'react-swipeable';
 import ClassView from "../Classview/Classview";
 import homeIcon from "../assets/home.png";
-import MappingTree from '../MappingTree';
 
 const Home = ({ user,onLogout }) => {
   const [index, setIndex] = useState(1);
@@ -52,8 +51,7 @@ const Home = ({ user,onLogout }) => {
         {index === 1 ? (
           <HomeList user={user} setIndex={setIndex}  />
         ) : index === 2 ? (
-          // <ClassView setIndex={setIndex} user={user} onLogout={onLogout}/>
-          <MappingTree/>
+          <ClassView setIndex={setIndex} user={user} onLogout={onLogout}/>
         ) : index === 3 ? (
           <StudentList onStudentsData={handleStudentsData} setIndex={setIndex} onLogout={onLogout}/>
         ) : index === 4 ? (
