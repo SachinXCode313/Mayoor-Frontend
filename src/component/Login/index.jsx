@@ -6,8 +6,9 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChang
 // import { onMessage } from "firebase/messaging";
 // import { messaging } from "../../Helper/firebase";
 import axios from "axios";
-import Home from "../Home/";
+// import Home from "../Home/";
 import Logo from './Logo.png';
+import { useNavigate } from 'react-router-dom';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -30,6 +31,7 @@ const allowedDomains = ["gitjaipur.com"];
 // const WS_URL = "ws://mayoorschoolapp.onrender.com/";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null); // Start with null to avoid flicker
   // const [teachers, setTeachers] = useState([]);
   const [error, setError] = useState("");
@@ -125,26 +127,32 @@ const Login = () => {
       console.log("ID Token retrieved:", idToken);
 
       try {
-        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/verify-token`, {
+        const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/verify-user`, {
           token: idToken,
         });
+        const data = response.data
 
         if (response.status === 200) {
           setError("");
+          console.log(response.data)
           const userData = {
-            uid: result.user.uid,
-            displayName: result.user.displayName,
-            email: result.user.email,
-            photoURL: result.user.photoURL,
+            role: data.role,
+            uid: data.user.uid,
+            displayName: data.user.displayName,
+            email: data.user.email,
+            photoURL: data.user.photoURL,
           };
           console.log("user authenticated successfully:", userData);
           // ✅ Store user in localStorage
+          localStorage.setItem("token", idToken);
+          localStorage.setItem("role", userData.role);
           localStorage.setItem("firebaseUser", JSON.stringify(userData));
+          if (userData.role === "admin") {
+            navigate("/admin");
+          } else {
+            navigate("/user");
+          }
           setUser(userData);
-          // Send minimal user data through WebSocket
-          // if (ws) {
-          //   ws.send(JSON.stringify({ email: result.user.email, name: result.user.displayName }));
-          // }
         } else {
           setError("Authentication failed: " + response.data.message);
         }
@@ -172,9 +180,9 @@ const Login = () => {
   return (
     <Wrapper>
       <div className="homePage">
-        {user ? (
+        {/* {user ? (
           <Home user={user?.displayName} onLogout={handleLogout} />
-        ) : (
+        ) : ( */}
           <div className="container">
             <div>
               <img id="logo" src={Logo} alt="Logo" /><br />
@@ -184,7 +192,7 @@ const Login = () => {
             <input id="SignIn" type="button" value="Sign in with Google" onClick={handleLogin} />
             {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
           </div>
-        )}
+        {/* )} */}
       </div>
     </Wrapper>
   );
