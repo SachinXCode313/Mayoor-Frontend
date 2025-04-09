@@ -159,7 +159,7 @@ const AC_List = ({
       const response = await axios.delete(
         `${process.env.REACT_APP_API_URL}/api/assessment-criteria?id=${deleteAcId}`
       );
-      const updatedAcItems = acItems.filter((item) => item.acId !== deleteAcId);
+      const updatedAcItems = filteredAcList.filter((item) => item.ac_id !== deleteAcId);
       setAcItems(updatedAcItems);
       setFilteredAcList(updatedAcItems);
       setshowDeleted(true);

@@ -132,7 +132,7 @@ const LOlist = ({ acItems, setAcItems, loItems, setLoItems, handleLoItems, setIn
     if (!deleteLoId) return;
     setLoading(true);
     try {
-      await axios.delete(`${process.env.REACT_APP_API_URL}/api/learning-outcome?lo_id=${deleteLoId}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/api/learning-outcome?id=${deleteLoId}`);
       // Remove deleted item from the list
       const updatedLoItems = filteredLoList.filter(item => item.lo_id !== deleteLoId);
       setLoItems(updatedLoItems);
