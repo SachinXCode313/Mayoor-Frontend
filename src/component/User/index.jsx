@@ -9,6 +9,7 @@ import ROlist from "../User/RO_List";
 import LOlist from "../User/LO_List";
 import AClist from "../User/AC_List";
 import Dashboard from "../User/Dashboard";
+import MappingTree from "./MappingTree";
 const UserPanel = () => {
     const [user, setUser] = useState();
     const [loItems, setLoItems] = useState([]);
@@ -31,6 +32,8 @@ const UserPanel = () => {
                     <Route path="lo" element={<LOlist loItems={loItems} setLoItems={setLoItems} acItems={acItems} setAcItems={setAcItems} />} />
                     <Route path="ac" element={<AClist acItems={acItems} setAcItems={setAcItems} studentsData={studentsData} user={user} />} />
                     <Route path="dashboard" element={<Dashboard />} />
+                    <Route path="mapping-tree" element={<MappingTree />} />
+                    
                 </Route>
             </Routes>
     );

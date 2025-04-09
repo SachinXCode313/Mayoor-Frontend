@@ -124,9 +124,20 @@ const Wrapper = styled.section`
     }
 }
 .loading-message{
-    display: block;
+    height: 100px;
     width: 100px;
-    margin: 200px auto;
-}
+    display: block;
+    margin: auto;
+    color: grey;
+    }
+      .loading-message div{
+        height: 100px;
+        width: 150px;
+      font-size: x-large;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
 `
 export default Wrapper;

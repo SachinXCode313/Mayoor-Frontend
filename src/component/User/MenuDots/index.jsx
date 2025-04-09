@@ -3,6 +3,8 @@ import dotsIcon from "../assets/dots.png";
 import Wrapper from "./style";
 import pen from '../assets/edit.png';
 import deletebtn from "../assets/delete.png";
+import { TbEdit } from "react-icons/tb";
+import { MdDeleteOutline } from "react-icons/md";
 
 const MenuDots = ({ onEditClick, onDeleteClick, index, activeMenuIndex, setActiveMenuIndex }) => {
   const isActive = activeMenuIndex === index;
@@ -39,8 +41,8 @@ const MenuDots = ({ onEditClick, onDeleteClick, index, activeMenuIndex, setActiv
         {/* Popup Menu */}
         {isActive && (
           <div className="popup-menu">
-            <button onClick={onEditClick}><img src={pen} className="pen" alt="Edit" /></button>
-            <button onClick={onDeleteClick}><img src={deletebtn} className="deletebtn" alt="Delete" /></button>
+            <button onClick={onEditClick}><TbEdit size={35} color="#6c6c6c" /></button>
+            <button onClick={onDeleteClick}><MdDeleteOutline size={35} color="#6c6c6c"/></button>
           </div>
         )}
       </div>

@@ -101,7 +101,7 @@ const TeacherList = () => {
             src={backArrow}
             alt="BackArrow"
             className="icon"
-            onClick={() => handleNavigation("/")}
+            onClick={() => handleNavigation("/admin")}
           />
           <div className="active-users">
             <button className="active-user-button">
@@ -167,7 +167,7 @@ const TeacherList = () => {
                   </div>
                 </div>
               ))}
-              <button className="add-button" onClick={() => handleChange("/addteacher")}>
+              <button className="add-button" onClick={() => handleChange("/admin/addteacher")}>
                 <FaPlus />
               </button>
             </div>

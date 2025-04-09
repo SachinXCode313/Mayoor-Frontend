@@ -19,13 +19,12 @@ const Wrapper = styled.section`
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
-  padding: 10px;
+  padding: 3px;
   display: flex;
   flex-direction: row;
   // min-width: 100px;
   z-index: 10;
   border-radius: 30px;
-  gap: 20px;
 }
   .pen{
   height: 30px;
@@ -37,7 +36,7 @@ const Wrapper = styled.section`
 .popup-menu button {
   background: none;
   border: none;
-  padding: 8px 12px;
+  padding: 4px 12px;
   cursor: pointer;
   text-align: left;
   width: 100%;

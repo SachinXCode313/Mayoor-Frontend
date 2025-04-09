@@ -141,7 +141,7 @@ const Wrapper = styled.section`
     margin-right: 30px;
   }
   .item-title{
-  font-size: larger;
+  font-size: 16px;
   padding-bottom: 5px;
   color:rgb(47, 46, 46);
 }
@@ -165,11 +165,20 @@ const Wrapper = styled.section`
     height: 40px;
     }
     .loading-message{
-    height: 30px;
-    width: 30px;
+    height: 100px;
+    width: 100px;
     display: block;
     margin: auto;
     color: grey;
+    }
+      .loading-message div{
+        height: 100px;
+        width: 150px;
+      font-size: x-large;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
     }
     .plus{
     font-size: 40px;
@@ -258,14 +267,17 @@ const Wrapper = styled.section`
   background-color: #F0F0F0;
 }
 .mapCounter{
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  background-color: gray;
-  text-align: center;
-  color: #fff;
-  margin-right: 5px;
-  padding: 2px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    margin-right: 5px;
+    padding: 2px;
 }
 .circular{
     height: 50px;

@@ -88,10 +88,21 @@ width: 100%;
     background-color: #fff;
     padding: 10px;
   }
-    .loading-message{
-    display: block;
+  .loading-message{
+    height: 100px;
     width: 100px;
-    margin: 200px auto;
+    display: block;
+    margin: auto;
+    color: grey;
+    }
+      .loading-message div{
+        height: 100px;
+        width: 150px;
+      font-size: x-large;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
     }
   .ro-list::-webkit-scrollbar {
     width: 8px; /* Width of the scrollbar for WebKit browsers */
@@ -129,7 +140,7 @@ width: 100%;
     margin-right: 30px;
 }
 .item-title{
-  font-size: larger;
+  font-size: 16px;
   padding-bottom: 5px;
   color:rgb(47, 46, 46);
 }
@@ -154,13 +165,17 @@ width: 100%;
   font-weight: bold;
 } */
 .mapCounter{
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  background-color: gray;
-  text-align: center;
-  color: #fff;
-  padding: 2px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    margin-right: 5px;
+    padding: 2px;
 }
 .circular{
     height: 50px;

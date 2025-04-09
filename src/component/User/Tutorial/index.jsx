@@ -196,7 +196,7 @@ const Tutorial = forwardRef((props, ref) => {
         skipButton,
         {
           text: "Finish",
-          action: () => tour.complete(),
+          action: () => tour.cancel(),
         },
       ],
     });
@@ -231,18 +231,35 @@ const Tutorial = forwardRef((props, ref) => {
   }, []);
 
   // Manual trigger (e.g., from a menu)
+  // useImperativeHandle(ref, () => ({
+  //   startTutorial: () => {
+  //     if (tourRef.current) {
+  //       tourRef.current.cancel();
+  //       tourRef.current = null;
+  //     }
+  //     createTour();
+  //     const stepToStart = routeStepMap[location.pathname] ?? 0;
+  //     setTimeout(() => {
+  //       tourRef.current.start();
+  //       tourRef.current.show(stepToStart);
+  //     }, 500);
+  //   },
+  // }));
+
   useImperativeHandle(ref, () => ({
     startTutorial: () => {
       if (tourRef.current) {
-        tourRef.current.cancel();
-        tourRef.current = null;
+        tourRef.current.cancel(); // just cancel it
       }
-      createTour();
-      const stepToStart = routeStepMap[location.pathname] ?? 0;
+      // Use a slight delay to ensure old instance is cleaned up
       setTimeout(() => {
-        tourRef.current.start();
-        tourRef.current.show(stepToStart);
-      }, 500);
+        createTour();
+        const stepToStart = routeStepMap[location.pathname] ?? 0;
+        setTimeout(() => {
+          tourRef.current.start();
+          tourRef.current.show(stepToStart);
+        }, 500);
+      }, 100); // small delay ensures cleanup is complete
     },
   }));
 

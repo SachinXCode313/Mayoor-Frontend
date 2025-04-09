@@ -33,6 +33,10 @@ const Menu = ({ onLogoutClick, onReturnClick }) => {
     navigate("/"); // 🔁 Redirect to login page
   };
 
+  const handleMappingTree = () => {
+    navigate("/user/home/mapping-tree");
+  };
+
   return (
     <Wrapper>
       <div className="menu-container">
@@ -49,6 +53,7 @@ const Menu = ({ onLogoutClick, onReturnClick }) => {
           <button onClick={onReturnClick}>Menu⤴</button>
           <button onClick={handleDashboard}>Teacher's Dashboard</button>
           <button onClick={handleTutorial}>Tutorial</button>
+          <button onClick={handleMappingTree}>Mapping Tree</button>
           <button onClick={handleLogout} className="logout-btn">
             Log Out
           </button>

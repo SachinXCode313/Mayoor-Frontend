@@ -50,7 +50,7 @@ const AddTeacher = () => {
     <Wrapper>
       <div className="app">
         <header className="header">
-          <img src={backArrow} alt="BackArrow" className="icon" onClick={() => {handleNavigation("/teacherList")}}/>
+          <img src={backArrow} alt="BackArrow" className="icon" onClick={() => {handleNavigation("/admin/teacherList")}}/>
           <div className="active-users"></div>
           <img src={userIcon} alt="User" className="icon" />
         </header>

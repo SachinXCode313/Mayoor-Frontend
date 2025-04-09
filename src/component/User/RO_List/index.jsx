@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router';
 import Skeleton from 'react-loading-skeleton';
 import { HiOutlineDocumentText } from "react-icons/hi2";
 
-const ROlist = ({ loItems, setLoItems, setIndex, handleLoItems, acItems ,onLogout}) => {
+const ROlist = ({ loItems, setLoItems, setIndex, handleLoItems, acItems, onLogout }) => {
   const [activeIndex, setActiveIndex] = useState(null);
   const [roList, setRoList] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -111,8 +111,9 @@ const ROlist = ({ loItems, setLoItems, setIndex, handleLoItems, acItems ,onLogou
         {loading ? (
           <li className="loading-message">
             <div>
-            <ReactLoading type="spin" color="#135D5D" height={100} width={100}  />
-            <Skeleton count={3} />
+              <span>Loading...  </span>
+              <ReactLoading type="spin" color="#135D5D" height={40} width={40} />
+              <Skeleton count={3} />
             </div>
           </li>
         ) : filteredRoList.length > 0 ? (
@@ -132,7 +133,7 @@ const ROlist = ({ loItems, setLoItems, setIndex, handleLoItems, acItems ,onLogou
                 <div className="ro-header" onClick={() => toggleDropdown(index)}>
                   <div className="list-icon-containers">
                     {/* <img src={List} alt="" className="list-icons" /> */}
-                    <HiOutlineDocumentText size={35} color="#2f2e2e"  />
+                    <HiOutlineDocumentText size={35} color="#2f2e2e" />
                   </div>
                   <div className="ro-info">
                     <p className="item-title">{item.ro_name}</p>

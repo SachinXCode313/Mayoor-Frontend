@@ -132,8 +132,10 @@ const StudentList = ({ onStudentsData, setIndex, onLogout }) => {
         {loading ? (
           <div className="loading-message">
             <div>
-              <ReactLoading type="spin" color="#135D5D" height={100} width={100}  />
+              <span>Loading...  </span>
+              <ReactLoading type="spin" color="#135D5D" height={40} width={40}  />
               <Skeleton count={3} />
+              
             </div>
           </div>
         ) : filteredStudents.length > 0 ? (

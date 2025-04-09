@@ -14,9 +14,9 @@ import AreYouSure from "../AreYouSure";
 import ReactLoading from 'react-loading'
 import Skeleton from 'react-loading-skeleton';
 import { useNavigate } from 'react-router';
-import { HiOutlineDocumentText,HiOutlineDocumentPlus } from "react-icons/hi2";
+import { HiOutlineDocumentText, HiOutlineDocumentPlus } from "react-icons/hi2";
 
-const LOlist = ({ acItems, setAcItems, loItems, setLoItems, handleLoItems, setIndex,onLogout }) => {
+const LOlist = ({ acItems, setAcItems, loItems, setLoItems, handleLoItems, setIndex, onLogout }) => {
   const [activeIndex, setActiveIndex] = useState(null);
   const [activeMenuIndex, setActiveMenuIndex] = useState(null);
   const [filteredLoList, setFilteredLoList] = useState([]);
@@ -49,10 +49,10 @@ const LOlist = ({ acItems, setAcItems, loItems, setLoItems, handleLoItems, setIn
   useEffect(() => {
     const storedUserData = sessionStorage.getItem("userData");
     if (storedUserData) {
-        setUserData(JSON.parse(storedUserData)); // Set the userData first
-        loadLO(JSON.parse(storedUserData)); // Use the parsed data
+      setUserData(JSON.parse(storedUserData)); // Set the userData first
+      loadLO(JSON.parse(storedUserData)); // Use the parsed data
     }
-}, []);
+  }, []);
   const loadLO = async (userData) => {
     setLoading(true);
     const headers = {
@@ -114,12 +114,12 @@ const LOlist = ({ acItems, setAcItems, loItems, setLoItems, handleLoItems, setIn
       return () => clearTimeout(timer);
     }
   }, [showDeleted]);
-  useEffect(()=>{
-    if(showDeleteFailed) {
-      const timer = setTimeout(()=>{
+  useEffect(() => {
+    if (showDeleteFailed) {
+      const timer = setTimeout(() => {
         setShowDeleteFailed(false)
       }, 1000)
-      return ()=> clearTimeout(timer)
+      return () => clearTimeout(timer)
     }
   }, [showDeleteFailed])
   // Function to show the confirmation modal before deletion
@@ -205,26 +205,28 @@ const LOlist = ({ acItems, setAcItems, loItems, setLoItems, handleLoItems, setIn
         {loading ? (
           <li className="loading-message">
             <div>
-              <ReactLoading type="spin" color="#135D5D" height={100} width={100}  />
+              <span>Loading...  </span>
+              <ReactLoading type="spin" color="#135D5D" height={40} width={40} />
               <Skeleton count={3} />
+
             </div>
           </li>
         ) : filteredLoList.length > 0 ? (
           filteredLoList.map((item, index) => {
-            const acCount = item.assessment_criterias ? item.assessment_criterias.length :0
+            const acCount = item.assessment_criterias ? item.assessment_criterias.length : 0
             const nullPriorityCount = item.assessment_criterias
               ? item.assessment_criterias.filter(ac => ac.priority === null).length
               : 0;
             return (
               <li key={item.lo_id}
-              className={`lo-list-item ${item.report_outcome === 0 ? 'no-ro' : ''} ${activeIndex === index ? 'active' : ''}`}
-              onTouchStart={(e) => handleTouchStart(item, e)}  // Pass 'event' here
-              onTouchEnd={handleTouchEnd}
-              onContextMenu={(e) => e.preventDefault()}>
+                className={`lo-list-item ${item.report_outcome === 0 ? 'no-ro' : ''} ${activeIndex === index ? 'active' : ''}`}
+                onTouchStart={(e) => handleTouchStart(item, e)}  // Pass 'event' here
+                onTouchEnd={handleTouchEnd}
+                onContextMenu={(e) => e.preventDefault()}>
                 <div className="lo-header" onClick={() => toggleDropdown(index)}>
                   <div className="list-icon-containers">
                     {/* <img src={List} alt="" className="list-icons" /> */}
-                    <HiOutlineDocumentText size={35} color="#191919"  />
+                    <HiOutlineDocumentText size={35} color="#191919" />
                   </div>
                   <div className="lo-info">
                     <p className="item-title">{item.lo_name}</p>
@@ -248,7 +250,7 @@ const LOlist = ({ acItems, setAcItems, loItems, setLoItems, handleLoItems, setIn
                 )}
                 <div className={`lo-dropdown-content ${activeIndex === index ? 'show' : 'hide'}`}>
                   {activeIndex === index && (
-                    <ACMapping acItems={acItems} setAcItems={setAcItems} loId={item.lo_id} acList={acList} setAcList={setAcList} loData={[item]} key={refreshKey} onSuccess={handleSuccess}/>
+                    <ACMapping acItems={acItems} setAcItems={setAcItems} loId={item.lo_id} acList={acList} setAcList={setAcList} loData={[item]} key={refreshKey} onSuccess={handleSuccess} />
                   )}
                 </div>
               </li>
@@ -261,7 +263,7 @@ const LOlist = ({ acItems, setAcItems, loItems, setLoItems, handleLoItems, setIn
         )}
       </ul>
       <div className="add" onClick={() => { setEditItem(null); setShowForm(true); }}>
-        <span className="plus"><HiOutlineDocumentPlus size={30} color="#000"/></span>
+        <span className="plus"><HiOutlineDocumentPlus size={30} color="#000" /></span>
       </div>
       {showForm && (
         <div className="popup-overlay">
@@ -293,7 +295,7 @@ const LOlist = ({ acItems, setAcItems, loItems, setLoItems, handleLoItems, setIn
       )}
       {showDeleteFailed && (
         <div className='success-overlay'>
-        <DeleteFailed/>
+          <DeleteFailed />
         </div>
       )}
     </Wrapper>

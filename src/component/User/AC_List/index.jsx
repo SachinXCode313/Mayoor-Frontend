@@ -14,7 +14,7 @@ import DeletedSuccessfully from "../DeletedSuccessfully/index.jsx";
 import ReactLoading from 'react-loading'
 import Skeleton from 'react-loading-skeleton';
 import { useNavigate } from "react-router-dom";
-import { HiOutlineDocumentText,HiOutlineDocumentPlus } from "react-icons/hi2";
+import { HiOutlineDocumentText,HiOutlineDocumentPlus,HiOutlineExclamationTriangle } from "react-icons/hi2";
 
 const AC_List = ({
   acItems,
@@ -252,15 +252,17 @@ const AC_List = ({
         {loading ? (
           <li className="loading-message">
             <div>
-              <ReactLoading type="spin" color="#135D5D" height={100} width={100}  />
+              <span>Loading...  </span>
+              <ReactLoading type="spin" color="#135D5D" height={40} width={40}  />
               <Skeleton count={3} />
+              
             </div>
           </li>
         ) : filteredAcList.length > 0 ? (
           filteredAcList.map((item, index) => (
             <li
               key={item.ac_id}
-              className={`ac-list-item ${item.learning_outcomes.length === 0 ? "no-lo" : ""}`}
+              className="ac-list-item"
               onClick={() => handleStartAssessment(item)}
               onTouchStart={(e) => handleTouchStart(item, e)}  // Pass 'event' here
               onTouchEnd={handleTouchEnd}
@@ -273,9 +275,9 @@ const AC_List = ({
                 <div className="ac-info">
                   <p className="item-title">{item.ac_name}</p>
                 </div>
-                {/* <div className="mapCounter">
-                  {missingMarksCount[item.ac_id] ?? 0}
-                </div> */}
+                <div >
+                  {item.learning_outcomes?.length === 0 ? (<HiOutlineExclamationTriangle size={30} color="#ffa590" />) : "" }
+                </div>
                 <div>
                   <MenuDots
                     index={index}

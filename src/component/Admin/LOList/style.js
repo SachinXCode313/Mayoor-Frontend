@@ -254,14 +254,17 @@ const Wrapper = styled.section`
   background-color: #F0F0F0;
 }
 .mapCounter{
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  background-color: gray;
-  text-align: center;
-  color: #fff;
-  margin-right: 5px;
-  padding: 2px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    margin-right: 5px;
+    padding: 2px;
 }
 
 .circular{
