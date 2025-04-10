@@ -17,8 +17,8 @@ const Wrapper = styled.section`
             flex : 1;
             background :rgb(0, 134, 128);
             color : #FFFFFF;
-            padding : 21px 30px;
-            border-radius: 5px;
+            padding : 15px 30px;
+            border-radius: 40px;
             font-size: 1.1rem;
             text-align: center;
             opacity : 0.7;
@@ -33,7 +33,7 @@ const Wrapper = styled.section`
         flex-wrap : nowrap;
         overflow-x: auto;
         .option{
-            padding : 21px 20px;
+            padding : 15px 20px;
             width : 80px;
             flex : auto;
             white-space: nowrap;
@@ -66,7 +66,7 @@ const Wrapper = styled.section`
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 40px 20px 50px 20px;
+        padding: 28px 0px;
         font-size: 17px;
         color: black;
         background: no-repeat 150% center;
@@ -74,16 +74,45 @@ const Wrapper = styled.section`
         background-size: auto 130%;
     }
 
-    #user-content {
-        display: flex;
-        flex-direction: column;
+    .profile-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px;
     }
 
-    #hi{
-    font-size: 22px;
-    font-weight: bold;
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid #a2c4c9;
     }
-    
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .profile-info h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 100;
+    }
+
+    .profile-info h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+
     #image {
         display: flex;
         gap: 15px;
@@ -173,7 +202,7 @@ const Wrapper = styled.section`
         color : #000;
         font-size: 20px;
         padding : 15px 30px;
-        border-radius: 5px;
+        border-radius: 10px;
         border : none;
         margin-top : 30px;
         width: auto;

@@ -40,6 +40,18 @@ const Login = () => {
 
   const loginInProgress = useRef(false); // Track if login is in progress
 
+  useEffect(() => {
+    const storedRole = localStorage.getItem("role");
+    if (storedRole === "admin") {
+      navigate("/admin");
+    } else if (storedRole === "teacher") {
+      navigate("/user");
+    }else{
+      navigate("/")
+    }
+  }, []);
+  
+
   // ✅ Load user from localStorage on mount
   useEffect(() => {
     const storedUser = localStorage.getItem("firebaseUser");
@@ -113,6 +125,7 @@ const Login = () => {
     loginInProgress.current = true;
 
     try {
+      await setPersistence(auth, browserLocalPersistence);
       // Force fresh sign-in flow
       await signOut(auth);
       provider.setCustomParameters({
@@ -122,7 +135,6 @@ const Login = () => {
       const result = await signInWithPopup(auth, provider);
       console.log("Sign-in successful:", result);
 
-      const email = result.user.email;
       const idToken = await result.user.getIdToken();
       console.log("ID Token retrieved:", idToken);
 
@@ -135,24 +147,26 @@ const Login = () => {
         if (response.status === 200) {
           setError("");
           console.log(response.data)
-          const userData = {
+          const user = {
             role: data.role,
             uid: data.user.uid,
-            displayName: data.user.displayName,
+            name: data.user.name,
             email: data.user.email,
-            photoURL: data.user.photoURL,
+            image: data.user.picture,
+            allocation: data.allocations
           };
-          console.log("user authenticated successfully:", userData);
+          console.log("user authenticated successfully:", user);
           // ✅ Store user in localStorage
           localStorage.setItem("token", idToken);
-          localStorage.setItem("role", userData.role);
-          localStorage.setItem("firebaseUser", JSON.stringify(userData));
-          if (userData.role === "admin") {
+          localStorage.setItem("role", user.role);
+          localStorage.setItem("User", JSON.stringify(user));
+
+          if (user.role === "admin") {
             navigate("/admin");
           } else {
             navigate("/user");
           }
-          setUser(userData);
+          setUser(user);
         } else {
           setError("Authentication failed: " + response.data.message);
         }

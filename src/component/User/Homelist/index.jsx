@@ -3,9 +3,12 @@ import Wrapper from './style';
 import Ripples from 'react-ripples'
 import { Link } from 'react-router';
 import Home from '../Home';
-const HomeList = ({ user }) => {
+const HomeList = () => {
   const [userData, setUserData] = useState({});
+  const user = JSON.parse(localStorage.getItem("User"))
+  
   useEffect(() => {
+    console.log(user)
     const clearSessionStorageOnRefresh = () => {
       sessionStorage.clear();
     };
@@ -28,7 +31,7 @@ const HomeList = ({ user }) => {
     const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
     return romanNumerals[classNum - 1] || classNum;
   };
-  
+
   const getSectionName = (sectionNum) => {
     const sectionNames = { '1': 'Orchid', '2': 'Tulip', '3': 'Daffodil' };
     return sectionNames[sectionNum] || sectionNum;
@@ -36,7 +39,7 @@ const HomeList = ({ user }) => {
 
   const getQuarterName = (quarterNum) => {
     const quarterNames = {
-      '1': 'Q I', '2': 'Q II', '3': 'T I', 
+      '1': 'Q I', '2': 'Q II', '3': 'T I',
       '4': 'Q III', '5': 'Q IV', '6': 'T II'
     };
     return quarterNames[quarterNum] || quarterNum;
@@ -52,32 +55,44 @@ const HomeList = ({ user }) => {
     return subjectNames[subjectNum] || subjectNum;
   };
 
-  const handleClick = () => {
-  // setIndex(2);
-  const updatedUserdata = {
-    year: parseInt(selectedYear, 10),
-    class: parseInt(selectedClass, 10),
-    section: parseInt(selectedSection, 10),
-    quarter: parseInt(selectedQuarter, 10),
-    subject: parseInt(selectedSubject, 10),
-    getclassName: getClassName(selectedClass),  
-    sectionName: getSectionName(selectedSection),
-    quarterName: getQuarterName(selectedQuarter), 
-    subjectName: getSubjectName(selectedSubject)
-  };  
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Good Morning,";
+    else if (hour < 18) return "Good Afternoon,";
+    else return "Good Evening,";
+  };
 
-  sessionStorage.setItem("userData", JSON.stringify(updatedUserdata));
-  setUserData(updatedUserdata);
-};
+  const handleClick = () => {
+    // setIndex(2);
+    const updatedUserdata = {
+      year: parseInt(selectedYear, 10),
+      class: parseInt(selectedClass, 10),
+      section: parseInt(selectedSection, 10),
+      quarter: parseInt(selectedQuarter, 10),
+      subject: parseInt(selectedSubject, 10),
+      getclassName: getClassName(selectedClass),
+      sectionName: getSectionName(selectedSection),
+      quarterName: getQuarterName(selectedQuarter),
+      subjectName: getSubjectName(selectedSubject)
+    };
+
+    sessionStorage.setItem("userData", JSON.stringify(updatedUserdata));
+    setUserData(updatedUserdata);
+  };
   const toggle = e => {
     e.target.nextSibling.style.display = e.target.nextSibling.style.display === 'flex' ? 'none' : 'flex'
   }
   return (
     <Wrapper>
       <div id="user">
-        <div id="detail">
-          <p id="hi">Hi,</p>
-          <h1 id="name">{user}</h1>
+        <div class="profile-card">
+          <div class="avatar">
+            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon"/>
+          </div>
+          <div class="profile-info">
+            <h2>{getGreeting()}</h2>
+            <h1>{user.name}</h1>
+          </div>
         </div>
         <div id="image">
           {/* <img id="notification" src={notification} alt="Notification" /> */}
@@ -93,12 +108,12 @@ const HomeList = ({ user }) => {
         </div>
         <label htmlFor="quarter" onClick={toggle}>Quarter</label>
         <div className="quarter options">
-          <Ripples><div tabIndex={0} className={selectedQuarter === "1" ? "option active" : "option"} onClick={e => setSelectedQuarter("1")}>Q I</div></Ripples>
-          <Ripples><div tabIndex={0} className={selectedQuarter === "2" ? "option active" : "option"} onClick={e => setSelectedQuarter("2")}>Q II</div></Ripples>
-          <Ripples><div tabIndex={0} className={selectedQuarter === "3" ? "option active" : "option"} onClick={e => setSelectedQuarter("3")}>T I</div></Ripples>
-          <Ripples><div tabIndex={0} className={selectedQuarter === "4" ? "option active" : "option"} onClick={e => setSelectedQuarter("4")}>Q III</div></Ripples>
-          <Ripples><div tabIndex={0} className={selectedQuarter === "5" ? "option active" : "option"} onClick={e => setSelectedQuarter("5")}>Q IV</div></Ripples>
-          <Ripples><div tabIndex={0} className={selectedQuarter === "6" ? "option active" : "option"} onClick={e => setSelectedQuarter("6")}>T II</div></Ripples>
+          <Ripples><div tabIndex={0} className={selectedQuarter === "1" ? "option active" : "option"} onClick={e => setSelectedQuarter("1")}>FA 1</div></Ripples>
+          <Ripples><div tabIndex={0} className={selectedQuarter === "2" ? "option active" : "option"} onClick={e => setSelectedQuarter("2")}>FA 2</div></Ripples>
+          <Ripples><div tabIndex={0} className={selectedQuarter === "3" ? "option active" : "option"} onClick={e => setSelectedQuarter("3")}>SA 1</div></Ripples>
+          <Ripples><div tabIndex={0} className={selectedQuarter === "4" ? "option active" : "option"} onClick={e => setSelectedQuarter("4")}>FA 3</div></Ripples>
+          <Ripples><div tabIndex={0} className={selectedQuarter === "5" ? "option active" : "option"} onClick={e => setSelectedQuarter("5")}>FA 4</div></Ripples>
+          <Ripples><div tabIndex={0} className={selectedQuarter === "6" ? "option active" : "option"} onClick={e => setSelectedQuarter("6")}>SA 2</div></Ripples>
         </div>
         <label htmlFor="class" onClick={toggle}>Class</label>
         <div className="class options">
@@ -135,7 +150,7 @@ const HomeList = ({ user }) => {
           <Ripples><div tabIndex={0} className={`option ${selectedSubject === '14' ? 'active' : ''}`} onClick={e => setSelectedSubject('14')}>Attendance</div></Ripples>
         </div>
         <Link to="/user/home">
-        {/* <Ripples className="started"><button
+          {/* <Ripples className="started"><button
           className="get-started"
           // onClick={(e) => {
           //   e.preventDefault();
@@ -146,9 +161,9 @@ const HomeList = ({ user }) => {
         >
           Get Started
         </button></Ripples> */}
-        <div className='started'>
-        <input type="button" value="Get started" className='get-started' onClick={handleClick}  />
-        </div>
+          <div className='started'>
+            <input type="button" value="Get started" className='get-started' onClick={handleClick} />
+          </div>
         </Link>
       </form>
     </Wrapper>

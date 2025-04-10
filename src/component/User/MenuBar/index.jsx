@@ -27,10 +27,10 @@ const Menu = ({ onLogoutClick, onReturnClick }) => {
     tutorialRef.current?.startTutorial(); // 👈 Manual trigger
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token"); // 🔥 Clear token
-    localStorage.removeItem("role"); // 🔥 Clear role
-    navigate("/"); // 🔁 Redirect to login page
+  const handleLogout = async () => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      navigate("/");
   };
 
   const handleMappingTree = () => {

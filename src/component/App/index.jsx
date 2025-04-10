@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { BrowserRouter, Route, Routes,Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import UserPanel from "../User";
 import Login from "../Login";
 import AdminPanel from "../Admin";
 const App = () => {
-    const [user, setUser] = useState();
-    const [loItems, setLoItems] = useState([]);
-    const [acItems, setAcItems] = useState([]);
-    const [studentsData, setStudentsData] = useState([]);
+    const RoleBasedRoute = ({ role, children }) => {
+        const userRole = localStorage.getItem("role");
+        return userRole === role ? children : <Navigate to="/" />;
+    };
 
     return (
         <BrowserRouter>
@@ -16,9 +16,22 @@ const App = () => {
 
                 {/* <Route element={<PrivateRoute />}> */}
                 <Route >
-                    <Route path="/user/*" element={<UserPanel />} />
-                        
-                    <Route path="/admin/*" element={<AdminPanel />} />
+                    <Route
+                        path="/user/*"
+                        element={
+                            <RoleBasedRoute role="teacher">
+                                <UserPanel />
+                            </RoleBasedRoute>
+                        } />
+
+                    <Route
+                        path="/admin/*"
+                        element={
+                            <RoleBasedRoute role="admin">
+                                <AdminPanel />
+                            </RoleBasedRoute>
+                        }
+                    />
                 </Route>
 
                 {/* <Route path="*" element={<NotFound />} /> */}
