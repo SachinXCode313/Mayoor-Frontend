@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Wrapper from './style';
 import Ripples from 'react-ripples'
 import { Link } from 'react-router';
-import Home from '../Home';
+import { CiUser } from "react-icons/ci";
 const HomeList = () => {
   const [userData, setUserData] = useState({});
   const user = JSON.parse(localStorage.getItem("User"))
@@ -87,7 +87,7 @@ const HomeList = () => {
       <div id="user">
         <div class="profile-card">
           <div class="avatar">
-            <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User Icon"/>
+          {user.image ? <img src={user.image} alt="User Icon" referrerPolicy="no-referrer" /> : <CiUser size={60} color='#008680' />}
           </div>
           <div class="profile-info">
             <h2>{getGreeting()}</h2>

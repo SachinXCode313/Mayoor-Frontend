@@ -82,12 +82,18 @@ const Wrapper = styled.section`
     }
 
     .avatar {
+        display: flex;
+        justify-content: center;
+        align-items: center;
       width: 80px;
       height: 80px;
       border-radius: 50%;
+      box-shadow: rgba(0, 0, 0, 0.35) 2px 2px 10px;
       overflow: hidden;
-      border: 4px solid #a2c4c9;
+      border: 3px solid #008680;
     }
+
+    
 
     .avatar img {
       width: 100%;
