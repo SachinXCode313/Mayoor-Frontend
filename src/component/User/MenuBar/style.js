@@ -1,83 +1,134 @@
-import styled from "styled-components";
+import styled from "styled-components"
+
 const Wrapper = styled.section`
-/* Container for the entire menu */
-.menu-container {
-  position: relative;
-  display: inline-block;
+.menu {
+    position: relative;
 }
-/* Hamburger Icon */
-.menu-icon {
-  width: 35px;
-  cursor: pointer;
-  z-index: 2000; /* Ensure it stays above */
+.heading {
+    display: flex;
+    justify-content: left;
+    padding: 20px 15px;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    overflow: hidden;
+    gap: 15px;
+    h1 {
+        font-size: 20px;
+    }
 }
-// /* Fullscreen Overlay for Background Blur */
-// .overlay {
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100vw;
-//   height: 100vh;
-//   background: rgba(0, 0, 0, 0.3); /* Dark overlay */
-//   backdrop-filter: blur(5px); /* Blur effect */
-//   z-index: 999;
-//   display: none;
-// }
-/* Show overlay when menu is open */
-.overlay.open {
-  display: block;
+
+.profile-card {
+      display: flex;
+      gap: 15px;
+    }
+
+    .avatar {
+      flex-shrink: 0;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #a2c4c9;
+      object-fit: cover;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .profile-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .profile-info h2 {
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .profile-info span {
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .profile-info a:hover {
+      text-decoration: underline;
+    }
+
+    .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 10;
+  }
+
+  .menu-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    background-color: #fff;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 20;
+    overflow: hidden;
+  }
+
+  .menu-bar.show {
+    transform: translateX(0);
+  }
+
+
+.paths {
+    display: flex;
+    flex-direction: column;
+    gap: 20px ;
+    padding: 20px 10px;
+    overflow-y: auto;
+    flex-grow: 1;
+    margin-bottom: 60px; /* Leave space for logout button */
 }
-/* Sidebar Menu */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: -250px; /* Initially hidden */
-  width: 150px;
-  height: auto;
-  background: #2A9D8F /* Teal color */
-  color: white;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  transition: right 0.4s ease-in-out;
-  box-shadow: -3px 0 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.9)
-  
+
+.paths div {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background 0.2s ease-in-out;
 }
-/* When menu is open */
-.sidebar.open {
-  left: 0; /* Slide into view */
-  border-bottom-right-radius: 25px;
+
+.paths div:hover {
+    background: #f1f1f1;
 }
-/* Menu Items */
-.sidebar button {
-  background: none;
-  border: none;
-  color: black;
-  text-align: left;
-  padding: 12px 15px;
-  font-size: 20px;
-  cursor: pointer;
-  width: 100%;
-  transition: background 0.3s ease-in-out;
-  display: flex;
-  align-items: center;
-  height: auto;
-  font-weight: 500;
+
+.icon {
+    margin:  0px 15px 0px 0px
 }
-/* Add icons next to the text */
-.sidebar button::before {
-  margin-right: 10px;
-}
-/* Logout Button */
-.logout-btn {
-  margin-top: auto; /* Push to bottom */
-  // background: beige;
-  color: white;
-  padding: 12px;
-  border-radius: 5px;
-  // font-weight: bold;
+
+.logout {
+    position: fixed;
+    bottom: 80px;
+    left: 0;
+    width: 260px;
+    display: flex;
+    align-items: center;
+    padding: 30px;
+    cursor: pointer;
+    z-index: 25;
+    height : 50px;
+    border-top : 1px solid #666;
 }
 `
-export default Wrapper
+
+export default Wrapper;

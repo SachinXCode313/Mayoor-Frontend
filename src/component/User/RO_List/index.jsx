@@ -93,10 +93,6 @@ const ROlist = ({ loItems, setLoItems, setIndex, handleLoItems, acItems, onLogou
       <div className="search-container">
         <div className="icon">
           <Menu
-            onProfileClick={() => alert("Go to Profile")}
-            onSettingsClick={() => alert("Open Settings")}
-            onLogoutClick={onLogout}
-            onReturnClick={handleReturnClick}
           />
         </div>
         <input

@@ -21,6 +21,7 @@ const Wrapper = styled.section`
     .bottom {
         display: flex;
         height: 80px;
+        z-index: 200;
     }
 
     /* FIX: Corrected selector */

@@ -10,6 +10,7 @@ import LOlist from "../User/LO_List";
 import AClist from "../User/AC_List";
 import Dashboard from "../User/Dashboard";
 import MappingTree from "./MappingTree";
+import Profile from "./Profile";
 const UserPanel = () => {
     const [user, setUser] = useState();
     const [loItems, setLoItems] = useState([]);
@@ -17,25 +18,25 @@ const UserPanel = () => {
     const [studentsData, setStudentsData] = useState([]);
 
     return (
-            <Routes>
-                {/* <Route path="/" element={<Login />} /> */}
-                <Route index element={<Navigate to="homelist" replace />} />
-                <Route path="homelist" element={<HomeList />} />
+        <Routes>
+            {/* <Route path="/" element={<Login />} /> */}
+            <Route index element={<Navigate to="homelist" replace />} />
+            <Route path="homelist" element={<HomeList />} />
 
-                {/* Parent route for Home */}
-                <Route path="/home/" element={<Home />}>
-                    {/* Default redirect to /home/classview */}
-                    <Route index element={<Navigate to="classview" replace />} />
-                    <Route path="classview" element={<ClassView user={user} />} />
-                    <Route path="students" element={<StudentList onStudentsData={setStudentsData} />} />
-                    <Route path="ro" element={<ROlist loItems={loItems} setLoItems={setLoItems} acItems={acItems} />} />
-                    <Route path="lo" element={<LOlist loItems={loItems} setLoItems={setLoItems} acItems={acItems} setAcItems={setAcItems} />} />
-                    <Route path="ac" element={<AClist acItems={acItems} setAcItems={setAcItems} studentsData={studentsData} user={user} />} />
-                    <Route path="dashboard" element={<Dashboard />} />
-                    <Route path="mapping-tree" element={<MappingTree />} />
-                    
-                </Route>
-            </Routes>
+            {/* Parent route for Home */}
+            <Route path="/home/" element={<Home />}>
+                {/* Default redirect to /home/classview */}
+                <Route index element={<Navigate to="classview" replace />} />
+                <Route path="classview" element={<ClassView user={user} />} />
+                <Route path="students" element={<StudentList onStudentsData={setStudentsData} />} />
+                <Route path="ro" element={<ROlist loItems={loItems} setLoItems={setLoItems} acItems={acItems} />} />
+                <Route path="lo" element={<LOlist loItems={loItems} setLoItems={setLoItems} acItems={acItems} setAcItems={setAcItems} />} />
+                <Route path="ac" element={<AClist acItems={acItems} setAcItems={setAcItems} studentsData={studentsData} user={user} />} />
+            </Route>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="mapping-tree" element={<MappingTree />} />
+            <Route path="profile" element={<Profile />} />
+        </Routes>
     );
 };
 

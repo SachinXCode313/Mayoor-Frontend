@@ -111,12 +111,6 @@ const Wrapper = styled.section`
     background: #f1f1f1;
 }
 
-.paths div img {
-    margin-right: 20px;
-    width: 30px;
-    height: 30px;
-}
-
 .icon {
     margin:  0px 15px 0px 0px
 }
@@ -125,7 +119,7 @@ const Wrapper = styled.section`
     position: fixed;
     bottom: 60px;
     left: 0;
-    width: 60vw;
+    width: 260px;
     display: flex;
     align-items: center;
     padding: 30px;
@@ -133,11 +127,6 @@ const Wrapper = styled.section`
     z-index: 25;
     height : 50px;
     border-top : 1px solid #666;
-    img {
-        margin-right: 20px;
-        width: 30px;
-        height: 30px;
-    }
 }
 `
 

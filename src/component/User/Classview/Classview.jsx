@@ -113,9 +113,9 @@ const ClassView = ({ setIndex, user, onLogout }) => {
             { value: overallData?.average?.length || 0, label: "AVERAGE", range: "35% - 66%", color: "#FFF3E0", border: "#FFCCBC" },
             { value: overallData?.below_average?.length || 0, label: "LOW", range: "0% - 33%", color: "#FFEBEE", border: "#FFCDD2" },
           ];
-          console.log("Matric data : ",updatedMetricData)
+    console.log("Matric data : ", updatedMetricData)
     setMetricData(updatedMetricData);
-  }, [selectedChart,overallData]);
+  }, [selectedChart, overallData]);
 
 
 
@@ -217,8 +217,8 @@ const ClassView = ({ setIndex, user, onLogout }) => {
     if (data) {
       setOverallData(data);
     }
-    console.log("Overall data : ",data)
-  }, [selectedChart,acData,loData,roData])
+    console.log("Overall data : ", data)
+  }, [selectedChart, acData, loData, roData])
 
 
 
@@ -385,12 +385,7 @@ const ClassView = ({ setIndex, user, onLogout }) => {
     <Wrapper>
       <div className="class-header">
         <div className="icon">
-          <Menu
-            onProfileClick={handleProfileClick}
-            onSettingsClick={handleSettingsClick}
-            onLogoutClick={onLogout}
-            onReturnClick={handleClick}
-          />
+          <Menu/>
         </div>
         <div className="class-title">
           <h2>Class Overview</h2>
