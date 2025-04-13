@@ -15,19 +15,19 @@ const ClassView = ({ setIndex, user, onLogout }) => {
   const [userData, setUserData] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [selectedStudents, setSelectedStudents] = useState([]);
+  const [selectedData, setSelectedData] = useState([]);
+  const [metricData, setMetricData] = useState([]);
+  const [overallData, setOverallData] = useState({});
   const navigate = useNavigate();
 
-
-  const studentData = {
-    high: ["Aman", "Priya", "Rohit", "Neha", "Vikram"],
-    average: ["Karan", "Sneha", "Mohan", "Anjali", "Raj"],
-    low: ["Tina", "Arjun", "Simran", "Ravi", "Pooja"],
-  };
-
-
   const handleOpenModal = (category) => {
-    const selectedChartData = studentDataByChart[selectedChart];
-    setSelectedStudents(selectedChartData[category.toLowerCase()]);
+    const selectedChartData =
+      category === "HIGH" ? overallData?.above_average?.map(item => item.student_name) :
+        category === "AVERAGE" ? overallData?.average?.map(item => item.student_name) :
+          overallData?.below_average?.map(item => item.student_name)
+
+    setSelectedStudents(selectedChartData);
+    console.log(selectedChartData)
     setShowModal(true);
   };
 
@@ -46,43 +46,6 @@ const ClassView = ({ setIndex, user, onLogout }) => {
       setShowModal(false);
     }
   };
-
-
-  const [metricData, setMetricData] = useState([
-    { value: 54, label: "HIGH", range: "67% - 100%", color: "#E8F5E9", border: "#C8E6C9" },
-    { value: 40, label: "AVERAGE", range: "35% - 66%", color: "#FFF3E0", border: "#FFCCBC" },
-    { value: 10, label: "LOW", range: "0% - 33%", color: "#FFEBEE", border: "#FFCDD2" },
-  ]);
-
-
-  const studentDataByChart = {
-    ac: {
-      high: ["Aman", "Priya", "Rohit", "Neha", "Vikram"],
-      average: ["Karan", "Sneha", "Mohan", "Anjali", "Raj"],
-      low: ["Tina", "Arjun", "Simran", "Ravi", "Pooja"],
-    },
-    lo: {
-      high: ["John", "Michael", "Alex", "Emma", "Sophia"],
-      average: ["Olivia", "Liam", "Lucas", "Ava", "Grace"],
-      low: ["David", "Ethan", "Mia", "Noah", "Chloe"],
-    },
-    ro: {
-      high: ["Raj", "Sanya", "Kabir", "Ishita", "Aryan"],
-      average: ["Arjun", "Meera", "Manav", "Aditi", "Kunal"],
-      low: ["Neeraj", "Simran", "Tushar", "Isha", "Rohan"],
-    },
-  };
-
-
-
-
-
-  const selectedData =
-    selectedChart === "ac" ? acData :
-      selectedChart === "lo" ? loData :
-        roData;
-  const prefix = selectedChart === "LO" ? "LO" : selectedChart === "RO" ? "RO" : "AC";
-
 
   useEffect(() => {
     const storedUserData = sessionStorage.getItem("userData");
@@ -108,13 +71,12 @@ const ClassView = ({ setIndex, user, onLogout }) => {
       console.log('LO API Response:', response.data);
 
       // Ensure response contains valid data
-      if (response.data && Array.isArray(response.data.class_lo_averages)) {
-        const scores = response.data.class_lo_averages.map(item => item.average_score);
-        console.log("Extracted scores:", scores);
-        setLoData(scores);
+      if (response.data) {
+        setLoData(response.data);
+        console.log("Extracted scores:", response.data);
       } else {
         setLoData([]); // Reset to avoid errors
-        console.error("Invalid AC Data format:", response.data);
+        console.error("Invalid LO Data format:", response.data);
       }
 
 
@@ -136,24 +98,24 @@ const ClassView = ({ setIndex, user, onLogout }) => {
     const updatedMetricData =
       selectedChart === "ac"
         ? [
-          { value: 54, label: "HIGH", range: "67% - 100%", color: "#E8F5E9", border: "#C8E6C9" },
-          { value: 40, label: "AVERAGE", range: "35% - 66%", color: "#FFF3E0", border: "#FFCCBC" },
-          { value: 11, label: "LOW", range: "0% - 33%", color: "#FFEBEE", border: "#FFCDD2" },
+          { value: overallData?.above_average?.length || 0, label: "HIGH", range: "67% - 100%", color: "#E8F5E9", border: "#C8E6C9" },
+          { value: overallData?.average?.length || 0, label: "AVERAGE", range: "35% - 66%", color: "#FFF3E0", border: "#FFCCBC" },
+          { value: overallData?.below_average?.length || 0, label: "LOW", range: "0% - 33%", color: "#FFEBEE", border: "#FFCDD2" },
         ]
         : selectedChart === "lo"
           ? [
-            { value: 44, label: "HIGH", range: "67% - 100%", color: "#E8F5E9", border: "#C8E6C9" },
-            { value: 30, label: "AVERAGE", range: "35% - 66%", color: "#FFF3E0", border: "#FFCCBC" },
-            { value: 12, label: "LOW", range: "0% - 33%", color: "#FFEBEE", border: "#FFCDD2" },
+            { value: overallData?.above_average?.length || 0, label: "HIGH", range: "67% - 100%", color: "#E8F5E9", border: "#C8E6C9" },
+            { value: overallData?.average?.length || 0, label: "AVERAGE", range: "35% - 66%", color: "#FFF3E0", border: "#FFCCBC" },
+            { value: overallData?.below_average?.length || 0, label: "LOW", range: "0% - 33%", color: "#FFEBEE", border: "#FFCDD2" },
           ]
           : [
-            { value: 34, label: "HIGH", range: "67% - 100%", color: "#E8F5E9", border: "#C8E6C9" },
-            { value: 20, label: "AVERAGE", range: "35% - 66%", color: "#FFF3E0", border: "#FFCCBC" },
-            { value: 13, label: "LOW", range: "0% - 33%", color: "#FFEBEE", border: "#FFCDD2" },
+            { value: overallData?.above_average?.length || 0, label: "HIGH", range: "67% - 100%", color: "#E8F5E9", border: "#C8E6C9" },
+            { value: overallData?.average?.length || 0, label: "AVERAGE", range: "35% - 66%", color: "#FFF3E0", border: "#FFCCBC" },
+            { value: overallData?.below_average?.length || 0, label: "LOW", range: "0% - 33%", color: "#FFEBEE", border: "#FFCDD2" },
           ];
-
+          console.log("Matric data : ",updatedMetricData)
     setMetricData(updatedMetricData);
-  }, [selectedChart]);
+  }, [selectedChart,overallData]);
 
 
 
@@ -174,10 +136,9 @@ const ClassView = ({ setIndex, user, onLogout }) => {
       console.log('RO API Response:', response.data);
 
       // Ensure response contains valid data
-      if (response.data && Array.isArray(response.data.class_ro_averages)) {
-        const scores = response.data.class_ro_averages.map(item => item.average_score);
-        console.log("Extracted scores:", scores);
-        setRoData(scores);
+      if (response.data) {
+        setRoData(response.data);
+        console.log("Extracted scores:", response.data);
       } else {
         setRoData([]); // Reset to avoid errors
         console.error("Invalid RO Data format:", response.data);
@@ -214,10 +175,9 @@ const ClassView = ({ setIndex, user, onLogout }) => {
       console.log('AC API Response:', response.data);
 
       // Ensure response data is an array
-      if (response.data && Array.isArray(response.data.class_ac_averages)) {
-        const scores = response.data.class_ac_averages.map(item => item.average_score);
-        console.log("Extracted scores:", scores);
-        setAcData(scores);
+      if (response.data) {
+        setAcData(response.data);
+        console.log("Extracted scores:", response.data);
       } else {
         setAcData([]); // Reset to avoid errors
         console.error("Invalid AC Data format:", response.data);
@@ -234,6 +194,34 @@ const ClassView = ({ setIndex, user, onLogout }) => {
       loadAcScore(userData);
     }
   }, [userData]);
+
+
+  useEffect(() => {
+    const data =
+      selectedChart === "ac" ? acData.class_ac_averages :
+        selectedChart === "lo" ? loData.class_lo_averages :
+          roData.class_ro_averages;
+
+    if (data) {
+      setSelectedData(data);
+    }
+    console.log(data)
+  }, [selectedChart, acData, loData, roData]);
+
+  useEffect(() => {
+    const data =
+      selectedChart === "ac" ? acData.overall_distribution :
+        selectedChart === "lo" ? loData.overall_distribution :
+          roData.overall_distribution;
+
+    if (data) {
+      setOverallData(data);
+    }
+    console.log("Overall data : ",data)
+  }, [selectedChart,acData,loData,roData])
+
+
+
 
   // Chart configuration for ApexCharts
   const getChartOptions = () => ({
@@ -307,13 +295,13 @@ const ClassView = ({ setIndex, user, onLogout }) => {
 
   const getChartSeries = () => {
     const data =
-      selectedChart === "ac" ? acData :
-        selectedChart === "lo" ? loData :
-          roData;
+      selectedChart === "ac" ? selectedData.map(item => item.average_score) :
+        selectedChart === "lo" ? selectedData.map(item => item.average_score) :
+          selectedData?.map(item => item.average_score);
     console.log("chart", data)
     return [{
       name: selectedChart.toUpperCase() + " Scores",
-      data: Array.isArray(data) && data.length > 0 ? data : [0], // Fallback to avoid errors
+      data: Array.isArray(data) && data.length > 0 ? data : [], // Fallback to avoid errors
     }];
   };
 
@@ -362,32 +350,32 @@ const ClassView = ({ setIndex, user, onLogout }) => {
 
   //}, []);
 
-  const loadStudentsAvg = async (userData) => {
-    const headers = {
-      Authorization: 'Bearer YOUR_ACCESS_TOKEN',
-      'Content-Type': 'application/json',
-      year: userData.year,
-      classname: userData.class,
-      section: userData.section,
-      subject: userData.subject,
-      quarter: userData.quarter,
-    };
+  // const loadStudentsAvg = async (userData) => {
+  //   const headers = {
+  //     Authorization: 'Bearer YOUR_ACCESS_TOKEN',
+  //     'Content-Type': 'application/json',
+  //     year: userData.year,
+  //     classname: userData.class,
+  //     section: userData.section,
+  //     subject: userData.subject,
+  //     quarter: userData.quarter,
+  //   };
 
-    try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/class_ac_averages`, { headers });
-      console.log('Load Students Response:', response.data);
+  //   try {
+  //     const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/class_ac_averages`, { headers });
+  //     console.log('Load Students Response:', response.data);
 
-    } catch (error) {
-      console.error('Error fetching AC scores:', error);
-      setAcData([]);
-    }
-  };
+  //   } catch (error) {
+  //     console.error('Error fetching AC scores:', error);
+  //     setAcData([]);
+  //   }
+  // };
 
-  useEffect(() => {
-    if (userData && Object.keys(userData).length > 0) {
-      loadStudentsAvg(userData);
-    }
-  }, [userData]);
+  // useEffect(() => {
+  //   if (userData && Object.keys(userData).length > 0) {
+  //     loadStudentsAvg(userData);
+  //   }
+  // }, [userData]);
 
 
   const chartWidth = selectedData.length > 5 ? Math.max(400, selectedData.length * 80) : 400; // Adjust width dynamically
@@ -477,23 +465,23 @@ const ClassView = ({ setIndex, user, onLogout }) => {
 
       </div>
 
-      {/* 
-{showModal && (
-  <div className="modal-overlay" onClick={handleCloseModal}>
-    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-      <button className="close-icon" onClick={handleCloseModal}>
-        ✕
-      </button>
-      <h3>Student List</h3>
-      <ul className="student-list">
-        {selectedStudents.map((student, index) => (
-          <li key={index}>{student}</li>
-        ))}
-      </ul>
-    </div>
-  </div>
-)}
-*/}
+
+      {showModal && (
+        <div className="modal-overlay" onClick={handleCloseModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-icon" onClick={handleCloseModal}>
+              ✕
+            </button>
+            <h3>Student List</h3>
+            <ul className="student-list">
+              {selectedStudents.map((student, index) => (
+                <li key={index}>{student}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+
 
 
     </Wrapper>

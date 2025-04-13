@@ -33,7 +33,7 @@ const AddTeacher = () => {
       });
       if (response.ok) {
         console.log("Teacher added successfully");
-        navigate("/admin/teacherList"); // Redirect to teacher list after successful addition
+        navigate("/admin/teachers"); // Redirect to teacher list after successful addition
       } else {
         console.error("Failed to add teacher:", response.statusText);
       }
@@ -42,15 +42,15 @@ const AddTeacher = () => {
     }
   };
 
-  const handleNavigation = (path) => {
-    navigate(path);
+  const handleNavigation = () => {
+    navigate(-1);
   };
 
   return (
     <Wrapper>
       <div className="app">
         <header className="header">
-          <img src={backArrow} alt="BackArrow" className="icon" onClick={() => {handleNavigation("/admin/teacherList")}}/>
+          <img src={backArrow} alt="BackArrow" className="icon" onClick={() => {handleNavigation()}}/>
           <div className="active-users"></div>
           <img src={userIcon} alt="User" className="icon" />
         </header>

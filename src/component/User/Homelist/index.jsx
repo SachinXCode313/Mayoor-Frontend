@@ -127,7 +127,7 @@ const HomeList = () => {
           <Ripples><div tabIndex={0} className={`option ${selectedClass === 8 ? 'active' : ''}`} onClick={e => setSelectedClass(8)}>8</div></Ripples>
         </div>
         <label htmlFor="section" onClick={toggle}>Section</label>
-        <div className="options">
+        <div className="section options">
           <Ripples><div tabIndex={0} className={selectedSection === "1" ? "option active" : "option"} onClick={e => setSelectedSection("1")}>Orchid</div></Ripples>
           <Ripples><div tabIndex={0} className={selectedSection === "2" ? "option active" : "option"} onClick={e => setSelectedSection("2")}>Tulip</div></Ripples>
           <Ripples><div tabIndex={0} className={selectedSection === "3" ? "option active" : "option"} onClick={e => setSelectedSection("3")}>Daffodil</div></Ripples>

@@ -95,7 +95,7 @@ const Wrapper = styled.section`
   }
 
   .savebtn {
-    background: #21c2ba;
+    background: #12a4a4;
   }
 `;
 

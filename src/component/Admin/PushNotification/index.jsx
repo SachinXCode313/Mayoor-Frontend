@@ -8,7 +8,7 @@ const PushNotification = () => {
   const navigate = useNavigate()
 
   const handleChange = () => {
-    navigate("/")
+    navigate(-1)
   }
 
   return (

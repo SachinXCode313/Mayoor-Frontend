@@ -85,8 +85,8 @@ const TeacherList = () => {
 
   const navigate = useNavigate();
 
-  const handleNavigation = (path) => {
-    navigate(path);
+  const handleNavigation = () => {
+    navigate(-1)
   };
 
   const handleChange = (path) => {
@@ -101,7 +101,7 @@ const TeacherList = () => {
             src={backArrow}
             alt="BackArrow"
             className="icon"
-            onClick={() => handleNavigation("/admin")}
+            onClick={() => handleNavigation()}
           />
           <div className="active-users">
             <button className="active-user-button">

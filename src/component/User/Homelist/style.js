@@ -18,7 +18,7 @@ const Wrapper = styled.section`
             background :rgb(0, 134, 128);
             color : #FFFFFF;
             padding : 15px 30px;
-            border-radius: 40px;
+            border-radius: 5px;
             font-size: 1.1rem;
             text-align: center;
             opacity : 0.7;
@@ -47,6 +47,15 @@ const Wrapper = styled.section`
     .class {
         flex-wrap : nowrap;
         overflow-x : auto;
+    }
+
+    .section {
+        flex-wrap : nowrap;
+        overflow-x : auto;
+    }
+
+    .section .react-ripples{
+        min-width : 120px;
     }
 
     .class .react-ripples{
@@ -208,7 +217,7 @@ const Wrapper = styled.section`
         color : #000;
         font-size: 20px;
         padding : 15px 30px;
-        border-radius: 10px;
+        border-radius: 30px;
         border : none;
         margin-top : 30px;
         width: auto;

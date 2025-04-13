@@ -10,7 +10,7 @@ import roList from "./roList.png"
 const BottomTab = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const [activeTab, setActiveTab] = useState(location.pathname);
 
   const handleTabClick = (path) => {
@@ -21,23 +21,7 @@ const BottomTab = () => {
   return (
     <Wrapper>
       <div className="tab-bar">
-        <div 
-          className={`tab ${activeTab === "/students" ? "active" : ""}`}
-          onClick={() => handleTabClick("/admin/students")}
-        >
-          <img src={student} alt="Student" />
-          <span>Student</span>
-        </div>
-
-        <div 
-          className={`tab ${activeTab === "/aclist" ? "active" : ""}`}
-          onClick={() => handleTabClick("/admin/aclist")}
-        >
-          <img src={acList} alt="AC List" />
-          <span>AC List</span>
-        </div>
-
-        <div 
+        <div
           className={`tab ${activeTab === "/" ? "active" : ""}`}
           onClick={() => handleTabClick("/admin")}
         >
@@ -45,7 +29,15 @@ const BottomTab = () => {
           <span>Home</span>
         </div>
 
-        <div 
+        <div
+          className={`tab ${activeTab === "/students" ? "active" : ""}`}
+          onClick={() => handleTabClick("/admin/students")}
+        >
+          <img src={student} alt="Student" />
+          <span>Student</span>
+        </div>
+
+        <div
           className={`tab ${activeTab === "/rolist" ? "active" : ""}`}
           onClick={() => handleTabClick("/admin/rolist")}
         >
@@ -53,13 +45,22 @@ const BottomTab = () => {
           <span>RO List</span>
         </div>
 
-        <div 
+        <div
           className={`tab ${activeTab === "/lolist" ? "active" : ""}`}
           onClick={() => handleTabClick("/admin/lolist")}
         >
           <img src={loList} alt="LO List" />
           <span>LO List</span>
         </div>
+
+        <div
+          className={`tab ${activeTab === "/aclist" ? "active" : ""}`}
+          onClick={() => handleTabClick("/admin/aclist")}
+        >
+          <img src={acList} alt="AC List" />
+          <span>AC List</span>
+        </div>
+
       </div>
     </Wrapper>
   )

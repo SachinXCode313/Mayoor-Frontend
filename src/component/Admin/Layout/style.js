@@ -22,6 +22,7 @@ flex-direction : column;
     height: 60px;
     background: #12736F;
     bottom: 0;
+    z-index: 100;
 }
 `
 
