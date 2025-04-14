@@ -1,4 +1,9 @@
-import React, { useEffect, useRef, useImperativeHandle, forwardRef } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+} from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Shepherd from "shepherd.js";
 import "shepherd.js/dist/css/shepherd.css";
@@ -11,22 +16,24 @@ const Tutorial = forwardRef((props, ref) => {
   const overlayRef = useRef(null);
   const isAutoRunDoneRef = useRef(false);
 
+  // Global Overlay Helpers
+  const addOverlay = () => {
+    if (overlayRef.current && !document.body.contains(overlayRef.current)) {
+      document.body.appendChild(overlayRef.current);
+    }
+  };
+
+  const removeOverlay = () => {
+    const el = document.querySelector('.tutorial-overlay');
+    if (el) el.remove();
+    overlayRef.current = null;
+  };
+  
+
   const createTour = () => {
     const overlay = document.createElement("div");
     overlay.classList.add("tutorial-overlay");
     overlayRef.current = overlay;
-
-    const addOverlay = () => {
-      if (!document.body.contains(overlay)) {
-        document.body.appendChild(overlay);
-      }
-    };
-
-    const removeOverlay = () => {
-      if (document.body.contains(overlay)) {
-        document.body.removeChild(overlay);
-      }
-    };
 
     const tour = new Shepherd.Tour({
       defaultStepOptions: {
@@ -35,7 +42,9 @@ const Tutorial = forwardRef((props, ref) => {
         arrow: true,
         when: {
           show: () => {
-            addOverlay();
+            if (!document.body.contains(overlayRef.current)) {
+              addOverlay();
+            }
             document
               .querySelector(".shepherd-modal-overlay-container")
               ?.scrollIntoView({ behavior: "smooth" });
@@ -44,12 +53,7 @@ const Tutorial = forwardRef((props, ref) => {
       },
     });
 
-    // Set tutorial as seen when completed or cancelled
-    tour.on("complete", () => {
-      removeOverlay();
-      localStorage.setItem("tutorialSeen", "true");
-    });
-
+    // Ensure overlay is removed on cancel/complete
     tour.on("cancel", () => {
       removeOverlay();
       localStorage.setItem("tutorialSeen", "true");
@@ -58,7 +62,10 @@ const Tutorial = forwardRef((props, ref) => {
     const skipButton = {
       text: "Skip",
       action: () => {
+        removeOverlay();
+        localStorage.setItem("tutorialSeen", "true");
         tour.cancel();
+        tourRef.current = null; 
       },
       classes: "shepherd-button-secondary",
     };
@@ -196,9 +203,18 @@ const Tutorial = forwardRef((props, ref) => {
         skipButton,
         {
           text: "Finish",
-          action: () => tour.cancel(),
+          action: () => {
+            removeOverlay();
+            localStorage.setItem("tutorialSeen", "true");
+            tour.cancel();
+            tourRef.current = null; 
+            document.querySelectorAll(".shepherd-element").forEach(el => el.remove());
+            document.querySelectorAll(".shepherd-modal-overlay-container").forEach(el => el.remove());
+          },
+          classes: "shepherd-button-secondary",
         },
-      ],
+        
+      ]  
     });
 
     tourRef.current = tour;
@@ -213,6 +229,13 @@ const Tutorial = forwardRef((props, ref) => {
     "/user/home/ac": 10,
   };
 
+  useEffect(() => {
+    return () => {
+      removeOverlay();
+    };
+  }, [location]);
+
+  
   useEffect(() => {
     const hasSeenTutorial = localStorage.getItem("tutorialSeen");
 
@@ -231,35 +254,21 @@ const Tutorial = forwardRef((props, ref) => {
   }, []);
 
   // Manual trigger (e.g., from a menu)
-  // useImperativeHandle(ref, () => ({
-  //   startTutorial: () => {
-  //     if (tourRef.current) {
-  //       tourRef.current.cancel();
-  //       tourRef.current = null;
-  //     }
-  //     createTour();
-  //     const stepToStart = routeStepMap[location.pathname] ?? 0;
-  //     setTimeout(() => {
-  //       tourRef.current.start();
-  //       tourRef.current.show(stepToStart);
-  //     }, 500);
-  //   },
-  // }));
-
   useImperativeHandle(ref, () => ({
     startTutorial: () => {
+      localStorage.removeItem("tutorialSeen");
       if (tourRef.current) {
-        tourRef.current.cancel(); // just cancel it
+        tourRef.current.cancel();
+        tourRef.current = null;
       }
-      // Use a slight delay to ensure old instance is cleaned up
+
+      createTour();
+      navigate("/user/homelist");
+
       setTimeout(() => {
-        createTour();
-        const stepToStart = routeStepMap[location.pathname] ?? 0;
-        setTimeout(() => {
-          tourRef.current.start();
-          tourRef.current.show(stepToStart);
-        }, 500);
-      }, 100); // small delay ensures cleanup is complete
+        tourRef.current.start();
+        tourRef.current.show(0);
+      }, 600);
     },
   }));
 

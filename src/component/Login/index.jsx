@@ -20,22 +20,18 @@ const firebaseConfig = {
   measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
 };
 
-
-
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 const allowedDomains = ["gitjaipur.com"];
-// const WS_URL = "ws://mayoorschoolapp.onrender.com/";
+const WS_URL = "http://localhost:5000"
 
 const Login = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null); // Start with null to avoid flicker
-  // const [teachers, setTeachers] = useState([]);
   const [error, setError] = useState("");
-  // const [ws, setWs] = useState(null);
+  const [ws, setWs] = useState(null);
   const [notification, setNotification] = useState({ title: "", body: "" });
 
   const loginInProgress = useRef(false); // Track if login is in progress
@@ -46,11 +42,11 @@ const Login = () => {
       navigate("/admin");
     } else if (storedRole === "teacher") {
       navigate("/user");
-    }else{
+    } else {
       navigate("/")
     }
   }, []);
-  
+
 
   // ✅ Load user from localStorage on mount
   useEffect(() => {
@@ -94,21 +90,27 @@ const Login = () => {
   //   });
   // }, []);
 
-  // useEffect(() => {
-  //   const socket = new WebSocket(WS_URL);
-  //   setWs(socket);
+  useEffect(() => {
+    const socket = new WebSocket(WS_URL);
+    setWs(socket);
 
-  //   socket.onopen = () => console.log("✅ Connected to WebSocket server");
+    socket.onopen = () => console.log("✅ Connected to WebSocket server");
 
-  //   socket.onmessage = (event) => {
-  //     console.log("📥 Received data:", event.data);
-  //     // setTeachers(JSON.parse(event.data));
-  //   };
+    socket.onmessage = (event) => {
+      console.log("📥 Received:", event.data);
+      // setTeachers(JSON.parse(event.data));
+    };
 
-  //   socket.onclose = () => console.log("🔴 Disconnected from WebSocket server");
+    socket.onerror = (err) => {
+      console.error("❌ WebSocket error", err);
+    };
 
-  //   return () => socket.close();
-  // }, []);
+    socket.onclose = () => {
+      console.log("🔴 Disconnected from WebSocket server");
+    };
+
+    return () => socket.close();
+  }, []);
 
   // const handleJoin = () => {
   //   if (teacher && ws) {
@@ -172,11 +174,11 @@ const Login = () => {
         }
       } catch (err) {
         console.error("Error during token verification:", err.response?.data || err.message || err);
-        setError("Error verifying token with backend.");
+        setError("This email isn’t registered. Please try again with a registered email.");
       }
     } catch (err) {
       console.error("Error during login:", err.code, err.message);
-      setError(`An error occurred during login: ${err.message || err}`);
+      setError("An error occurred during login please try again");
       await signOut(auth); // Ensure we clean up invalid credentials
     } finally {
       loginInProgress.current = false;
@@ -197,15 +199,15 @@ const Login = () => {
         {/* {user ? (
           <Home user={user?.displayName} onLogout={handleLogout} />
         ) : ( */}
-          <div className="container">
-            <div>
-              <img id="logo" src={Logo} alt="Logo" /><br />
-              <h1 id="appName">Mayoor</h1>
-            </div>
-
-            <input id="SignIn" type="button" value="Sign in with Google" onClick={handleLogin} />
-            {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
+        <div className="container">
+          <div>
+            <img id="logo" src={Logo} alt="Logo" /><br />
+            <h1 id="appName">Mayoor</h1>
           </div>
+
+          <input id="SignIn" type="button" value="Sign in with Google" onClick={handleLogin} />
+          {error && <p style={{ color: "red" }}>{error}</p>}
+        </div>
         {/* )} */}
       </div>
     </Wrapper>

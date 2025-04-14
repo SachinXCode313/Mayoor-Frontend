@@ -4,7 +4,6 @@ const Wrapper = styled.div`
   .class-header {
     height: 110px;
     align-items: center;
-    color: white;
     background-color: #21c2ba;
     display: flex;
     flex-direction: row;
@@ -16,10 +15,14 @@ const Wrapper = styled.div`
     margin-left: 20px;
   }
 
+  .class-title h2 {
+    font-weight: 100;
+  }
+
   .class-container {
     display: flex;
     flex-direction: column;
-    align-items: center;z
+    align-items: center;
     flex: 1;
     margin-top: -20px;
     border-top-left-radius: 30px;

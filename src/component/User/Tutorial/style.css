@@ -1,44 +1,78 @@
-.shepherd-theme-custom {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    border: 2px solid #1f807b; /* Blue border */
-  }
-  
-  
-  /* style.css */
+/* Overlay */
 .tutorial-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgb(0, 0, 0, 0.2);
-  z-index: 9998; /* Should be less than Shepherd's tooltip z-index */
-  pointer-events: all; /* Block all clicks/touches */
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 9999;
+  pointer-events: auto;
+  transition: background 0.3s ease;
 }
 
-  .shepherd-theme-custom .shepherd-header {
-    font-weight: bold;
-    background: #007bff; /* Blue header */
-    color: white;
-    padding: 10px;
-    border-radius: 6px 6px 0 0;
-  }
-  
-  .shepherd-theme-custom .shepherd-text {
-    padding: 10px;
-    font-size: 16px;
-    color: #333;
-  }
-  
-  .shepherd-theme-custom .shepherd-button {
-    background: #21c2ba;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    margin-right: 8px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
+/* Main tooltip container */
+.shepherd-theme-custom {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border: 2px solid #1f807b;
+  max-width: 420px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+/* Header section */
+.shepherd-theme-custom .shepherd-header {
+  background-color: #21c2ba;
+  color: white;
+  padding: 16px 20px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 12px 12px 0 0;
+}
+
+/* Tooltip text */
+.shepherd-theme-custom .shepherd-text {
+  padding: 16px 20px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333333;
+}
+
+/* Button styles */
+.shepherd-theme-custom .shepherd-button {
+  background-color: #21c2ba;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 8px 4px 16px;
+  transition: background 0.3s ease;
+}
+
+.shepherd-theme-custom .shepherd-button:hover {
+  background-color: #1a9f97;
+}
+
+/* Secondary button (e.g., Skip, Finish) */
+.shepherd-theme-custom .shepherd-button.shepherd-button-secondary {
+  background-color: #f0f0f0;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.shepherd-theme-custom .shepherd-button.shepherd-button-secondary:hover {
+  background-color: #e0e0e0;
+}
+
+/* Buttons container */
+.shepherd-theme-custom .shepherd-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 20px 20px;
+  gap: 8px;
+}
