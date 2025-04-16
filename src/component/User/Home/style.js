@@ -6,7 +6,6 @@ const Wrapper = styled.section`
     
     .screen {
         flex: 1;
-        display: flex;
         flex-direction: row;
         overflow: auto;
     }

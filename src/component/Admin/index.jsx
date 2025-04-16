@@ -13,6 +13,7 @@ import AddTeacher from './AddTeacher/index.jsx'
 import ClassView from './Classview/index.jsx';
 import MappingTree from './MappingTree/index.jsx';
 import Profile from './Profile/index.jsx';
+import TeacherActivity from './TeacherActivty/index.jsx';
 
 
 const AdminPanel = () => {
@@ -50,6 +51,7 @@ const AdminPanel = () => {
                 <Route path="/addteacher" element={<AddTeacher />} />
                 <Route path="/classview" element={<ClassView />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/teacher-activity" element={<TeacherActivity />} />
             </Route>
         </Routes>
     )

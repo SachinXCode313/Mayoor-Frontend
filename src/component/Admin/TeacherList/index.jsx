@@ -111,10 +111,9 @@ const TeacherList = () => {
               <img src={require("./kavya.png")} alt="User 2" className="active-user" />
             </button>
           </div>
-          <img src={userIcon} alt="User" className="icon" />
         </header>
 
-        <h2 className="teachers-list-heading">Teacher’s List</h2>
+        <h2 className="teachers-list-heading">Teachers</h2>
 
         <div className="layout">
           <div className="filters">

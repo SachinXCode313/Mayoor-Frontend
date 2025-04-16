@@ -44,7 +44,7 @@ const Wrapper = styled.section`
   border-color: #12a4a4;
   border: none;
   background-color: #12a4a4;
-  color: black;
+  color: #00000096;
   text-align: center; /* Center the text */
   width: 100%;
   position : fixed;
@@ -160,5 +160,6 @@ button:hover {
   .header {
     font-size: 18px;
   }
+}
 `
 export default Wrapper;

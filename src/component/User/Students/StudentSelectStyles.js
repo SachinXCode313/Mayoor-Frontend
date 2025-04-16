@@ -14,12 +14,19 @@ const Wrapper = styled.section`
     max-width: 100%;
     box-sizing: border-box;
   }
+  .top-heading{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0px;
+        color: #00000096;
+        font-size: larger;;
+      }
   .search-container {
     display: flex;
       gap: 5px;
       align-items: center;
       position: relative;
-      margin-top: 17px;
       padding: 10px;
       margin-left: -10px;
   }
@@ -67,7 +74,7 @@ const Wrapper = styled.section`
     // margin-top: -1px;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
-    width: 93%;
+    width: 100;
     overflow-y: auto;
   }
   .student-item {

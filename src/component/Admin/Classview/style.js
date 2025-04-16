@@ -1,4 +1,6 @@
-const styles = `
+import styled from "styled-components";
+
+const Wrapper = styled.div`
 .app {
 
   background: #12a4a4;
@@ -11,7 +13,6 @@ const styles = `
   .classview-header {
   align-items: flex-start;
   background: #12a4a4;
-  color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -27,8 +28,8 @@ const styles = `
   border-color: #12a4a4;
   border: none;
   background-color: #12a4a4;
-  color: black;
   text-align: center; /* Center the text */
+    color: #00000096;
   width: 100%;
   top: 85px; /* Below the header */
   padding-bottom: 15px;
@@ -158,6 +159,162 @@ padding-bottom: 10px;
 
 }
 
+.metric-cards-container {
+    width:90%;
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 30px;
+  }
+
+  .metric-card {
+    width: 100px;
+    height: 150px;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+      
+
+
+  .metric-value {
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .metric-label {
+    font-size: 14px;
+    margin-top: px;
+  }
+
+  .metric-range {
+    font-size: 12px;
+    margin-top: 10px;
+    color: #666;
+  }
+
+  .view-button {
+    margin-top: 30px;
+    padding: 5px 10px;
+    background-color:rgba(255, 255, 255);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    color: #444;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .view-button:hover {
+    background-color:rgba(33, 194, 186, 0.1);
+  }
+
+ .modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+  position: relative;
+}
+
+.close-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border: none;
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+  position: relative;
+}
+
+.close-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background-color:rgb(111, 110, 110);
+  color: white;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-icon:hover {
+  background-color: #c0392b;
+}
+
+.student-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.student-list li {
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+  color: white;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close-icon:hover {
+  background-color:rgb(83, 80, 80);
+}
+
+.student-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.student-list li {
+  padding: 5px 0;
+  border-bottom: 1px solid #ddd;
+}
+
 
   .header-image {
     width: 24px;
@@ -203,12 +360,10 @@ padding-bottom: 10px;
   .name h5 {
     font-size: 20px;
   }
+}
   
 `
 
-const styleSheet = document.createElement("style")
-styleSheet.type = "text/css"
-styleSheet.innerText = styles
-document.head.appendChild(styleSheet)
+export default Wrapper
 
-export default styles
+

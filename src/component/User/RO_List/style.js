@@ -10,10 +10,17 @@ width: 100%;
       gap: 5px;
       align-items: center;
       position: relative;
-      margin-top: 17px;
       padding: 10px;
             margin-left: -10px;
     }
+    .top-heading{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px 0px;
+        color: #00000096;
+        font-size: larger;;
+      }
     .icon{
       display: flex;
       gap: 12px;

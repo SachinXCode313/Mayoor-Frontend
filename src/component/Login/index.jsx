@@ -91,25 +91,35 @@ const Login = () => {
   // }, []);
 
   useEffect(() => {
-    const socket = new WebSocket(WS_URL);
-    setWs(socket);
+    const websocket = new WebSocket(WS_URL);
 
-    socket.onopen = () => console.log("✅ Connected to WebSocket server");
-
-    socket.onmessage = (event) => {
-      console.log("📥 Received:", event.data);
-      // setTeachers(JSON.parse(event.data));
+    websocket.onopen = () => {
+      console.log('✅ Connected to WebSocket server');
     };
 
-    socket.onerror = (err) => {
-      console.error("❌ WebSocket error", err);
+    websocket.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        localStorage.setItem('teachers', JSON.stringify(data));
+        window.dispatchEvent(new Event('teachersUpdated'));
+      } catch (err) {
+        console.error('❌ Error parsing WebSocket message:', err);
+      }
     };
 
-    socket.onclose = () => {
-      console.log("🔴 Disconnected from WebSocket server");
+    websocket.onclose = () => {
+      console.log('🔴 WebSocket connection closed');
     };
 
-    return () => socket.close();
+    websocket.onerror = (err) => {
+      console.error('❌ WebSocket error:', err);
+    };
+
+    setWs(websocket);
+
+    return () => {
+      websocket.close();
+    };
   }, []);
 
   // const handleJoin = () => {
@@ -157,6 +167,13 @@ const Login = () => {
             image: data.user.picture,
             allocation: data.allocations
           };
+
+          if (ws) {
+            const userData = JSON.stringify({ name: user.name, email: user.email });
+            ws.send(userData);
+            console.log("Sending data to WebSocket server:", userData);  // Log the data before sending
+          }
+
           console.log("user authenticated successfully:", user);
           // ✅ Store user in localStorage
           localStorage.setItem("token", idToken);

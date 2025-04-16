@@ -211,7 +211,7 @@ const LOlist = ({ loItems, setLoItems, handleLoItems, acItems, setAcItems, onLog
         </div>
         <input
           type="text"
-          placeholder="Search LO..."
+          placeholder="Search Learning Outcome..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="search-bar"
@@ -219,8 +219,8 @@ const LOlist = ({ loItems, setLoItems, handleLoItems, acItems, setAcItems, onLog
       </div>
 
       <div className="lo-list-heading">
-        <h2>
-          LO List
+        <h2 className='top-heading'>
+          Learning Outcome
         </h2>
       </div>
 
@@ -237,12 +237,12 @@ const LOlist = ({ loItems, setLoItems, handleLoItems, acItems, setAcItems, onLog
         </select>
 
         <select value={quarter} onChange={(e) => handleFilterChange('quarter', e.target.value)}>
-          <option value="1">Q1</option>
-          <option value="2">Q2</option>
-          <option value="3">T1</option>
-          <option value="4">Q3</option>
-          <option value="5">Q4</option>
-          <option value="6">T2</option>
+        <option value="1">FA 1</option>
+            <option value="2">FA 2</option>
+            <option value="3">SA 1</option>
+            <option value="4">FA 3</option>
+            <option value="5">FA 4</option>
+            <option value="6">SA 2</option>
         </select>
 
         <select value={classname} onChange={(e) => handleFilterChange('classname', e.target.value)}>

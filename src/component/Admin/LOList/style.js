@@ -341,7 +341,10 @@ const Wrapper = styled.section`
 .lo-list-heading {
   font-size : 20px;
   text-align : center;
-  margin : 20px;
+}
+.top-heading {
+  color: #00000096;
+  font-size: larger;
 }
 `
 

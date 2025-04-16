@@ -51,8 +51,6 @@ const AddTeacher = () => {
       <div className="app">
         <header className="header">
           <img src={backArrow} alt="BackArrow" className="icon" onClick={() => {handleNavigation()}}/>
-          <div className="active-users"></div>
-          <img src={userIcon} alt="User" className="icon" />
         </header>
         <h2 className="teachers-add-heading">Add Teacher</h2>
         <div className="container"> 

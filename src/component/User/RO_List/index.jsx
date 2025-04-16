@@ -97,12 +97,13 @@ const ROlist = ({ loItems, setLoItems, setIndex, handleLoItems, acItems, onLogou
         </div>
         <input
           type="text"
-          placeholder="Search RO..."
+          placeholder="Search Reported Outcome..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="search-bar"
         />
       </div>
+      <div className='top-heading'><h1>Reported Outcome</h1></div>
       <ul className="ro-list">
         {loading ? (
           <li className="loading-message">

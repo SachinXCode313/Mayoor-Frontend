@@ -113,12 +113,7 @@ const StudentList = ({ onStudentsData, setIndex, onLogout }) => {
     <Wrapper>
       <div className="search-container">
         <div className="icon">
-          <Menu
-            onProfileClick={() => alert("Go to Profile")}
-            onSettingsClick={() => alert("Open Settings")}
-            onLogoutClick={onLogout}
-            onReturnClick={handleReturnClick}
-          />
+          <Menu/>
         </div>
         <input
           type="text"
@@ -128,6 +123,7 @@ const StudentList = ({ onStudentsData, setIndex, onLogout }) => {
           className="search-bar"
         />
       </div>
+      <div className='top-heading'><h1>Students</h1></div>
       <div className="studentlist">
         {loading ? (
           <div className="loading-message">

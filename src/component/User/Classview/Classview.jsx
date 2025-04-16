@@ -3,11 +3,8 @@ import ReactApexChart from "react-apexcharts";
 import Wrapper from "./ClassViewStyle";
 import Menu from "../MenuBar/index";
 import axios from "axios";
-import { useNavigate } from "react-router";
 
-
-
-const ClassView = ({ setIndex, user, onLogout }) => {
+const ClassView = () => {
   const [selectedChart, setSelectedChart] = useState("ac");
   const [acData, setAcData] = useState([]);
   const [loData, setLoData] = useState([]);
@@ -18,7 +15,7 @@ const ClassView = ({ setIndex, user, onLogout }) => {
   const [selectedData, setSelectedData] = useState([]);
   const [metricData, setMetricData] = useState([]);
   const [overallData, setOverallData] = useState({});
-  const navigate = useNavigate();
+  
 
   const handleOpenModal = (category) => {
     const selectedChartData =
@@ -54,6 +51,89 @@ const ClassView = ({ setIndex, user, onLogout }) => {
     }
   }, []);
 
+  useEffect(() => {
+    // ✅ Mocked dynamic metric data based on selectedChart
+    const updatedMetricData =
+      selectedChart === "ac"
+        ? [
+          { value: overallData?.above_average?.length || 0, label: "HIGH", range: "67% - 100%", color: "#E8F5E9", border: "#C8E6C9" },
+          { value: overallData?.average?.length || 0, label: "AVERAGE", range: "35% - 66%", color: "#FFF3E0", border: "#FFCCBC" },
+          { value: overallData?.below_average?.length || 0, label: "LOW", range: "0% - 33%", color: "#FFEBEE", border: "#FFCDD2" },
+        ]
+        : selectedChart === "lo"
+          ? [
+            { value: overallData?.above_average?.length || 0, label: "HIGH", range: "67% - 100%", color: "#E8F5E9", border: "#C8E6C9" },
+            { value: overallData?.average?.length || 0, label: "AVERAGE", range: "35% - 66%", color: "#FFF3E0", border: "#FFCCBC" },
+            { value: overallData?.below_average?.length || 0, label: "LOW", range: "0% - 33%", color: "#FFEBEE", border: "#FFCDD2" },
+          ]
+          : [
+            { value: overallData?.above_average?.length || 0, label: "HIGH", range: "67% - 100%", color: "#E8F5E9", border: "#C8E6C9" },
+            { value: overallData?.average?.length || 0, label: "AVERAGE", range: "35% - 66%", color: "#FFF3E0", border: "#FFCCBC" },
+            { value: overallData?.below_average?.length || 0, label: "LOW", range: "0% - 33%", color: "#FFEBEE", border: "#FFCDD2" },
+          ];
+    console.log("Matric data : ", updatedMetricData)
+    setMetricData(updatedMetricData);
+  }, [selectedChart, overallData]);
+
+  useEffect(() => {
+    const data =
+      selectedChart === "ac" ? acData.class_ac_averages :
+        selectedChart === "lo" ? loData.class_lo_averages :
+          roData.class_ro_averages;
+
+    if (data) {
+      setSelectedData(data);
+    }
+    console.log(data)
+  }, [selectedChart, acData, loData, roData]);
+
+  useEffect(() => {
+    const data =
+      selectedChart === "ac" ? acData.overall_distribution :
+        selectedChart === "lo" ? loData.overall_distribution :
+          roData.overall_distribution;
+
+    if (data) {
+      setOverallData(data);
+    }
+    console.log("Overall data : ", data)
+  }, [selectedChart, acData, loData, roData])
+
+  const loadAcScore = async (userData) => {
+    const headers = {
+      Authorization: 'Bearer YOUR_ACCESS_TOKEN',
+      'Content-Type': 'application/json',
+      year: userData.year,
+      classname: userData.class,
+      section: userData.section,
+      subject: userData.subject,
+      quarter: userData.quarter,
+    };
+
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/class-overview-ac-avg`, { headers });
+      console.log('AC API Response:', response.data);
+
+      // Ensure response data is an array
+      if (response.data) {
+        setAcData(response.data);
+        console.log("Extracted scores:", response.data);
+      } else {
+        setAcData([]); // Reset to avoid errors
+        console.error("Invalid AC Data format:", response.data);
+      }
+
+    } catch (error) {
+      console.error('Error fetching AC scores:', error);
+      setAcData([]);
+    }
+  };
+
+  useEffect(() => {
+    if (userData && Object.keys(userData).length > 0) {
+      loadAcScore(userData);
+    }
+  }, [userData]);
 
   const loadLoScore = async (userData) => {
     const headers = {
@@ -92,34 +172,6 @@ const ClassView = ({ setIndex, user, onLogout }) => {
     }
   }, [userData]);
 
-
-  useEffect(() => {
-    // ✅ Mocked dynamic metric data based on selectedChart
-    const updatedMetricData =
-      selectedChart === "ac"
-        ? [
-          { value: overallData?.above_average?.length || 0, label: "HIGH", range: "67% - 100%", color: "#E8F5E9", border: "#C8E6C9" },
-          { value: overallData?.average?.length || 0, label: "AVERAGE", range: "35% - 66%", color: "#FFF3E0", border: "#FFCCBC" },
-          { value: overallData?.below_average?.length || 0, label: "LOW", range: "0% - 33%", color: "#FFEBEE", border: "#FFCDD2" },
-        ]
-        : selectedChart === "lo"
-          ? [
-            { value: overallData?.above_average?.length || 0, label: "HIGH", range: "67% - 100%", color: "#E8F5E9", border: "#C8E6C9" },
-            { value: overallData?.average?.length || 0, label: "AVERAGE", range: "35% - 66%", color: "#FFF3E0", border: "#FFCCBC" },
-            { value: overallData?.below_average?.length || 0, label: "LOW", range: "0% - 33%", color: "#FFEBEE", border: "#FFCDD2" },
-          ]
-          : [
-            { value: overallData?.above_average?.length || 0, label: "HIGH", range: "67% - 100%", color: "#E8F5E9", border: "#C8E6C9" },
-            { value: overallData?.average?.length || 0, label: "AVERAGE", range: "35% - 66%", color: "#FFF3E0", border: "#FFCCBC" },
-            { value: overallData?.below_average?.length || 0, label: "LOW", range: "0% - 33%", color: "#FFEBEE", border: "#FFCDD2" },
-          ];
-    console.log("Matric data : ", updatedMetricData)
-    setMetricData(updatedMetricData);
-  }, [selectedChart, overallData]);
-
-
-
-
   const loadRoScore = async (userData) => {
     const headers = {
       Authorization: 'Bearer YOUR_ACCESS_TOKEN',
@@ -155,70 +207,6 @@ const ClassView = ({ setIndex, user, onLogout }) => {
       loadRoScore(userData);
     }
   }, [userData]);
-
-
-
-
-  const loadAcScore = async (userData) => {
-    const headers = {
-      Authorization: 'Bearer YOUR_ACCESS_TOKEN',
-      'Content-Type': 'application/json',
-      year: userData.year,
-      classname: userData.class,
-      section: userData.section,
-      subject: userData.subject,
-      quarter: userData.quarter,
-    };
-
-    try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/class-overview-ac-avg`, { headers });
-      console.log('AC API Response:', response.data);
-
-      // Ensure response data is an array
-      if (response.data) {
-        setAcData(response.data);
-        console.log("Extracted scores:", response.data);
-      } else {
-        setAcData([]); // Reset to avoid errors
-        console.error("Invalid AC Data format:", response.data);
-      }
-
-    } catch (error) {
-      console.error('Error fetching AC scores:', error);
-      setAcData([]);
-    }
-  };
-
-  useEffect(() => {
-    if (userData && Object.keys(userData).length > 0) {
-      loadAcScore(userData);
-    }
-  }, [userData]);
-
-
-  useEffect(() => {
-    const data =
-      selectedChart === "ac" ? acData.class_ac_averages :
-        selectedChart === "lo" ? loData.class_lo_averages :
-          roData.class_ro_averages;
-
-    if (data) {
-      setSelectedData(data);
-    }
-    console.log(data)
-  }, [selectedChart, acData, loData, roData]);
-
-  useEffect(() => {
-    const data =
-      selectedChart === "ac" ? acData.overall_distribution :
-        selectedChart === "lo" ? loData.overall_distribution :
-          roData.overall_distribution;
-
-    if (data) {
-      setOverallData(data);
-    }
-    console.log("Overall data : ", data)
-  }, [selectedChart, acData, loData, roData])
 
 
 
@@ -305,91 +293,15 @@ const ClassView = ({ setIndex, user, onLogout }) => {
     }];
   };
 
-
-  const handleClick = () => {
-
-    navigate("/user/homelist");
-  };
-
-  const handleProfileClick = () => alert("Go to Profile");
-  const handleSettingsClick = () => alert("Open Settings");
-
-  // useEffect(() => {
-  // const graphContainer = document.querySelector(".chart-wrapper"); // Select chart wrapper
-  // if (!graphContainer) return;
-
-  // let startX = 0;
-  // let startY = 0;
-
-  // const handleTouchStart = (event) => {
-  //   startX = event.touches[0].clientX;
-  //   startY = event.touches[0].clientY;
-  // };
-
-  // const handleTouchMove = (event) => {
-  //   const deltaX = event.touches[0].clientX - startX;
-  //   const deltaY = event.touches[0].clientY - startY;
-
-  //   // If horizontal movement is more than vertical, prevent swipe navigation
-  //   if (Math.abs(deltaX) > Math.abs(deltaY)) {
-  //     event.stopPropagation();
-  //     event.preventDefault();
-  //   }
-  // };
-
-  // graphContainer.addEventListener("touchstart", handleTouchStart);
-  // graphContainer.addEventListener("touchmove", handleTouchMove);
-
-  // return () => {
-  //   graphContainer.removeEventListener("touchstart", handleTouchStart);
-  //   graphContainer.removeEventListener("touchmove", handleTouchMove);
-  // 
-  // };
-
-
-
-  //}, []);
-
-  // const loadStudentsAvg = async (userData) => {
-  //   const headers = {
-  //     Authorization: 'Bearer YOUR_ACCESS_TOKEN',
-  //     'Content-Type': 'application/json',
-  //     year: userData.year,
-  //     classname: userData.class,
-  //     section: userData.section,
-  //     subject: userData.subject,
-  //     quarter: userData.quarter,
-  //   };
-
-  //   try {
-  //     const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/class_ac_averages`, { headers });
-  //     console.log('Load Students Response:', response.data);
-
-  //   } catch (error) {
-  //     console.error('Error fetching AC scores:', error);
-  //     setAcData([]);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (userData && Object.keys(userData).length > 0) {
-  //     loadStudentsAvg(userData);
-  //   }
-  // }, [userData]);
-
-
   const chartWidth = selectedData.length > 5 ? Math.max(400, selectedData.length * 80) : 400; // Adjust width dynamically
-
 
   return (
     <Wrapper>
       <div className="class-header">
         <div className="icon">
-          <Menu/>
+          <Menu />
         </div>
-        <div className="class-title">
-          <h2>Class Overview</h2>
-        </div>
+        <div className='top-heading'><h1>Class Overview</h1></div>
       </div>
 
       <div className="class-container">

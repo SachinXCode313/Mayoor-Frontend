@@ -233,21 +233,17 @@ const AC_List = ({
     <Wrapper>
       <div className="search-container">
         <div className="icon">
-          <Menu
-            onProfileClick={() => alert("Go to Profile")}
-            onSettingsClick={() => alert("Open Settings")}
-            onLogoutClick={onLogout}
-            onReturnClick={handleReturnClick} // Pass the handleClick function here
-          />
+          <Menu/>
         </div>
         <input
           type="text"
-          placeholder="Search AC..."
+          placeholder="Search Assessment Criteria..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="search-bar"
         />
       </div>
+      <div className='top-heading'><h1>Assessment Criteria</h1></div>
       <ul className="ac-list">
         {loading ? (
           <li className="loading-message">

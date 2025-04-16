@@ -252,7 +252,7 @@ const ACList = ({ acItems, setAcItems, handleAcItems, studentsData, user, onLogo
         </div>
         <input
           type="text"
-          placeholder="Search AC..."
+          placeholder="Search Assessment Criteria..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="search-bar"
@@ -260,8 +260,8 @@ const ACList = ({ acItems, setAcItems, handleAcItems, studentsData, user, onLogo
       </div>
 
       <div className="ac-list-heading">
-        <h2>
-          AC List
+        <h2 className='top-heading'>
+          Assessment Criteria
         </h2>
       </div>
 
@@ -278,12 +278,12 @@ const ACList = ({ acItems, setAcItems, handleAcItems, studentsData, user, onLogo
         </select>
 
         <select value={quarter} onChange={(e) => handleFilterChange('quarter', e.target.value)}>
-          <option value="1">Q1</option>
-          <option value="2">Q2</option>
-          <option value="3">T1</option>
-          <option value="4">Q3</option>
-          <option value="5">Q4</option>
-          <option value="6">T2</option>
+          <option value="1">FA 1</option>
+          <option value="2">FA 2</option>
+          <option value="3">SA 1</option>
+          <option value="4">FA 3</option>
+          <option value="5">FA 4</option>
+          <option value="6">SA 2</option>
         </select>
 
         <select value={classname} onChange={(e) => handleFilterChange('classname', e.target.value)}>

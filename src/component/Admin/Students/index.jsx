@@ -96,11 +96,9 @@ const handleCheckboxChange = (studentId) => {
     <Wrapper ref={containerRef}>
       <div className="app">
         <header className="header">
-          <img src={hamburgerIcon} alt="Menu" className="icon" onClick={() => setMenuVisible(true)}/>
-          {menuVisible && <Menu onMenuClose={handleMenuClose} />}
-          <img src={userIcon} alt="User" className="icon" />
+          <Menu />
         </header>
-        <h2 className="student-list-heading">Student’s List</h2>
+        <h2 className="student-list-heading">Students</h2>
         <div className="layout">
           <div className="filters">
             <select onChange={(e) => setSelectedYear(e.target.value)}>

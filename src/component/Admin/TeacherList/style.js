@@ -44,7 +44,7 @@ const Wrapper = styled.section`
   border-color: #12a4a4;
   border: none;
   background-color: #12a4a4;
-  color: black;
+  color: #00000096;
   text-align: center; /* Center the text */
   width: 100%;
   position : fixed;
@@ -146,6 +146,9 @@ const Wrapper = styled.section`
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+.name-class h4{
+  font-weight: 100;
 }
 .details {
   flex: 1; /* Allows details to take available space */

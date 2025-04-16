@@ -186,21 +186,17 @@ const LOlist = ({ acItems, setAcItems, loItems, setLoItems, handleLoItems, setIn
     <Wrapper>
       <div className="search-container">
         <div className="icon">
-          <Menu
-            onProfileClick={() => alert("Go to Profile")}
-            onSettingsClick={() => alert("Open Settings")}
-            onLogoutClick={onLogout}
-            onReturnClick={handleReturnClick} // Pass the return click handler
-          />
+          <Menu/>
         </div>
         <input
           type="text"
-          placeholder="Search LO..."
+          placeholder="Search Learning Outcome..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="search-bar"
         />
       </div>
+      <div className='top-heading'><h1>Learning Outcome</h1></div>
       <ul className="lo-list">
         {loading ? (
           <li className="loading-message">

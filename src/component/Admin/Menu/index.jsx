@@ -77,6 +77,10 @@ const Menu = () => {
                             <PiMonitorPlay size={30} className='icon' />
                             <span>Tutorial</span>
                         </div>
+                        <div onClick={() => navigate(`/admin/teacher-activity`)}>
+                            <PiMonitorPlay size={30} className='icon' />
+                            <span>Teacher Activity</span>
+                        </div>
                         <div className='logout' onClick={handleLogout}>
                             <TbLogout2 size={30} className='icon' />
                             <span>Logout</span>

@@ -14,7 +14,6 @@ const Wrapper = styled.section`
 /* Header */
 .header {
   background: #12a4a4;
-  color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -32,12 +31,12 @@ const Wrapper = styled.section`
 }
 
 .student-list-heading {
+  color: #00000096;
   margin-top: -8px;
   margin-bottom: 0px;
   border-color: #12a4a4;
   border: none;
   background-color: #12a4a4;
-  color: black;
   text-align: center; /* Center the text */
   width: 100%;
   top: 85px; /* Below the header */
@@ -90,10 +89,9 @@ const Wrapper = styled.section`
 }
 
 .student-card {
-  border-bottom: 1px solid #575864;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
-  background: #ffffff;
   padding: 10px;
   border-radius: 10px;
   flex-wrap: wrap; /* Allow wrapping for smaller screens */
@@ -102,11 +100,11 @@ const Wrapper = styled.section`
 
 .student-card:active {
   transform: scale(0.98);
-  media (max-width: 768px) {
-    transform: scale(1);}
-  background-color: #f0f0f0;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  background-color: #f0f0f0;
   transition: 0.2s ease-in-out;
+  @media (max-width: 768px) {
+    transform: scale(1);}
 }
 .select-all {
   border: 1px solid #575864;
@@ -123,7 +121,7 @@ const Wrapper = styled.section`
   height: 50px;
   border-radius: 50%;
   margin-right: 15px;
-  margin-left: 25px;
+  margin-left: 10px;
 }
 
 .name h5 {
@@ -184,6 +182,10 @@ const Wrapper = styled.section`
   .name h5 {
     font-size: 20px;
   }
+}
+
+.stname h5{
+  font-weight: 100;
 }
   
 `

@@ -5,169 +5,194 @@ import axios from "axios";
 import imgUser from "./user.png";
 import hamburger from './hamburger.png';
 import Menu from '../Menu'; // Import the Menu component
+import Wrapper from "./style";
 
-const ClassView = ({ setIndex, user }) => {
+const ClassView = ({ setIndex, user, filters, setFilters }) => {
   const [selectedChart, setSelectedChart] = useState("ac");
   const [acData, setAcData] = useState([]);
   const [loData, setLoData] = useState([]);
   const [roData, setRoData] = useState([]);
-  const [selectedClass, setSelectedClass] = useState("1");
-  const [selectedSection, setSelectedSection] = useState("1");
-  const [selectedYear, setSelectedYear] = useState("2024");
-  const [selectedQuater, setSelectedQuater] = useState("1");
-  const [selectedSubject, setSelectedSubject] = useState("1");
-  const [userData, setUserData] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [selectedStudents, setSelectedStudents] = useState([]);
+  const [selectedData, setSelectedData] = useState([]);
+  const [metricData, setMetricData] = useState([]);
+  const [overallData, setOverallData] = useState({});
+
+
+  const { year, subject, quarter, classname, section } = filters;
+
+  const handleFilterChange = (field, value) => {
+    setFilters(prev => ({ ...prev, [field]: value }));
+    console.log(filters)
+  };
 
   const [menuVisible, setMenuVisible] = useState(false);
-  const selectedData =
-    selectedChart === "ac" ? acData :
-    selectedChart === "lo" ? loData :
-    roData;
-    const prefix = selectedChart === "LO" ? "LO" : selectedChart === "RO" ? "RO" : "AC";
 
+  const handleOpenModal = (category) => {
+    const selectedChartData =
+      category === "HIGH" ? overallData?.above_average?.map(item => item.student_name) :
+        category === "AVERAGE" ? overallData?.average?.map(item => item.student_name) :
+          overallData?.below_average?.map(item => item.student_name)
 
-  useEffect(() => {
-    const storedUserData = sessionStorage.getItem("userData");
-    if (storedUserData) {
-      setUserData(JSON.parse(storedUserData));
-    }
-  }, []);
-   
-  
-  const loadLoScore = async (userData) => {
-    const headers = {
-      Authorization: 'Bearer YOUR_ACCESS_TOKEN',
-      'Content-Type': 'application/json',
-      year: userData.year,
-      classname: userData.class,
-      section: userData.section,
-      subject: userData.subject,
-      quarter: userData.quarter,
-    };
-    
-    try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/class-overview-lo-avg`, { headers });
-      console.log('LO API Response:', response.data);
-  
-      // Ensure response contains valid data
-      if (response.data && Array.isArray(response.data.class_lo_averages)) {
-        const scores = response.data.class_lo_averages.map(item => item.average_score);
-        console.log("Extracted scores:", scores);
-        setLoData(scores);
-      } else {
-        setLoData([]); // Reset to avoid errors
-        console.error("Invalid AC Data format:", response.data);
-      }
-  
-  
-    } catch (error) {
-      console.error('Error fetching LO scores:', error);
-      setLoData([]);
+    setSelectedStudents(selectedChartData);
+    console.log(selectedChartData)
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    const modalOverlay = document.querySelector(".modal-overlay");
+    const modalContent = document.querySelector(".modal-content");
+
+    if (modalOverlay && modalContent) {
+      modalOverlay.classList.add("fadeOut");
+      modalContent.classList.add("fadeOut");
+
+      setTimeout(() => {
+        setShowModal(false);
+      }, 300); // Wait for animation to complete
+    } else {
+      setShowModal(false);
     }
   };
-  
+
   useEffect(() => {
-    if (userData && Object.keys(userData).length > 0) {
-      loadLoScore(userData);
-    }
-  }, [userData]);
+    // ✅ Mocked dynamic metric data based on selectedChart
+    const updatedMetricData =
+      selectedChart === "ac"
+        ? [
+          { value: overallData?.above_average?.length || 0, label: "HIGH", range: "67% - 100%", color: "#E8F5E9", border: "#C8E6C9" },
+          { value: overallData?.average?.length || 0, label: "AVERAGE", range: "35% - 66%", color: "#FFF3E0", border: "#FFCCBC" },
+          { value: overallData?.below_average?.length || 0, label: "LOW", range: "0% - 33%", color: "#FFEBEE", border: "#FFCDD2" },
+        ]
+        : selectedChart === "lo"
+          ? [
+            { value: overallData?.above_average?.length || 0, label: "HIGH", range: "67% - 100%", color: "#E8F5E9", border: "#C8E6C9" },
+            { value: overallData?.average?.length || 0, label: "AVERAGE", range: "35% - 66%", color: "#FFF3E0", border: "#FFCCBC" },
+            { value: overallData?.below_average?.length || 0, label: "LOW", range: "0% - 33%", color: "#FFEBEE", border: "#FFCDD2" },
+          ]
+          : [
+            { value: overallData?.above_average?.length || 0, label: "HIGH", range: "67% - 100%", color: "#E8F5E9", border: "#C8E6C9" },
+            { value: overallData?.average?.length || 0, label: "AVERAGE", range: "35% - 66%", color: "#FFF3E0", border: "#FFCCBC" },
+            { value: overallData?.below_average?.length || 0, label: "LOW", range: "0% - 33%", color: "#FFEBEE", border: "#FFCDD2" },
+          ];
+    console.log("Matric data : ", updatedMetricData)
+    setMetricData(updatedMetricData);
+  }, [selectedChart, overallData]);
 
-
-
-  const loadRoScore = async (userData) => {
-    const headers = {
-      Authorization: 'Bearer YOUR_ACCESS_TOKEN',
-      'Content-Type': 'application/json',
-      year: userData.year,
-      classname: userData.class,
-      section: userData.section,
-      subject: userData.subject,
-      quarter: userData.quarter,
-    };
-    
-    try {
-      const response = await axios.get(`https://mayoor-server.vercel.app/api/class-overview-ro-avg`, { headers });
-      console.log('RO API Response:', response.data);
-  
-      // Ensure response contains valid data
-      if (response.data && Array.isArray(response.data.class_ro_averages)) {
-        const scores = response.data.class_ro_averages.map(item => item.average_score);
-        console.log("Extracted scores:", scores);
-        setRoData(scores);
-      } else {
-        setRoData([]); // Reset to avoid errors
-        console.error("Invalid RO Data format:", response.data);
-      }
-  
-    } catch (error) {
-      console.error('Error fetching RO scores:', error);
-      setRoData([]);
-    }
-  };
-  
   useEffect(() => {
-    if (userData && Object.keys(userData).length > 0) {
-      loadRoScore(userData);
-    }
-  }, [userData]);
-  
-  
+    console.log(acData)
+    const data =
+      selectedChart === "ac" ? acData.class_ac_averages :
+        selectedChart === "lo" ? loData.class_lo_averages :
+          roData.class_ro_averages;
 
-  const handleMenuClose = () => {
-    setMenuVisible(false);
-  };
-  const loadAcScore = async (userData) => {
-    const headers = {
-      Authorization: 'Bearer YOUR_ACCESS_TOKEN',
-      'Content-Type': 'application/json',
-      year: userData.year,
-      classname: userData.class,
-      section: userData.section,
-      subject: userData.subject,
-      quarter: userData.quarter,
-    };
-    
+    if (data) {
+      setSelectedData(data);
+    }
+  }, [selectedChart, acData, loData, roData]);
+
+  useEffect(() => {
+    const data =
+      selectedChart === "ac" ? acData.overall_distribution :
+        selectedChart === "lo" ? loData.overall_distribution :
+          roData.overall_distribution;
+
+    if (data) {
+      setOverallData(data);
+    }
+    console.log("Overall data : ", data)
+  }, [selectedChart, acData, loData, roData])
+
+  const loadAcScore = async () => {
+    const headers = { year, subject, quarter, classname, section }
+
     try {
       const response = await axios.get(`https://mayoor-server.vercel.app/api/class-overview-ac-avg`, { headers });
       console.log('AC API Response:', response.data);
-  
+
       // Ensure response data is an array
-      if (response.data && Array.isArray(response.data.class_ac_averages)) {
-        const scores = response.data.class_ac_averages.map(item => item.average_score);
-        console.log("Extracted scores:", scores);
-        setAcData(scores);
+      if (response.data) {
+        setAcData(response.data);
+        console.log("Extracted scores:", response.data);
       } else {
         setAcData([]); // Reset to avoid errors
         console.error("Invalid AC Data format:", response.data);
       }
-  
+
     } catch (error) {
       console.error('Error fetching AC scores:', error);
       setAcData([]);
     }
   };
-   
-  useEffect(() => {
-    if (userData && Object.keys(userData).length > 0) {
-      loadAcScore(userData);
-    }
-  }, [userData]);
 
+  useEffect(() => {
+    loadAcScore();
+  }, [filters]);
+
+  const loadLoScore = async () => {
+    const headers = { year, subject, quarter, classname, section }
+
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/class-overview-lo-avg`, { headers });
+      console.log('LO API Response:', response.data);
+
+      // Ensure response contains valid data
+      if (response.data) {
+        setLoData(response.data);
+        console.log("Extracted scores:", response.data);
+      } else {
+        setLoData([]); // Reset to avoid errors
+        console.error("Invalid LO Data format:", response.data);
+      }
+
+
+    } catch (error) {
+      console.error('Error fetching LO scores:', error);
+      setLoData([]);
+    }
+  };
+
+  useEffect(() => {
+    loadLoScore();
+  }, [filters]);
+
+  const loadRoScore = async () => {
+    const headers = { year, subject, quarter, classname, section }
+
+    try {
+      const response = await axios.get(`https://mayoor-server.vercel.app/api/class-overview-ro-avg`, { headers });
+      console.log('RO API Response:', response.data);
+
+      // Ensure response contains valid data
+      if (response.data) {
+        setRoData(response.data);
+        console.log("Extracted scores:", response.data);
+      } else {
+        setRoData([]); // Reset to avoid errors
+        console.error("Invalid RO Data format:", response.data);
+      }
+
+    } catch (error) {
+      console.error('Error fetching RO scores:', error);
+      setRoData([]);
+    }
+  };
+
+  useEffect(() => {
+    loadRoScore();
+  }, [filters]);
+
+  const handleMenuClose = () => {
+    setMenuVisible(false);
+  };
   // Chart configuration for ApexCharts
   const getChartOptions = () => ({
     chart: {
       type: "line",
       toolbar: { show: false },
-      zoom: { enabled: true },
+      zoom: { enabled: false }, // ✅ Disable zoom
       background: "rgb(158, 184, 160 , 0.05)",
-      scrollablePlotArea: {
-        enabled: true, // Enables scrolling
-        scrollHeight: undefined,
-        scrollHorizontal: true,
-      },
-      
-      
- parentHeightOffset: 10,
+      parentHeightOffset: 10,
     },
     stroke: {
       curve: "smooth",
@@ -195,170 +220,179 @@ const ClassView = ({ setIndex, user }) => {
       theme: "dark",
       style: { fontSize: "14px" },
     },
-    
-    
     xaxis: {
-      categories: selectedData.length 
-        ? selectedData.map((_, i) => `${selectedChart.toUpperCase()} ${i + 1}`) 
+      categories: selectedData.length
+        ? selectedData.map((_, i) => `${selectedChart.toUpperCase()} ${i + 1}`)
         : [`${selectedChart.toUpperCase()} 1`, `${selectedChart.toUpperCase()} 2`],
-      labels: { style: { fontSize: "12px", colors: "#666" } },
-      tickAmount: selectedData.length,
+      labels: { rotate: 0, style: { fontSize: "12px", colors: "#666" } },
+      tickAmount: selectedData.length, // ✅ Keep gap consistent
     },
-    
     yaxis: {
       min: 0,
       max: 1,
       tickAmount: 5,
-      floating: false,
-      labels: { formatter: (value) => value.toFixed(2) }, 
+      labels: { formatter: (value) => value.toFixed(2) },
     },
-   // legend: { position: "top", horizontalAlign: "center" },
+    dataLabels: {
+      enabled: false,
+    },
+    plotOptions: {
+      line: {
+        dataLabels: { enabled: false },
+      },
+    },
+    scrollablePlotArea: {
+      enabled: true,
+      scrollHorizontal: true,
+      scrollHeight: undefined,
+      padding: {
+        right: 10,
+      },
+    },
+
   });
-  
-  
-  
 
   const getChartSeries = () => {
+    console.log(selectedChart)
     const data =
-      selectedChart === "ac" ? acData :
-      selectedChart === "lo" ? loData :
-      roData;
-    console.log("chart",data)
+      selectedChart === "ac" ? selectedData.map(item => item.average_score) :
+        selectedChart === "lo" ? selectedData.map(item => item.average_score) :
+          selectedData?.map(item => item.average_score);
+    console.log("chart", data)
     return [{
       name: selectedChart.toUpperCase() + " Scores",
-      data: Array.isArray(data) && data.length > 0 ? data : [0], // Fallback to avoid errors
+      data: Array.isArray(data) && data.length > 0 ? data : [], // Fallback to avoid errors
     }];
   };
-  
 
-  const handleClick = () => {
-    setIndex(1);
-  };
+  const chartWidth = selectedData.length > 5 ? Math.max(400, selectedData.length * 80) : 400; // Adjust width dynamically
 
-  const handleProfileClick = () => alert("Go to Profile");
-  const handleSettingsClick = () => alert("Open Settings");
-  const handleLogoutClick = () => alert("Logging Out...");
-
-  useEffect(() => {
-  const graphContainer = document.querySelector(".chart-wrapper"); // Select chart wrapper
-  if (!graphContainer) return;
-
-  let startX = 0;
-  let startY = 0;
-
-  const handleTouchStart = (event) => {
-    startX = event.touches[0].clientX;
-    startY = event.touches[0].clientY;
-  };
-
-  const handleTouchMove = (event) => {
-    const deltaX = event.touches[0].clientX - startX;
-    const deltaY = event.touches[0].clientY - startY;
-
-    // If horizontal movement is more than vertical, prevent swipe navigation
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-      event.stopPropagation();
-      event.preventDefault();
-    }
-  };
-
-  graphContainer.addEventListener("touchstart", handleTouchStart);
-  graphContainer.addEventListener("touchmove", handleTouchMove);
-
-  return () => {
-    graphContainer.removeEventListener("touchstart", handleTouchStart);
-    graphContainer.removeEventListener("touchmove", handleTouchMove);
-  };
-}, []);
-  
 
   return (
-    <>
-    <div className="app">
-<header className="classview-header">
-  <img src={hamburger} alt="Menu" className="cv-icon" onClick={() => setMenuVisible(true)} />
-  {menuVisible && <Menu onMenuClose={handleMenuClose} />}
-  <img src={imgUser} alt="User" className="cv-icon" />
-</header>
-<h2 className="class-view-heading">Student’s List</h2>
-<div className="classview-filters">
-            <select onChange={(e) => setSelectedYear(e.target.value)}>
-              <option value="2024">2024</option>
-              <option value="2023">2023</option>
-            </select>
-            <select onChange={(e) => setSelectedClass(e.target.value)}>
-              <option value="1">Class: I</option>
-              <option value="2">Class: II</option>
-              <option value="3">Class: III</option>
-              <option value="4">Class: IV</option>
-              <option value="5">Class: V</option>
-              <option value="6">Class: VI</option>
-              <option value="7">Class: VII</option>
-              <option value="8">Class: VIII</option>
-            </select>
-            <select onChange={(e) => setSelectedSection(e.target.value)}>
-              <option value="1">Orchid</option>
-              <option value="2">Daffodil</option>
-              <option value="3">Tulip</option>
-            </select>
-            
-            <select onChange={(e) => setSelectedQuater(e.target.value)}>
-              <option value="1">Q1</option>
-              <option value="2">Q2</option>
-            </select>
-            
-            <select onChange={(e) => setSelectedSubject(e.target.value)}>
-              <option value="1">English</option>
-              <option value="2">Hindi</option>
-              <option value="3">Mathematics</option>
-            </select>
-          </div>
+    <Wrapper>
+      <div className="app">
+        <header className="classview-header">
+          <Menu />
+        </header>
+        <h2 className="class-view-heading">Class Overview</h2>
+        <div className="classview-filters">
+          <select onChange={(e) => handleFilterChange('year', e.target.value)}>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+          </select>
+          <select onChange={(e) => handleFilterChange('classname', e.target.value)}>
+            <option value="1">Class: I</option>
+            <option value="2">Class: II</option>
+            <option value="3">Class: III</option>
+            <option value="4">Class: IV</option>
+            <option value="5">Class: V</option>
+            <option value="6">Class: VI</option>
+            <option value="7">Class: VII</option>
+            <option value="8">Class: VIII</option>
+          </select>
+          <select onChange={(e) => handleFilterChange('section', e.target.value)}>
+            <option value="1">Orchid</option>
+            <option value="2">Daffodil</option>
+            <option value="3">Tulip</option>
+          </select>
 
+          <select onChange={(e) => handleFilterChange('quarter', e.target.value)}>
+            <option value="1">FA 1</option>
+            <option value="2">FA 2</option>
+            <option value="3">SA 1</option>
+            <option value="4">FA 3</option>
+            <option value="5">FA 4</option>
+            <option value="6">SA 2</option>
+          </select>
 
-      <div className="classview-container">
-        <div className="info-box">
-          <div className="info-text">
-            <p><strong>Class:</strong> {userData.class}</p>
-            <p><strong>Year:</strong> {userData.year}</p>
-            <p><strong>Subject:</strong> {userData.subject}</p>
-          </div>
-          <div className="info-text">
-            <p><strong>Section:</strong> {userData.section}</p>
-            <p><strong>Quarter:</strong> {userData.quarter}</p>
-          </div>
-        </div>
-
-        <div className="chart-selection">
-  <div className="custom-dropdown">
-    <select
-      className="chart-dropdown"
-      value={selectedChart}
-      onChange={(e) => setSelectedChart(e.target.value)}
-    >
-      <option value="ac">AC Average</option>
-      <option value="lo">LO Average</option>
-      <option value="ro">RO Average</option>
-    </select>
-  </div>
-</div>
-
-        {/* Chart Display */}
-        <div className="chart-wrapper">
-          <div className="chart-container">
-            <ReactApexChart 
-              options={getChartOptions()} 
-              series={getChartSeries()} 
-              type="line" 
-              height={250} 
-            />
-          </div>
+          <select onChange={(e) => handleFilterChange('subject', e.target.value)}>
+            {["English", "Hindi", "Mathematics", "Science", "Computer Sc.", "Social Studies", "III Language", "GP Values", "Music", "Dance/Dramatics", "Art", "Sports", "Discipline", "Attendance"].map((subj, index) => (
+              <option key={index} value={index + 1}>{subj}</option>
+            ))}
+          </select>
         </div>
 
 
-        
+        <div className="classview-container">
+          <div className="info-box">
+            <div className="info-text">
+              <p><strong>Class:</strong> {classname}</p>
+              <p><strong>Year:</strong> {year}</p>
+              <p><strong>Subject:</strong> {subject}</p>
+            </div>
+            <div className="info-text">
+              <p><strong>Section:</strong> {section}</p>
+              <p><strong>Quarter:</strong> {quarter}</p>
+            </div>
+          </div>
+
+          <div className="chart-selection">
+            <div className="custom-dropdown">
+              <select
+                className="chart-dropdown"
+                value={selectedChart}
+                onChange={(e) => setSelectedChart(e.target.value)}
+              >
+                <option value="ac">AC Average</option>
+                <option value="lo">LO Average</option>
+                <option value="ro">RO Average</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Chart Display */}
+          <div className="chart-wrapper">
+            <div className="chart-container" style={{ width: `${chartWidth}px` }} >
+              <ReactApexChart
+                options={getChartOptions()}
+                series={getChartSeries()}
+                type="line"
+                height={250}
+              />
+            </div>
+          </div>
+
+          <div className="metric-cards-container">
+            {metricData.map((metric, index) => (
+              <div
+                key={index}
+                className="metric-card"
+                style={{
+                  backgroundColor: metric.color,
+                  border: `1px solid ${metric.border}`,
+                }}
+              >
+                <div className="metric-value">{metric.value}</div>
+                <div className="metric-label">{metric.label}</div>
+                <div className="metric-range">{metric.range}</div>
+
+                <button
+                  className="view-button"
+                  onClick={() => handleOpenModal(metric.label)}
+                >
+                  View Students
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+        {showModal && (
+          <div className="modal-overlay" onClick={handleCloseModal}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <button className="close-icon" onClick={handleCloseModal}>
+                ✕
+              </button>
+              <h3>Student List</h3>
+              <ul className="student-list">
+                {selectedStudents.map((student, index) => (
+                  <li key={index}>{student}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
       </div>
-      </div>
-    </>
+    </Wrapper>
   );
 };
 
