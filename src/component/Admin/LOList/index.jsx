@@ -46,7 +46,7 @@ const LOlist = ({ loItems, setLoItems, handleLoItems, acItems, setAcItems, onLog
     }
   }, []);
 
-  const { year, subject, quarter, classname } = filters;
+  const { year, subject, quarter, classname,section } = filters;
 
   const loadLO = async () => {
     if (!year || !subject || !quarter || !classname) {
@@ -148,7 +148,13 @@ const LOlist = ({ loItems, setLoItems, handleLoItems, acItems, setAcItems, onLog
     if (!deleteLoId) return;
     setLoading(true);
     try {
-      await axios.delete(`${REACT_APP_API_URL}/api/learning-outcome?id=${deleteLoId}`);
+      const headers = {
+        year,
+        quarter,
+        classname,
+        section
+      }
+      await axios.delete(`${REACT_APP_API_URL}/api/learning-outcome?id=${deleteLoId}`,{headers});
       const updatedLoItems = filteredLoList.filter(item => item.lo_id !== deleteLoId);
       setLoItems(updatedLoItems);
       setFilteredLoList(updatedLoItems);

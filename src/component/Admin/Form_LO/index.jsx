@@ -136,7 +136,7 @@ const Form_LO = ({ closeForm, loadLO, closeFormOnly, setShowSuccess, setShowFail
       "Content-Type": "application/json",
       year,
       quarter,
-      classname: classname, // Note: your backend expects it as "class", not "classname"
+      classname,// Note: your backend expects it as "class", not "classname"
       subject,
     };
   

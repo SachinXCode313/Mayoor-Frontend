@@ -160,10 +160,18 @@ const ACList = ({ acItems, setAcItems, handleAcItems, studentsData, user, onLogo
   const handleConfirm = async () => {
     if (!deleteAcId) return;
     setLoading(true);
+    const headers = {
+
+    }
     try {
+      const headers = {
+        classname,
+        section,
+        year,
+        quarter
+      }
       const response = await axios.delete(
-        `${REACT_APP_API_URL}/api/assessment-criteria?id=${deleteAcId}`
-      );
+        `${REACT_APP_API_URL}/api/assessment-criteria?id=${deleteAcId}`,{headers});
       const updatedAcItems = acItems.filter((item) => item.acId !== deleteAcId);
       setAcItems(updatedAcItems);
       setFilteredAcList(updatedAcItems);

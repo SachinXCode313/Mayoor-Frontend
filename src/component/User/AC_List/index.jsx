@@ -156,8 +156,14 @@ const AC_List = ({
     if (!deleteAcId) return;
     setLoading(true);
     try {
+      const headers = {
+        year: userData.year,
+        classname: userData.class,
+        section: userData.section,
+        quarter: userData.quarter,
+      };
       const response = await axios.delete(
-        `${process.env.REACT_APP_API_URL}/api/assessment-criteria?id=${deleteAcId}`
+        `${process.env.REACT_APP_API_URL}/api/assessment-criteria?id=${deleteAcId}`,{headers}
       );
       const updatedAcItems = filteredAcList.filter((item) => item.ac_id !== deleteAcId);
       setAcItems(updatedAcItems);
