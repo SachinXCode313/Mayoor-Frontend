@@ -1,23 +1,22 @@
 import styled from "styled-components";
 const Wrapper = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
   .search-container {
     display: flex;
     gap: 50px;
     align-items: center;
     position: relative;
-    background-color: #21c2ba;
+    background-color: #21C2BA;
     width: 90%;
     margin: 22px 0;
   }
     .info-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   max-width: 90%;
-  text-align: center;
+  width: 100%;
   overflow: hidden;
 }
   .search-bar {
@@ -54,7 +53,7 @@ const Wrapper = styled.div`
     text-align: center;
     width: 100%;
     height: 180px;
-    background-color: #21c2ba;
+    background-color: #21C2BA;
     box-shadow: 0px 4px 6px rgba(244, 240, 240, 0.1);
     align-items: center;
     overflow: hidden;
@@ -76,9 +75,20 @@ const Wrapper = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   direction: ltr;
+  margin-bottom: 8px;
+}
+  .scores {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
   .max-marks {
-    font-size: 14px;
+    font-size: 18px;
+    color: white;
+  }
+    .average-score{
+    font-size: 18px;
     color: white;
   }
   .ac-container {
@@ -92,21 +102,26 @@ const Wrapper = styled.div`
     border-top-left-radius: 40px;
     border-top-right-radius: 40px;
     background-color: white;
-    margin-top: -44px;
+    margin-top: -38px;
   }
   .ac-container::-webkit-scrollbar {
     display: none;
   }
   .student-list {
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    scroll-behavior: smooth;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 10px;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 0px 30px 0px;
+  &::-webkit-scrollbar {
+    display: none;
   }
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
     .student-avatar {
     width: 50px;
     height: 50px;
@@ -150,20 +165,32 @@ const Wrapper = styled.div`
     text-align: center;
     margin-top: 5px;
   }
-  .done-button {
-  background-color:  #21C2BA;
-  font-size: 1px;
-  font-weight: bold;
-  text-align: center;
-  padding: 10px;
-  border: none;
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  position: fixed;
-  bottom: 90px;
-  left: 75%;
+  .plus{
+    font-size: 40px;
+    color: rgb(26, 24, 24)
+  }
+  .add{
+    background-color: #21C2BA;
+    opacity: 0.9;
+    font-weight: bold;
+    margin-bottom: 10px;
+    width: 60px;
+    height: 60px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    text-align: center;
+    position: fixed; /* Fixed positioning */
+    bottom: 90px; /* Distance from the bottom */
+    right: 40px; /* Distance from the right */
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), /* Slight shadow below */
+              0 -4px 6px rgba(0, 0, 0, 0.1), /* Slight shadow above */
+              4px 0 6px rgba(0, 0, 0, 0.1), /* Slight shadow on the right */
+              -4px 0 6px rgba(0, 0, 0, 0.1);
   }
   .success-overlay {
     position: fixed; /* Ensures full-page coverage */

@@ -24,6 +24,11 @@ const Wrapper = styled.section`
   font-size: 20px;
 }
 
+.download-icon {
+  position: absolute;
+  right: 20px;
+}
+
 .icon {
   width: 25px; /* Set width for the icon */
   cursor: pointer;

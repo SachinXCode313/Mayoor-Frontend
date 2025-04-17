@@ -139,6 +139,7 @@ const LOlist = ({ acItems, setAcItems, loItems, setLoItems, handleLoItems, setIn
         subject: userData.subject,
         quarter: userData.quarter,
       }
+      console.log("Deleting LO with ID:", headers);
       await axios.delete(`${process.env.REACT_APP_API_URL}/api/learning-outcome?id=${deleteLoId}`,{headers});
       // Remove deleted item from the list
       const updatedLoItems = filteredLoList.filter(item => item.lo_id !== deleteLoId);

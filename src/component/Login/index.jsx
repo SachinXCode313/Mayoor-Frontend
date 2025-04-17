@@ -25,7 +25,7 @@ const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 const allowedDomains = ["gitjaipur.com"];
-const WS_URL = "http://localhost:5000"
+// const WS_URL = "http://localhost:5000"
 
 const Login = () => {
   const navigate = useNavigate();
@@ -90,37 +90,37 @@ const Login = () => {
   //   });
   // }, []);
 
-  useEffect(() => {
-    const websocket = new WebSocket(WS_URL);
+  // useEffect(() => {
+  //   const websocket = new WebSocket(WS_URL);
 
-    websocket.onopen = () => {
-      console.log('✅ Connected to WebSocket server');
-    };
+  //   websocket.onopen = () => {
+  //     console.log('✅ Connected to WebSocket server');
+  //   };
 
-    websocket.onmessage = (event) => {
-      try {
-        const data = JSON.parse(event.data);
-        localStorage.setItem('teachers', JSON.stringify(data));
-        window.dispatchEvent(new Event('teachersUpdated'));
-      } catch (err) {
-        console.error('❌ Error parsing WebSocket message:', err);
-      }
-    };
+  //   websocket.onmessage = (event) => {
+  //     try {
+  //       const data = JSON.parse(event.data);
+  //       localStorage.setItem('teachers', JSON.stringify(data));
+  //       window.dispatchEvent(new Event('teachersUpdated'));
+  //     } catch (err) {
+  //       console.error('❌ Error parsing WebSocket message:', err);
+  //     }
+  //   };
 
-    websocket.onclose = () => {
-      console.log('🔴 WebSocket connection closed');
-    };
+  //   websocket.onclose = () => {
+  //     console.log('🔴 WebSocket connection closed');
+  //   };
 
-    websocket.onerror = (err) => {
-      console.error('❌ WebSocket error:', err);
-    };
+  //   websocket.onerror = (err) => {
+  //     console.error('❌ WebSocket error:', err);
+  //   };
 
-    setWs(websocket);
+  //   setWs(websocket);
 
-    return () => {
-      websocket.close();
-    };
-  }, []);
+  //   return () => {
+  //     websocket.close();
+  //   };
+  // }, []);
 
   // const handleJoin = () => {
   //   if (teacher && ws) {
@@ -160,6 +160,7 @@ const Login = () => {
           setError("");
           console.log(response.data)
           const user = {
+            teacherId: data.teacherId,
             role: data.role,
             uid: data.user.uid,
             name: data.user.name,
@@ -168,11 +169,11 @@ const Login = () => {
             allocation: data.allocations
           };
 
-          if (ws) {
-            const userData = JSON.stringify({ name: user.name, email: user.email });
-            ws.send(userData);
-            console.log("Sending data to WebSocket server:", userData);  // Log the data before sending
-          }
+          // if (ws) {
+          //   const userData = JSON.stringify({ name: user.name, email: user.email });
+          //   ws.send(userData);
+          //   console.log("Sending data to WebSocket server:", userData);  // Log the data before sending
+          // }
 
           console.log("user authenticated successfully:", user);
           // ✅ Store user in localStorage

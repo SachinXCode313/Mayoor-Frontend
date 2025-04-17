@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import hamburgerIcon from "../Home/hamburger.png"; 
+import hamburgerIcon from "../Home/hamburger.png";
 import Menu from '../Menu'; // Import the Menu component
 import userIcon from "../TeacherList/user.png";
 import { FaPlus } from "react-icons/fa";
 import Wrapper from "./style";
 import avtar from './kavya.png'; // Import the Menu component
+import DownloadChecklist from "../../User/Donwload";
 
 const Students = () => {
   const [studentsData, setStudentsData] = useState([]);
@@ -57,13 +58,13 @@ const Students = () => {
     clearTimeout(holdTimeout.current);
   };
 
-    const handleClickOutside = (event) => {
-      if (!event.target.closest(".student-card") && !event.target.closest("input[type='checkbox']")) {
-        setShowCheckboxes(false);
-        setSelectAll(false);
-        setSelectedStudents([]);
-      }
-    };
+  const handleClickOutside = (event) => {
+    if (!event.target.closest(".student-card") && !event.target.closest("input[type='checkbox']")) {
+      setShowCheckboxes(false);
+      setSelectAll(false);
+      setSelectedStudents([]);
+    }
+  };
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -72,7 +73,7 @@ const Students = () => {
     };
   }, []);
 
-const handleCheckboxChange = (studentId) => {
+  const handleCheckboxChange = (studentId) => {
     setSelectedStudents((prev) =>
       prev.includes(studentId)
         ? prev.filter((id) => id !== studentId)
@@ -120,6 +121,9 @@ const handleCheckboxChange = (studentId) => {
               <option value="2">Daffodil</option>
               <option value="3">Tulip</option>
             </select>
+            <div className="download-icon">
+              <DownloadChecklist />
+            </div>
             {showCheckboxes && (
               <label className="select-all">
                 <input

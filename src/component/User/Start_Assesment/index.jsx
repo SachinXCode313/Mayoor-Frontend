@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import Wrapper from "./style.js";
+import Wrapper from "./style";
 import { FaArrowLeft } from "react-icons/fa";
 import axios from "axios";
 import Done from "../assets/check.png";
 import SuccessfulDone from "../Popup_successful";
 import Failed from "../Popup_Failed/index.jsx";
-
-const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
+const Assessment = ({ selectedAssessment, onBack }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [userData, setUserData] = useState(null);
   const containerRef = useRef(null);
@@ -16,8 +15,7 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
   const [scoresLoaded, setScoresLoaded] = useState(false);
   const [studentName, setStudentName] = useState([]);
   const [loading, setLoading] = useState(false);
-  const missingMarksRef = useRef(null);
-
+  // const missingMarksRef = useRef(null);
   useEffect(() => {
     const sessionUserData = sessionStorage.getItem("userData");
     if (sessionUserData) {
@@ -29,7 +27,6 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
       }
     }
   }, [selectedAssessment]);
-
   useEffect(() => {
     const loadStudents = async () => {
       if (!userData || studentName.length > 0) return;
@@ -61,12 +58,10 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
         setLoading(false);
       }
     };
-
     if (userData && Object.keys(userData).length > 0 && studentName.length === 0) {
       loadStudents();
     }
   }, [userData]);
-
   const loadSavedScores = async (userData) => {
     if (loading) return;
     setLoading(true);
@@ -84,14 +79,16 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/assessment-criteria-score`,
         { headers }
-      );
+      )
       if (response.data && Array.isArray(response.data)) {
         const transformedStudents = response.data.map((item) => ({
           id: item.student_id,
           name: item.student_name
             .toLowerCase()
             .replace(/\b[a-z](?!\s)/g, (x) => x.toUpperCase()),
-          marks: (selectedAssessment.max_marks * parseFloat(item.value)).toFixed(1),
+            marks: (selectedAssessment.max_marks * parseFloat(item.value)) % 1 === 0
+            ? (selectedAssessment.max_marks * parseFloat(item.value)).toString()
+            : (selectedAssessment.max_marks * parseFloat(item.value)).toFixed(1),
           scoreId: item.id,
         }));
         setStudents(transformedStudents);
@@ -107,38 +104,38 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
       setLoading(false);
     }
   };
-
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
   };
-
   const handleMarksChange = (e, studentId) => {
     let value = e.target.value;
     if (!/^\d+(\.\d{0,1})?$/.test(value) && value !== "") return;
     const maxMarks = selectedAssessment?.max_marks || 100;
     if (parseFloat(value) > maxMarks || parseFloat(value) < 0) return;
-
     const sourceList = students.length > 0 ? students : studentName;
     const updatedList = sourceList.map((stu) =>
       stu.id === studentId ? { ...stu, marks: value } : stu
     );
-
     students.length > 0 ? setStudents(updatedList) : setStudentName(updatedList);
   };
-
   const submitNewScores = async (newScores, headers) => {
     try {
+      const body = {
+        ac_id: selectedAssessment.ac_id,
+        scores: newScores
+      }
+      console.log("Submitting new scores:", body)
       await axios.post(
         `${process.env.REACT_APP_API_URL}/api/assessment-criteria-score`,
-        { ac_id: selectedAssessment.ac_id, scores: newScores },
+        body,
         { headers }
-      );
-      setShowSuccess(true);
+      )
+      setShowSuccess(true)
     } catch (error) {
-      setShowFailed(true);
+      setShowFailed(true)
+      console.error("Failed to submit scores:", error.response || error.message)
     }
-  };
-
+  }
   const updateScores = async (updateScoresList, headers) => {
     try {
       await axios.put(
@@ -151,9 +148,8 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
       setShowFailed(true);
     }
   };
-
   const handleSubmit = async () => {
-    if (!selectedAssessment?.ac_id || !userData) return;
+    if (!selectedAssessment?.ac_id || !userData) return
     const headers = {
       Authorization: "Bearer YOUR_ACCESS_TOKEN",
       "Content-Type": "application/json",
@@ -162,60 +158,50 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
       section: userData?.section,
       quarter: userData?.quarter,
       subject: userData?.subject,
-    };
-
-    const dataSource = students.length > 0 ? students : studentName;
-    const newScores = [];
-    const updateScoresList = [];
-
+    }
+    const dataSource = students.length > 0 ? students : studentName
+    const newScores = []
+    const updateScoresList = []
     dataSource.forEach((student) => {
       if (student.marks !== null) {
-        const marksValue = student.marks === "" ? null : Number(student.marks);
+        const marksValue = student.marks === "" ? null : Number(student.marks)
         if (!student.scoreId) {
-          newScores.push({ student_id: student.id, obtained_marks: marksValue });
+          newScores.push({ student_id: student.id, obtained_marks: marksValue })
         } else {
           updateScoresList.push({
             id: student.scoreId,
             student_id: student.id,
             obtained_marks: marksValue,
-          });
+          })
         }
       }
-    });
-    console.log(newScores)
-
-    if (newScores.length > 0) await submitNewScores(newScores, headers);
-    if (updateScoresList.length > 0) await updateScores(updateScoresList, headers);
-    loadSavedScores(userData);
-  };
-
-  useEffect(() => {
-    const source = students.length > 0 ? students : studentName;
-    const missingCount = source.filter((stu) => !stu.marks || stu.marks === "").length;
-    if (missingMarksRef.current !== missingCount) {
-      missingMarksRef.current = missingCount;
-      onMissingMarksChange(selectedAssessment.ac_id, missingCount);
-    }
-  }, [students, studentName, selectedAssessment, onMissingMarksChange]);
-
+    })
+    if (newScores.length > 0) await submitNewScores(newScores, headers)
+    if (updateScoresList.length > 0) await updateScores(updateScoresList, headers)
+  }
+  // useEffect(() => {
+  //   const source = students.length > 0 ? students : studentName;
+  //   const missingCount = source.filter((stu) => stu.marks === "" || stu.marks === null).length;
+  //   if (missingMarksRef.current !== missingCount) {
+  //     missingMarksRef.current = missingCount;
+  //     onMissingMarksChange(selectedAssessment.ac_id, missingCount);
+  //   }
+  // }, [students, studentName, selectedAssessment, onMissingMarksChange])
   useEffect(() => {
     if (showSuccess) {
       const timer = setTimeout(() => setShowSuccess(false), 1000);
       return () => clearTimeout(timer);
     }
   }, [showSuccess]);
-
   useEffect(() => {
     if (showFailed) {
       const timer = setTimeout(() => setShowFailed(false), 1000);
       return () => clearTimeout(timer);
     }
   }, [showFailed]);
-
   const displayList = (students.length > 0 ? students : studentName).filter((stu) =>
     stu.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
   return (
     <Wrapper>
       <div className="profile-section">
@@ -235,12 +221,13 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
           <h1 className="name">
             {selectedAssessment ? selectedAssessment.ac_name : "AC-1"}
           </h1>
+          <div className="scores">
           <p className="max-marks">Max Marks: {selectedAssessment?.max_marks}</p>
+          <p className="average-score">Average Score: {selectedAssessment?.average_score?.toFixed(2)}</p>
+          </div>
         </div>
       </div>
-
       {loading && <p style={{ textAlign: "center" }}>Loading student data...</p>}
-
       <div className="ac-container">
         <div className="student-list" ref={containerRef}>
           {displayList.map((stu) => (
@@ -270,15 +257,17 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
             </div>
           ))}
         </div>
-
-        <img
+        <div
+        className="add"
+      >
+        <span className="plus"> <img
           src={Done}
           alt="Done"
           className="done-button"
           onClick={handleSubmit}
-        />
+        /></span>
       </div>
-
+      </div>
       {showSuccess && (
         <div className="success-overlay">
           <SuccessfulDone />
@@ -292,5 +281,4 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
     </Wrapper>
   );
 };
-
 export default Assessment;

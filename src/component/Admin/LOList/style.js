@@ -333,7 +333,8 @@ const Wrapper = styled.section`
   select{
     flex : 1;
     background-color: #d0eaf5;
-    border-radius: 20px;
+    border-radius: 5px;
+    padding: 1px;
     border : 1
 }
 }

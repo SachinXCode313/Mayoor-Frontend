@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ReactECharts from "echarts-for-react";
+import { TbArrowBackUp } from "react-icons/tb";
 import axios from "axios";
 import Wrapper from "./style";
+import { useNavigate } from 'react-router'
 
 const MappingTree = () => {
   const [option, setOption] = useState(null);
+    const navigate = useNavigate()
 
 
   useEffect(() => {
@@ -176,16 +179,11 @@ const MappingTree = () => {
   return (
     <Wrapper>
 
-      <div className="class-header">
+      <div className="header">
         <div className="icon">
-          {/* <Menu
-      onProfileClick={handleProfileClick}
-      onSettingsClick={handleSettingsClick}
-      onLogoutClick={onLogout}
-      onReturnClick={handleClick}
-    /> */}
+          <TbArrowBackUp size={30} onClick={() => navigate(-1)} />
         </div>
-        <div className="class-title">
+        <div className="title">
           <h2>Mapping Tree</h2>
         </div>
       </div>

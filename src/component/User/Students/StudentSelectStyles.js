@@ -15,13 +15,21 @@ const Wrapper = styled.section`
     box-sizing: border-box;
   }
   .top-heading{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 10px 0px;
-        color: #00000096;
-        font-size: larger;;
-      }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0px;
+    color: #00000096;
+    font-size: larger;;
+  }
+  .top-heading h1{
+    margin: 0 auto;
+  }
+  .download-icon{
+    position: absolute;
+    right: 20px;
+  }
+
   .search-container {
     display: flex;
       gap: 5px;

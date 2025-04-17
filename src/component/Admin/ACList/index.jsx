@@ -10,10 +10,9 @@ import Failed from '../Failed';
 import axios from 'axios';
 import MenuDots from '../MenuDots';
 import Assessment from '../Assessment';
-import { HiOutlineDocumentText } from 'react-icons/hi';
-import { HiOutlineDocumentPlus } from 'react-icons/hi2';
 import Skeleton from 'react-loading-skeleton';
 import ReactLoading from 'react-loading'
+import { HiOutlineDocumentText,HiOutlineDocumentPlus,HiOutlineExclamationTriangle } from "react-icons/hi2";
 
 const ACList = ({ acItems, setAcItems, handleAcItems, studentsData, user, onLogout, filters, setFilters }) => {
 
@@ -171,7 +170,7 @@ const ACList = ({ acItems, setAcItems, handleAcItems, studentsData, user, onLogo
         quarter
       }
       const response = await axios.delete(
-        `${REACT_APP_API_URL}/api/assessment-criteria?id=${deleteAcId}`,{headers});
+        `${REACT_APP_API_URL}/api/assessment-criteria?id=${deleteAcId}`, { headers });
       const updatedAcItems = acItems.filter((item) => item.acId !== deleteAcId);
       setAcItems(updatedAcItems);
       setFilteredAcList(updatedAcItems);
@@ -333,7 +332,12 @@ const ACList = ({ acItems, setAcItems, handleAcItems, studentsData, user, onLogo
                 <div className="ac-info">
                   <p className="item-title">{item.ac_name}</p>
                 </div>
-
+                <div >
+                  {item.mapped_los?.length === 0 ? (<HiOutlineExclamationTriangle size={30} color="#ffa590" />) : ""}
+                </div>
+                <div className="mapCounter">
+                  {item.remaining_students ?? 0}
+                </div>
                 <div>
                   <MenuDots
                     index={index}

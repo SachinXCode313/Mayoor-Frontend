@@ -13,13 +13,27 @@ const Wrapper = styled.div`
     margin: 22px 0;
   }
     .info-container {
-  display: flex;
+      display: flex;
   flex-direction: column;
-  align-items: center;
   max-width: 90%;
-  text-align: center;
+  width: 100%;
   overflow: hidden;
 }
+
+.scores {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+  .max-marks {
+    font-size: 18px;
+    color: white;
+  }
+    .average-score{
+    font-size: 18px;
+    color: white;
+  }
   .search-bar {
     width: 90%;
     padding: 10px 40px 10px 15px;

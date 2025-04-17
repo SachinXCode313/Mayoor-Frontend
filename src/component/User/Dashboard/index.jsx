@@ -15,6 +15,7 @@ const Dashboard = () => {
         navigate(-1)
     }
     const [userData, setUserData] = useState(null);
+    const user = JSON.parse(localStorage.getItem("User"))
       useEffect(() => {
         const userData = sessionStorage.getItem("userData");
         if (userData) {
@@ -29,7 +30,7 @@ const Dashboard = () => {
           "Content-Type": "application/json",
           year: userData?.year,
           quarter: userData?.quarter,
-          teacher_id: 6
+          teacher_id: user?.teacherId
         };
         try {
           const response = await axios.get(

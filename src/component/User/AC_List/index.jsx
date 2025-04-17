@@ -278,7 +278,10 @@ const AC_List = ({
                   <p className="item-title">{item.ac_name}</p>
                 </div>
                 <div >
-                  {item.learning_outcomes?.length === 0 ? (<HiOutlineExclamationTriangle size={30} color="#ffa590" />) : "" }
+                  {item.mapped_los?.length === 0 ? (<HiOutlineExclamationTriangle size={30} color="#ffa590" />) : "" }
+                </div>
+                <div className="mapCounter">
+                {item.remaining_students ?? 0}
                 </div>
                 <div>
                   <MenuDots

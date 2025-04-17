@@ -452,6 +452,7 @@ const Wrapper = styled.section`
   .filters{
   align-items: center;
   display: flex;
+  overflow-x: auto;
   flex-direction: row;
   height : 50px;
   gap : 15px;
@@ -461,7 +462,8 @@ const Wrapper = styled.section`
   select{
     flex : 1;
     background-color: #d0eaf5;
-    border-radius: 20px;
+    border-radius: 5px;
+    padding: 1px;
     border : 1
 }
 }

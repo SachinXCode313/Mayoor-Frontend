@@ -52,7 +52,6 @@ const Student_report = ({ student, onBack   }) => {
         subject: userData.subject,
         quarter: userData.quarter,
       };
-      console.log(headers);
 
       try {
       
@@ -78,6 +77,8 @@ useEffect(() => {
     const validValues = arr.map(item => parseFloat(item.value) || 0);
     return validValues.reduce((sum, val) => sum + val, 0) / validValues.length*100;
   };
+
+  console.log("ac-score",scores.ac_scores);
 
   const avg_ac = getAverage(scores.ac_scores);
   const avg_lo = getAverage(scores.lo_scores);
@@ -144,10 +145,10 @@ useEffect(() => {
               <span className="initials">{student.name.split(' ')[0][0] + (student.name.split(' ')[1] ? student.name.split(' ')[1][0].toUpperCase() : "")}</span>
               </div>
               <div className="student-details">
-                <p><strong>Name:</strong> {student.name|| userData?.name || "N/A"}</p>
-                <p><strong>Roll No:</strong> {student.id|| userData?.id || "N/A"} </p>
-                <p><strong>Grade:</strong> {student.section| userData?.section|| "N/A"}</p>
-                <p><strong>Section:</strong> {student.class|| userData?.class || "N/A"}</p>
+                <p><strong>Name:</strong> {student.name || userData?.name || "N/A"}</p>
+                <p><strong>Roll No:</strong> {student.id || userData?.id || "N/A"} </p>
+                <p><strong>Grade:</strong> {student.class || userData?.class|| "N/A"}</p>
+                <p><strong>Section:</strong> {userData?.sectionName || "N/A"}</p>
               </div>
             </div>
 

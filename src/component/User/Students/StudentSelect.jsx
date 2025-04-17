@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Wrapper from "./StudentSelectStyles.js";
 import ReactLoading from 'react-loading'
 import Skeleton from 'react-loading-skeleton'
+import DownloadChecklist from "../Donwload/index.jsx";
 const StudentList = ({ onStudentsData, setIndex, onLogout }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [students, setStudents] = useState([]);
@@ -75,9 +76,9 @@ const StudentList = ({ onStudentsData, setIndex, onLogout }) => {
         let re = /(\b[a-z](?!\s))/g;
         response.data.students.map(
           (student) =>
-            (student.name = student.name
-              .toLowerCase()
-              .replace(re, (x) => x.toUpperCase()))
+          (student.name = student.name
+            .toLowerCase()
+            .replace(re, (x) => x.toUpperCase()))
         );
         if (response.data && Array.isArray(response.data.students)) {
           setStudents(response.data.students);
@@ -113,7 +114,7 @@ const StudentList = ({ onStudentsData, setIndex, onLogout }) => {
     <Wrapper>
       <div className="search-container">
         <div className="icon">
-          <Menu/>
+          <Menu />
         </div>
         <input
           type="text"
@@ -123,15 +124,20 @@ const StudentList = ({ onStudentsData, setIndex, onLogout }) => {
           className="search-bar"
         />
       </div>
-      <div className='top-heading'><h1>Students</h1></div>
+      <div className='top-heading'>
+        <h1>Students</h1>
+        <div className="download-icon">
+          <DownloadChecklist />
+        </div>
+      </div>
       <div className="studentlist">
         {loading ? (
           <div className="loading-message">
             <div>
               <span>Loading...  </span>
-              <ReactLoading type="spin" color="#135D5D" height={40} width={40}  />
+              <ReactLoading type="spin" color="#135D5D" height={40} width={40} />
               <Skeleton count={3} />
-              
+
             </div>
           </div>
         ) : filteredStudents.length > 0 ? (
