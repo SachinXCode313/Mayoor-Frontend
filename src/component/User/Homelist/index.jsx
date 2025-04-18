@@ -70,7 +70,7 @@ const HomeList = () => {
       section: parseInt(selectedSection, 10),
       quarter: parseInt(selectedQuarter, 10),
       subject: parseInt(selectedSubject, 10),
-      getclassName: getClassName(selectedClass),
+      className: getClassName(selectedClass),
       sectionName: getSectionName(selectedSection),
       quarterName: getQuarterName(selectedQuarter),
       subjectName: getSubjectName(selectedSubject)

@@ -59,10 +59,10 @@ const holdTimeoutRef = useRef(null);
               {student.name.split(' ')[0][0] + (student.name.split(' ')[1] ? student.name.split(' ')[1][0].toUpperCase() : "")}
             </span>
             <div className="student-details">
-              <p><strong>Name:</strong> {student.name || userData?.name || "N/A"}</p>
-              <p><strong>Roll No:</strong> {student.id || userData?.id || "N/A"}</p>
-              <p><strong>Grade:</strong> {student.section || userData?.section || "N/A"}</p>
-              <p><strong>Section:</strong> {student.class || userData?.class || "N/A"}</p>
+            <p><strong>Name:</strong> {student.name || userData?.name || "N/A"}</p>
+                <p><strong>Roll No:</strong> {student.id || userData?.id || "N/A"} </p>
+                <p><strong>Grade:</strong> {userData?.className || "N/A"}</p>
+                <p><strong>Section:</strong> {userData?.sectionName || "N/A"}</p>
             </div>
           </div>
           

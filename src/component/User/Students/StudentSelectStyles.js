@@ -22,13 +22,6 @@ const Wrapper = styled.section`
     color: #00000096;
     font-size: larger;;
   }
-  .top-heading h1{
-    margin: 0 auto;
-  }
-  .download-icon{
-    position: absolute;
-    right: 20px;
-  }
 
   .search-container {
     display: flex;

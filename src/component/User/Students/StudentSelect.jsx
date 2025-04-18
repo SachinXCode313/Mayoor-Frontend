@@ -125,6 +125,7 @@ const StudentList = ({ onStudentsData, setIndex, onLogout }) => {
         />
       </div>
       <div className='top-heading'>
+        <div></div>
         <h1>Students</h1>
         <div className="download-icon">
           <DownloadChecklist />
