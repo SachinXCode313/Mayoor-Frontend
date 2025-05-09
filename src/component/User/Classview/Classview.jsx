@@ -307,7 +307,7 @@ const ClassView = () => {
       <div className="class-container">
         <div className="info-box">
           <div className="info-text">
-            <p><strong>Class:</strong> {userData.getclassName}</p>
+            <p><strong>Class:</strong> {userData.className}</p>
             <p><strong>Year:</strong> {userData.year}</p>
             <p><strong>Subject:</strong> {userData.subjectName}</p>
           </div>
