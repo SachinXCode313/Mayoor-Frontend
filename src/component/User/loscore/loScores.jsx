@@ -60,7 +60,7 @@ const holdTimeoutRef = useRef(null);
             </span>
             <div className="student-details">
             <p><strong>Name:</strong> {student.name || userData?.name || "N/A"}</p>
-                <p><strong>Roll No:</strong> {student.id || userData?.id || "N/A"} </p>
+                <p><strong>Roll No:</strong> {student.student || userData?.id || "N/A"} </p>
                 <p><strong>Grade:</strong> {userData?.className || "N/A"}</p>
                 <p><strong>Section:</strong> {userData?.sectionName || "N/A"}</p>
             </div>

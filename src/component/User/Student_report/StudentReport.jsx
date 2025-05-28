@@ -45,7 +45,7 @@ const Student_report = ({ student, onBack   }) => {
       const headers = {
         Authorization: 'Bearer YOUR_ACCESS_TOKEN', // Replace with actual token
         'Content-Type': 'application/json',
-        studentid: student.id,
+        studentid: student.student,
         year: userData.year,
         classname: userData.class,
         section: userData.section,
@@ -146,7 +146,7 @@ useEffect(() => {
               </div>
               <div className="student-details">
                 <p><strong>Name:</strong> {student.name || userData?.name || "N/A"}</p>
-                <p><strong>Roll No:</strong> {student.id || userData?.id || "N/A"} </p>
+                <p><strong>Roll No:</strong> {student.student || userData?.id || "N/A"} </p>
                 <p><strong>Grade:</strong> {userData?.className || "N/A"}</p>
                 <p><strong>Section:</strong> {userData?.sectionName || "N/A"}</p>
               </div>

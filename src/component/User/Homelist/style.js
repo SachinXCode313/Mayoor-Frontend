@@ -228,6 +228,11 @@ const Wrapper = styled.section`
     a{
         text-decoration: none;
     }
+    .get-started:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+        opacity: 0.8;
+    }
 `
 
 export default Wrapper;

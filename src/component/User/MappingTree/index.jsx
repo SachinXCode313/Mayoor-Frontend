@@ -90,10 +90,11 @@ const MappingTree = () => {
               bottom: "5%",
               right: "30%",
               nodePadding: 0,
-              roam: true, // Zoom aur pan allow kar raha hai
+              // roam: true, // Zoom aur pan allow kar raha hai
+              roam: "move", 
               symbolSize: 14,
               bounding: "all", // Chart ko boundary ke andar limit karega
-              scaleLimit: { min: 0.5, max: 2 }, // Zoom range set karta hai
+              // scaleLimit: { min: 0.5, max: 2 }, // Zoom range set karta hai
               label: {
                 position: "left",
                 verticalAlign: "middle",

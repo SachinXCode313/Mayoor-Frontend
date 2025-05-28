@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import Wrapper from './style';
-import Ripples from 'react-ripples'
+import Ripples from 'react-ripples';
 import { Link } from 'react-router';
 import { CiUser } from "react-icons/ci";
+
 const HomeList = () => {
-  const [userData, setUserData] = useState({});
-  const user = JSON.parse(localStorage.getItem("User"))
-  
+  const user = JSON.parse(localStorage.getItem("User"));
+
+  const [selectedYear, setSelectedYear] = useState(sessionStorage.getItem("year") || 2024);
+  const [selectedClass, setSelectedClass] = useState(sessionStorage.getItem("class") || 1);
+  const [selectedSection, setSelectedSection] = useState(sessionStorage.getItem("section") || '1');
+  const [selectedQuarter, setSelectedQuarter] = useState(sessionStorage.getItem("quarter") || '1');
+  const [selectedSubject, setSelectedSubject] = useState(sessionStorage.getItem("subject") || '1');
+  const [userData, setUserData] = useState(
+    JSON.parse(sessionStorage.getItem("userData")) || {}
+  );
+
   useEffect(() => {
-    console.log(user)
+    console.log(user);
     const clearSessionStorageOnRefresh = () => {
       sessionStorage.clear();
     };
@@ -17,15 +26,6 @@ const HomeList = () => {
       window.removeEventListener("beforeunload", clearSessionStorageOnRefresh);
     };
   }, []);
-  const [selectedYear, setSelectedYear] = useState(sessionStorage.getItem("year") || 2024);
-  const [selectedClass, setSelectedClass] = useState(sessionStorage.getItem("class") || 1);
-  const [selectedSection, setSelectedSection] = useState(sessionStorage.getItem("section") || '1');
-  const [selectedQuarter, setSelectedQuarter] = useState(sessionStorage.getItem("quarter") || '1');
-  const [selectedSubject, setSelectedSubject] = useState(sessionStorage.getItem("subject") || '1');
-  const updateSessionStorage = (key, value, setter) => {
-    sessionStorage.setItem(key, value);
-    setter(value);
-  };
 
   const getClassName = (classNum) => {
     const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII'];
@@ -61,112 +61,183 @@ const HomeList = () => {
     else if (hour < 18) return "Good Afternoon,";
     else return "Good Evening,";
   };
+  const getSectionNumber = (name) => {
+  const sectionNames = {
+    1: "Orchid",
+    2: "Tulip",
+    3: "Daffodil",
+  };
+
+  // Find the key (number) for the given name
+  return parseInt(
+    Object.keys(sectionNames).find((key) => sectionNames[key] === name),
+    10
+  );
+};
+
+const subjectNames = {
+  1: "English",
+  2: "Hindi",
+  3: "Mathematics",
+  4: "Science",
+  5: "Computer Sc.",
+  6: "Social Studies",
+  7: "III Language",
+  8: "GP Values",
+  9: "Music",
+  10: "Dance/Dramatics",
+  11: "Art",
+  12: "Sports",
+  13: "Discipline",
+  14: "Attendance"
+};
+const getSubjectNumber = (name) => {
+  return parseInt(
+    Object.keys(subjectNames).find((key) => subjectNames[key] === name),
+    10
+  );
+};
+
 
   const handleClick = () => {
-    // setIndex(2);
-    const updatedUserdata = {
-      year: parseInt(selectedYear, 10),
-      class: parseInt(selectedClass, 10),
-      section: parseInt(selectedSection, 10),
-      quarter: parseInt(selectedQuarter, 10),
-      subject: parseInt(selectedSubject, 10),
-      className: getClassName(selectedClass),
-      sectionName: getSectionName(selectedSection),
-      quarterName: getQuarterName(selectedQuarter),
-      subjectName: getSubjectName(selectedSubject)
-    };
+  const sectionNum = getSectionNumber(selectedSection); // 'Orchid' -> 1
+  const subjectNum = getSubjectNumber(selectedSubject); // 'English' -> 1
 
-    sessionStorage.setItem("userData", JSON.stringify(updatedUserdata));
-    setUserData(updatedUserdata);
+  const updatedUserdata = {
+    year: parseInt(selectedYear, 10),
+    class: parseInt(selectedClass, 10),
+    section: sectionNum,
+    quarter: parseInt(selectedQuarter, 10),
+    subject: subjectNum,                    // Number
+    className: getClassName(selectedClass),
+    quarterName: getQuarterName(selectedQuarter),
+    sectionName: selectedSection,
+    subjectName: selectedSubject            // Store subject name too
   };
+
+  sessionStorage.setItem("userData", JSON.stringify(updatedUserdata));
+  setUserData(updatedUserdata);
+};
+
+
+
   const toggle = e => {
-    e.target.nextSibling.style.display = e.target.nextSibling.style.display === 'flex' ? 'none' : 'flex'
-  }
+    e.target.nextSibling.style.display = e.target.nextSibling.style.display === 'flex' ? 'none' : 'flex';
+  };
+
+  const allocation = user?.allocation || [];
+
+  const availableClasses = [...new Set(allocation.map(item => item.class))];
+  const availableSections = [...new Set(
+    allocation.filter(item => item.class === selectedClass)
+      .map(item => item.section)
+  )];
+  const availableSubjects = [...new Set(
+    allocation.filter(item => item.class === selectedClass && item.section === selectedSection)
+      .map(item => item.subject)
+  )];
+
+  // Sync userData when any selection changes
+ useEffect(() => {
+  const sectionNum = getSectionNumber(selectedSection); // 'Orchid' -> 1
+  const subjectNum = getSubjectNumber(selectedSubject); // 'English' -> 1
+
+  const updatedUserdata = {
+    year: parseInt(selectedYear, 10),
+    class: parseInt(selectedClass, 10),
+    section: sectionNum,
+    quarter: parseInt(selectedQuarter, 10),
+    subject: subjectNum,                    // Number
+    className: getClassName(selectedClass),
+    quarterName: getQuarterName(selectedQuarter),
+    sectionName: selectedSection,
+    subjectName: selectedSubject            // Store subject name too
+  };
+  sessionStorage.setItem("userData", JSON.stringify(updatedUserdata));
+  setUserData(updatedUserdata);
+}, [selectedYear, selectedClass, selectedSection, selectedQuarter, selectedSubject]);
+
+const isAllSelected =
+  selectedYear &&
+  availableClasses.includes(selectedClass) &&
+  availableSections.includes(selectedSection) &&
+  availableSubjects.includes(selectedSubject) &&
+  selectedQuarter;
+
+
   return (
     <Wrapper>
       <div id="user">
-        <div class="profile-card">
-          <div class="avatar">
-          {user.image ? <img src={user.image} alt="User Icon" referrerPolicy="no-referrer" /> : <CiUser size={60} color='#008680' />}
+        <div className="profile-card">
+          <div className="avatar">
+            {user.image ? <img src={user.image} alt="User Icon" referrerPolicy="no-referrer" /> : <CiUser size={60} color='#008680' />}
           </div>
-          <div class="profile-info">
+          <div className="profile-info">
             <h2>{getGreeting()}</h2>
             <h1>{user.name}</h1>
           </div>
         </div>
-        <div id="image">
-          {/* <img id="notification" src={notification} alt="Notification" /> */}
-          {/* <img id="profile" src={student} alt="User" /> */}
-          {/* <img id="menu" src={menu} alt="Menu" /> */}
-        </div>
       </div>
+
       <form className="choice">
         <label htmlFor="year" onClick={toggle}>Session</label>
         <div className="options">
-          <Ripples><div tabIndex={0} className={selectedYear === 2025 ? "option active" : "option"} onClick={e => setSelectedYear(2025)}>2025 - 2026</div></Ripples>
-          <Ripples><div tabIndex={0} className={selectedYear === 2024 ? "option active" : "option"} onClick={e => setSelectedYear(2024)}>2024 - 2025</div></Ripples>
+          <Ripples><div tabIndex={0} className={selectedYear === 2025 ? "option active" : "option"} onClick={() => setSelectedYear(2025)}>2025 - 2026</div></Ripples>
+          <Ripples><div tabIndex={0} className={selectedYear === 2024 ? "option active" : "option"} onClick={() => setSelectedYear(2024)}>2024 - 2025</div></Ripples>
         </div>
+
         <label htmlFor="quarter" onClick={toggle}>Quarter</label>
         <div className="quarter options">
-          <Ripples><div tabIndex={0} className={selectedQuarter === "1" ? "option active" : "option"} onClick={e => setSelectedQuarter("1")}>FA 1</div></Ripples>
-          <Ripples><div tabIndex={0} className={selectedQuarter === "2" ? "option active" : "option"} onClick={e => setSelectedQuarter("2")}>FA 2</div></Ripples>
-          <Ripples><div tabIndex={0} className={selectedQuarter === "3" ? "option active" : "option"} onClick={e => setSelectedQuarter("3")}>SA 1</div></Ripples>
-          <Ripples><div tabIndex={0} className={selectedQuarter === "4" ? "option active" : "option"} onClick={e => setSelectedQuarter("4")}>FA 3</div></Ripples>
-          <Ripples><div tabIndex={0} className={selectedQuarter === "5" ? "option active" : "option"} onClick={e => setSelectedQuarter("5")}>FA 4</div></Ripples>
-          <Ripples><div tabIndex={0} className={selectedQuarter === "6" ? "option active" : "option"} onClick={e => setSelectedQuarter("6")}>SA 2</div></Ripples>
+          {[1, 2, 3, 4, 5, 6].map(q => (
+            <Ripples key={q}>
+              <div tabIndex={0} className={`option ${selectedQuarter === q.toString() ? "active" : ""}`} onClick={() => setSelectedQuarter(q.toString())}>
+                {getQuarterName(q.toString())}
+              </div>
+            </Ripples>
+          ))}
         </div>
+
         <label htmlFor="class" onClick={toggle}>Class</label>
         <div className="class options">
-          <Ripples><div tabIndex={0} className={`option ${selectedClass === 1 ? 'active' : ''}`} onClick={e => setSelectedClass(1)}>1</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedClass === 2 ? 'active' : ''}`} onClick={e => setSelectedClass(2)}>2</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedClass === 3 ? 'active' : ''}`} onClick={e => setSelectedClass(3)}>3</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedClass === 4 ? 'active' : ''}`} onClick={e => setSelectedClass(4)}>4</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedClass === 5 ? 'active' : ''}`} onClick={e => setSelectedClass(5)}>5</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedClass === 6 ? 'active' : ''}`} onClick={e => setSelectedClass(6)}>6</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedClass === 7 ? 'active' : ''}`} onClick={e => setSelectedClass(7)}>7</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedClass === 8 ? 'active' : ''}`} onClick={e => setSelectedClass(8)}>8</div></Ripples>
+          {availableClasses.map(cls => (
+            <Ripples key={cls}>
+              <div tabIndex={0} className={`option ${selectedClass === cls ? 'active' : ''}`} onClick={() => setSelectedClass(cls)}>
+                {cls}
+              </div>
+            </Ripples>
+          ))}
         </div>
+
         <label htmlFor="section" onClick={toggle}>Section</label>
         <div className="section options">
-          <Ripples><div tabIndex={0} className={selectedSection === "1" ? "option active" : "option"} onClick={e => setSelectedSection("1")}>Orchid</div></Ripples>
-          <Ripples><div tabIndex={0} className={selectedSection === "2" ? "option active" : "option"} onClick={e => setSelectedSection("2")}>Tulip</div></Ripples>
-          <Ripples><div tabIndex={0} className={selectedSection === "3" ? "option active" : "option"} onClick={e => setSelectedSection("3")}>Daffodil</div></Ripples>
+          {availableSections.map(sec => (
+            <Ripples key={sec}>
+              <div tabIndex={0} className={`option ${selectedSection === sec ? 'active' : ''}`} onClick={() => setSelectedSection(sec)}>
+                {getSectionName(sec)}
+              </div>
+            </Ripples>
+          ))}
         </div>
+
         <label htmlFor="subject" onClick={toggle}>Subject</label>
         <div className="options subjects">
-          <Ripples><div tabIndex={0} className={`option ${selectedSubject === "1" ? 'active' : ''}`} onClick={e => setSelectedSubject('1')}>English</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedSubject === "2" ? 'active' : ''}`} onClick={e => setSelectedSubject('2')}>Hindi</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedSubject === '3' ? 'active' : ''}`} onClick={e => setSelectedSubject('3')}>Mathematics</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedSubject === '4' ? 'active' : ''}`} onClick={e => setSelectedSubject('4')}>Science</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedSubject === '5' ? 'active' : ''}`} onClick={e => setSelectedSubject('5')}>Computer Sc.</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedSubject === '6' ? 'active' : ''}`} onClick={e => setSelectedSubject('6')}>Social Studies</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedSubject === '7' ? 'active' : ''}`} onClick={e => setSelectedSubject('7')}>III Language</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedSubject === '8' ? 'active' : ''}`} onClick={e => setSelectedSubject('8')}>GP Values</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedSubject === '9' ? 'active' : ''}`} onClick={e => setSelectedSubject('9')}>Music</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedSubject === '10' ? 'active' : ''}`} onClick={e => setSelectedSubject('10')}>Dance/Dramatics</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedSubject === '11' ? 'active' : ''}`} onClick={e => setSelectedSubject('11')}>Art</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedSubject === '12' ? 'active' : ''}`} onClick={e => setSelectedSubject('12')}>Sports</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedSubject === '13' ? 'active' : ''}`} onClick={e => setSelectedSubject('13')}>Discipline</div></Ripples>
-          <Ripples><div tabIndex={0} className={`option ${selectedSubject === '14' ? 'active' : ''}`} onClick={e => setSelectedSubject('14')}>Attendance</div></Ripples>
+          {availableSubjects.map(sub => (
+            <Ripples key={sub}>
+              <div tabIndex={0} className={`option ${selectedSubject === sub ? 'active' : ''}`} onClick={() => setSelectedSubject(sub)}>
+                {getSubjectName(sub)}
+              </div>
+            </Ripples>
+          ))}
         </div>
+
         <Link to="/user/home">
-          {/* <Ripples className="started"><button
-          className="get-started"
-          // onClick={(e) => {
-          //   e.preventDefault();
-          //   handleClick();
-          // }}
-          disabled={!selectedSubject}
-          value={Home}
-        >
-          Get Started
-        </button></Ripples> */}
           <div className='started'>
-            <input type="button" value="Get started" className='get-started' onClick={handleClick} />
+            <input type="button" value="Get started" className='get-started' onClick={handleClick} disabled={!isAllSelected} />
           </div>
         </Link>
       </form>
     </Wrapper>
   );
 };
+
 export default HomeList;
