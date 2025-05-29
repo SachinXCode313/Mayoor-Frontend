@@ -41,8 +41,8 @@ const Form_AC = ({closeForm, loadAC, closeFormOnly, setShowSuccess, setShowFaile
       console.log("Editing AC, selected LO IDs:", editItem.learning_outcomes)
         setAcName(editItem.ac_name || "");
         setMaxMarks(editItem.max_marks ? String(editItem.max_marks) : "");
-        if (Array.isArray(editItem.learning_outcomes)) {
-          const loIds = editItem.learning_outcomes.map((lo) => lo.lo_id);
+        if (Array.isArray(editItem.mapped_los)) {
+          const loIds = editItem.mapped_los.map((lo) => lo.lo_id);
           console.log("Extracted LO IDs:", loIds); // Debugging output
           setSelectedLoIds(loIds);
         } else {
