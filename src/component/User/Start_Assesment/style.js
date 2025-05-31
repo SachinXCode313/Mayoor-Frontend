@@ -135,7 +135,7 @@ const Wrapper = styled.div`
   }
   .ac-box {
     width: 85%;
-    height: 60px;
+    height: auto;
     color: #6C6C6C;
     background-color: #FFFFFF;
     border-radius: 5px;

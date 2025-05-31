@@ -15,7 +15,6 @@ import ReactLoading from 'react-loading'
 import Skeleton from 'react-loading-skeleton';
 import { useNavigate } from "react-router-dom";
 import { HiOutlineDocumentText,HiOutlineDocumentPlus,HiOutlineExclamationTriangle } from "react-icons/hi2";
-
 const AC_List = ({
   acItems,
   setAcItems,
@@ -230,8 +229,6 @@ const AC_List = ({
     }
     setHeldAC(null);
   };
-  
-
   const handleReturnClick = () => {
     navigate("/user/homelist"); // Navigate to HomeList
   };
@@ -257,7 +254,6 @@ const AC_List = ({
               <span>Loading...  </span>
               <ReactLoading type="spin" color="#135D5D" height={40} width={40}  />
               <Skeleton count={3} />
-              
             </div>
           </li>
         ) : filteredAcList.length > 0 ? (
@@ -278,10 +274,10 @@ const AC_List = ({
                   <p className="item-title">{item.ac_name}</p>
                 </div>
                 <div >
-                  {item.mapped_los?.length === 0 ? (<HiOutlineExclamationTriangle size={30} color="#ffa590" />) : "" }
+                  {item.mapped_los?.length === 0 ? (<HiOutlineExclamationTriangle size={30} color="#FFA590" />) : "" }
                 </div>
                 <div className="mapCounter">
-                {item.remaining_students ?? 0}
+                {missingMarksCount[item.ac_id] ?? item.remaining_students ?? 0}
                 </div>
                 <div>
                   <MenuDots
