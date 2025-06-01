@@ -64,8 +64,8 @@ const HomeList = () => {
   const getSectionNumber = (name) => {
   const sectionNames = {
     1: "Orchid",
-    2: "Tulip",
-    3: "Daffodil",
+    2: "Daffodil",
+    3: "Tulip",
   };
 
   // Find the key (number) for the given name

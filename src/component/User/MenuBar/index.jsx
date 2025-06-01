@@ -3,10 +3,11 @@ import Wrapper from './style';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { BsSendArrowUp } from "react-icons/bs";
 import { PiUserList, PiMonitorPlay, PiTreeStructure } from "react-icons/pi";
-import { TbLogout2,TbFilterStar } from "react-icons/tb";
+import { TbLogout2, TbFilterStar } from "react-icons/tb";
 import { CiUser } from "react-icons/ci";
 import { FiMenu } from "react-icons/fi";
 import { RiListSettingsLine } from "react-icons/ri";
+import { VscFeedback } from "react-icons/vsc";
 import Tutorial from '../Tutorial';
 
 const Menu = () => {
@@ -87,6 +88,10 @@ const Menu = () => {
             <div className='logout' onClick={handleLogout}>
               <TbLogout2 size={30} className='icon' />
               <span>Logout</span>
+            </div>
+            <div onClick={() => window.open("https://docs.google.com/forms/d/e/1FAIpQLScNz0eRnql-p_drunBT2NrPbvruEq96XCGL2eWK4a0h8QhcrQ/viewform?usp=header", "_blank")}>
+              <VscFeedback size={30} className='icon' />
+              <span>Feedback</span>
             </div>
           </div>
         </div>
