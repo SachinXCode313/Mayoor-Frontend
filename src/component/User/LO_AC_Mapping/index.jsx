@@ -69,10 +69,10 @@ const ACMapping = ({ loId, acList, loData, onSuccess }) => {
       Authorization: `Bearer ${userData?.token}`,
       "Content-Type": "application/json",
       year: userData?.year,
+      quarter: userData?.quarter,
       classname: userData?.class,
       section: userData?.section,
       subject: userData?.subject,
-      quarter: userData?.quarter,
     };
     try {
       const response = await axios.put(

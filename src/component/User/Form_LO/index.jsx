@@ -124,10 +124,11 @@ const Form_LO = ({ closeForm, loadLO, closeFormOnly, setShowSuccess, setShowFail
       const headers = {
         Authorization: "Bearer YOUR_ACCESS_TOKEN",
         "Content-Type": "application/json",
-        classname: userData.class,
         year: userData.year,
-        subject: userData.subject,
         quarter: userData.quarter,
+        classname: userData.class,
+        section: userData.section,
+        subject: userData.subject,
       };
     
       const body = {

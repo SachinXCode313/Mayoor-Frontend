@@ -73,7 +73,7 @@ const Wrapper = styled.section`
     border-top-left-radius:30px;
     border-top-right-radius: 30px;
     background-color: #fff;
-     padding: 10px 10px 50px 10px;
+     padding: 10px 10px 100px 10px;
   }
   .no-results{
     list-style: none;
@@ -162,8 +162,8 @@ const Wrapper = styled.section`
     align-items: center; /* Center vertically */
     text-align: center;
     position: fixed; /* Fixed positioning */
-    bottom: 90px; /* Distance from the bottom */
-    right: 40px; /* Distance from the right */
+    bottom: 100px; /* Distance from the bottom */
+    right: 20px; /* Distance from the right */
     z-index: 1000;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), /* Slight shadow below */
               0 -4px 6px rgba(0, 0, 0, 0.1), /* Slight shadow above */

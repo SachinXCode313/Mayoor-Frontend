@@ -20,7 +20,8 @@ const Wrapper = styled.section`
     align-items: center;
     padding: 10px 0px;
     color: #00000096;
-    font-size: larger;;
+    font-size: larger;
+    padding: 10px 20px;
   }
 
   .search-container {
