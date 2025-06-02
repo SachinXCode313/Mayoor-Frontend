@@ -1,33 +1,28 @@
 import styled from "styled-components";
-
 const Wrapper = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
     overflow: hidden; /* Prevent overflowing of the container */
-    background-color: #21c2ba;
-
+    background-color: #21C2BA;
     .class-header {
    height: 100px;
     align-items: center;
     color: white;
-    background-color: #21c2ba;
+    background-color: #21C2BA;
     display: flex;
     flex-direction: row;
     gap: 60px;
   }
-
   .icon {
     width: 30px;
     margin-left: 20px;
   }
-
     .menu-icon {
         font-size: 24px;
         margin-right: 10px;
         cursor: pointer;
     }
-
     /* Main Content */
     main {
         background-color: white;
@@ -48,7 +43,6 @@ const Wrapper = styled.div`
     margin-left: 3px;
     margin-right: 30px;
   }
-
     /* Card Styling */
     .card {
         background-color: white;
@@ -57,7 +51,6 @@ const Wrapper = styled.div`
         margin-bottom: 20px;
         border: 2px solid lightgrey;
     }
-
     .info {
         display: flex;
         flex-wrap: wrap;
@@ -65,44 +58,40 @@ const Wrapper = styled.div`
         font-size: 16px;
         margin-bottom: 15px;
     }
-
     .info p {
         margin: 5px 0;
         width: 48%; /* Ensures each pair aligns side by side */
     }
-
     /* Stats Boxes */
     .stats {
         display: flex;
         justify-content: space-between;
         margin: 5px 0;
     }
-
     .box {
         padding: 15px 10px;
         text-align: center;
         border-radius: 5px;
         font-size: 18px;
-        margin: 0 20px;
+        /* margin: 0 5px; */
         border: 2px solid;
         span{
             font-size: 14px;
         }
     }
-
     /* Color for each box */
     .ac {
         border-color: green;
+        width: 50px;
     }
-
     .lo {
         border-color: orange;
+        width: 50px;
     }
-
     .ro {
         border-color: red;
+        width: 50px;
     }
-
     .loading-message{
     display: block;
     width: 100px;
@@ -111,6 +100,5 @@ const Wrapper = styled.div`
 .no-results{
     text-align: center;
 }
-
 `
 export default Wrapper
