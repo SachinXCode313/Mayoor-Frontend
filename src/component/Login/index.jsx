@@ -220,7 +220,8 @@ const Login = () => {
         <div className="container">
           <div>
             <img id="logo" src={Logo} alt="Logo" /><br />
-            <h1 id="appName">Mayoor</h1>
+            <h1 id="appName">Mayoor School Jaipur</h1>
+            <p id="tagline">In Collaboration With Mayo College General Council</p>
           </div>
 
           <input id="SignIn" type="button" value="Sign in with Google" onClick={handleLogin} />

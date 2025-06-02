@@ -6,8 +6,16 @@ const Wrapper = styled.section`
     margin: 0;
     /* background:#21B2CA; */
     #appName {
-      margin: auto 100px;
-      font-size: 50px;
+      margin: auto auto;
+      font-size: 35px;
+      color: #36454F;
+      opacity: 0; /* Initially hidden */
+      animation: fadeIn 1s ease-out forwards;
+      animation-delay: 2s; /* Delay for text */
+    }
+      #tagline {
+      margin: 2px auto;
+      font-size: 13px;
       color: #36454F;
       opacity: 0; /* Initially hidden */
       animation: fadeIn 1s ease-out forwards;

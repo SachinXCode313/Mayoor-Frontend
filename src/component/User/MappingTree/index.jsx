@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router'
 
 const MappingTree = () => {
   const [option, setOption] = useState(null);
-    const navigate = useNavigate()
+  const navigate = useNavigate()
 
 
   useEffect(() => {
@@ -26,8 +26,11 @@ const MappingTree = () => {
         const headers = {
           Authorization: "Bearer YOUR_ACCESS_TOKEN",
           "Content-Type": "application/json",
-          year: 2024,
-          subject: userData.subject, // Ensure this field exists
+          year: userData?.year,
+          quarter: userData?.quarter,
+          classname: userData?.class,
+          section: userData?.section,
+          subject: userData?.subject,
         };
 
         const response = await axios.get(
@@ -91,7 +94,7 @@ const MappingTree = () => {
               right: "30%",
               nodePadding: 0,
               // roam: true, // Zoom aur pan allow kar raha hai
-              roam: "move", 
+              roam: "move",
               symbolSize: 14,
               bounding: "all", // Chart ko boundary ke andar limit karega
               // scaleLimit: { min: 0.5, max: 2 }, // Zoom range set karta hai

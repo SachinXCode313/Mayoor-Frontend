@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router';
 import axios from 'axios';
 import ReactLoading from 'react-loading'
 import Skeleton from 'react-loading-skeleton';
-
 const Dashboard = () => {
     const[teacherData, setTeacherData] = useState([])
     const [loading, setLoading] = useState(false);
@@ -22,7 +21,6 @@ const Dashboard = () => {
           setUserData(JSON.parse(userData));
         }
       }, []);
-
     const loadDashboard = async () => {
         setLoading(true)
         const headers = {
@@ -55,7 +53,6 @@ const Dashboard = () => {
           loadDashboard();
         }
       }, [userData]);
-
     return (
         <Wrapper>
         <div className="class-header">
@@ -68,7 +65,6 @@ const Dashboard = () => {
           <h2>Teacher's Dashboard</h2>
         </div>
         </div>
-
             <main>
                 {loading ? (
                     <div className="loading-message">
@@ -88,15 +84,15 @@ const Dashboard = () => {
                         </div>
                         <div className="stats">
                             <div className="box ac">
-                                <p>{card.ac_class_average ?? "N/A"}</p>
+                                <p>{card.ac_class_average !== null ? `${(card.ac_class_average * 100).toFixed(1)}%` : "N/A"}</p>
                                 <span>AC (%)</span>
                             </div>
                             <div className="box lo">
-                                <p>{card.lo_class_average ?? "N/A"}</p>
+                                <p>{card.lo_class_average !== null ? `${(card.lo_class_average * 100).toFixed(1)}%` : "N/A"}</p>
                                 <span>LO (%)</span>
                             </div>
                             <div className="box ro">
-                                <p>{card.ro_class_average ?? "N/A"}</p>
+                                <p>{card.ro_class_average !== null ? `${(card.ro_class_average * 100).toFixed(1)}%` : "N/A"}</p>
                                 <span>RO (%)</span>
                             </div>
                         </div>
@@ -111,5 +107,4 @@ const Dashboard = () => {
         </Wrapper>
     );
 };
-
 export default Dashboard;
