@@ -50,6 +50,7 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
           name: student.name.toLowerCase().replace(re, (x) => x.toUpperCase()),
           marks: "",
         }))
+        console.log("Formatted Student Data:", formatted)
         setStudentName(formatted)
         setAverageScore(0)
       } catch (error) {
@@ -81,6 +82,7 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
         `${process.env.REACT_APP_API_URL}/api/assessment-criteria-score`,
         { headers }
       )
+      console.log("Response Data:", response.data)
       if (Array.isArray(response.data)) {
         const transformed = response.data.map((item) => {
           const marks =
@@ -88,7 +90,7 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
               ? (selectedAssessment.max_marks * parseFloat(item.value)).toString()
               : (selectedAssessment.max_marks * parseFloat(item.value)).toFixed(1)
           return {
-            id: item.student_id,
+            id: item.id,
             name: item.student_name
               .toLowerCase()
               .replace(/\b[a-z](?!\s)/g, (x) => x.toUpperCase()),
@@ -96,6 +98,7 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
             scoreId: item.id,
           }
         })
+        console.log("Transformed Scores:", transformed)
         setStudents(transformed)
         updateAverage(transformed)
         if (typeof onMissingMarksChange === "function") {
@@ -156,8 +159,8 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
   const updateScores = async (updateScoresList, headers) => {
     try {
       await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/assessment-criteria-score/?ac_id=${selectedAssessment.ac_id}`,
-        { scores: updateScoresList },
+        `${process.env.REACT_APP_API_URL}/api/assessment-criteria-score`,
+        {ac_id: selectedAssessment.ac_id, scores: updateScoresList },
         { headers }
       )
       setShowSuccess(true)
@@ -179,10 +182,11 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
     const dataSource = students.length > 0 ? students : studentName
     const newScores = []
     const updateScoresList = []
+    console.log("Data Source:", dataSource)
     dataSource.forEach((s) => {
       const marks = s.marks === "" ? null : Number(s.marks)
-      if (s.scoreId) {
-        updateScoresList.push({ id: s.scoreId, student_id: s.id, obtained_marks: marks })
+      if (s.id) {
+        updateScoresList.push({ student_id: s.id, obtained_marks: marks })
       } else {
         newScores.push({ student_id: s.id, obtained_marks: marks })
       }
@@ -243,7 +247,7 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
               </div>
               <div className="details">
                 <h3 className="studentName">{stu.name}</h3>
-                <p className="roll-number">Roll Number: {stu.id}</p>
+                <p className="roll-number">Roll Number: {stu.roll}</p>
                 <input
                   type="text"
                   step="0.1"
