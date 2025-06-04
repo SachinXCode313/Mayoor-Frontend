@@ -45,7 +45,7 @@ const Student_report = ({ student, onBack   }) => {
       const headers = {
         Authorization: 'Bearer YOUR_ACCESS_TOKEN', // Replace with actual token
         'Content-Type': 'application/json',
-        studentid: student.student,
+        studentid: student.id,
         year: userData.year,
         classname: userData.class,
         section: userData.section,
