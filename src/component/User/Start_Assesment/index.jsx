@@ -5,6 +5,7 @@ import axios from "axios"
 import Done from "../assets/check.png"
 import SuccessfulDone from "../Popup_successful"
 import Failed from "../Popup_Failed/index.jsx"
+import ReactLoading from 'react-loading'
 const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
   const [searchQuery, setSearchQuery] = useState("")
   const [userData, setUserData] = useState(null)
@@ -167,6 +168,7 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
   }
   const handleSubmit = async () => {
     if (!selectedAssessment?.ac_id || !userData) return
+    setLoading(true)
     const headers = {
       Authorization: "Bearer YOUR_ACCESS_TOKEN",
       "Content-Type": "application/json",
@@ -187,9 +189,13 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
         newScores.push({ student_id: s.id, obtained_marks: marks })
       }
     })
-    if (newScores.length > 0) await submitNewScores(newScores, headers)
-    if (updateScoresList.length > 0) await updateScores(updateScoresList, headers)
-    updateAverage(dataSource)
+    try {
+      if (newScores.length > 0) await submitNewScores(newScores, headers)
+      if (updateScoresList.length > 0) await updateScores(updateScoresList, headers)
+      updateAverage(dataSource)
+    } finally {
+      setLoading(false)
+    }
   }
   useEffect(() => {
     if (showSuccess) {
@@ -229,7 +235,6 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
           </div>
         </div>
       </div>
-      {loading && <p style={{ textAlign: "center" }}>Loading student data...</p>}
       <div className="ac-container">
         <div className="student-list" ref={containerRef}>
           {displayList.map((stu) => (
@@ -265,6 +270,11 @@ const Assessment = ({ selectedAssessment, onBack, onMissingMarksChange }) => {
           </span>
         </div>
       </div>
+      {loading && (
+        <div className="loading-overlay">
+          <ReactLoading type="spin" color="#007BFF" height={50} width={50} />
+        </div>
+      )}
       {showSuccess && (
         <div className="success-overlay">
           <SuccessfulDone />
