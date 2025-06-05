@@ -54,8 +54,16 @@ const Wrapper = styled.section`
     overflow: hidden;
     text-overflow: ellipsis;
     flex: 1;
-    margin-right: 30px;
+    margin-right: 10px;
+    display: block;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: normal; /* allows wrapping */
+    max-width: 100%;      /* or fixed width if needed like 250px */
+    overflow-wrap: break-word;
+    padding-right: 5px;
 }
+
   /* :white_check_mark: Fix LO List Display */
   .lo-list {
     list-style: none;

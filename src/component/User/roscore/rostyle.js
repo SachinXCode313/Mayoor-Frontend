@@ -119,7 +119,7 @@ const Wrapper = styled.div`
       font-size: 1rem;  
     }  
   }  
-    .held-popup {
+ .held-popup {
   position: absolute;
   background: rgba(94, 93, 93, 0.8);
   color: white;
@@ -130,8 +130,14 @@ const Wrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   max-width: 400px;
- 
+ display: block;
+    word-wrap: break-word;
+    word-break: break-word;
+    /* white-space: normal;  */
+    max-width: 100%;      /* or fixed width if needed like 250px */
+    overflow-wrap: break-word;
 }
+
 .TableDataCell {  
     border: 1px solid #ddd;  
     padding: 8px;  

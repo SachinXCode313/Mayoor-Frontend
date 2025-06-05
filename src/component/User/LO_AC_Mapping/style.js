@@ -33,9 +33,16 @@ const Wrapper = styled.section`
     padding: 16px;
     cursor: pointer;
   }
-  .name{
+.name{
   font-weight: 35px;
   font-size: 16px;
+  display: block;
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: normal; /* allows wrapping */
+  max-width: 100%;      /* or fixed width if needed like 250px */
+  overflow-wrap: break-word;
+  padding-right: 5px;
   }
   /* LO list container */
   .ac-list {
@@ -143,5 +150,7 @@ const Wrapper = styled.section`
   border-radius: 5px;
   cursor: pointer;
 }
+
+
 `
 export default Wrapper  
